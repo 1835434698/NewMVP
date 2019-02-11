@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+
 import com.tangzy.themvp.databind.DataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
@@ -25,6 +27,7 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         colorTitle = R.color.colorPrimaryDark;
         dark = false;
         super.onCreate(savedInstanceState);
