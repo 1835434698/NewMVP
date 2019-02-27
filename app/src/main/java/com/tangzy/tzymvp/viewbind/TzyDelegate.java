@@ -6,9 +6,11 @@ import android.widget.TextView;
 import com.tangzy.themvp.view.AppDelegate;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.TzyBean;
+import com.tangzy.tzymvp.bean.UserBean;
 
 public class TzyDelegate extends AppDelegate {
     public TzyBean tzyBean;
+    public UserBean userBean;
 
     @Override
     public int getRootLayoutId() {
@@ -19,6 +21,7 @@ public class TzyDelegate extends AppDelegate {
     public void setIntent(Intent intent) {
         super.setIntent(intent);
         tzyBean = (TzyBean) intent.getSerializableExtra(TzyBean.class.getCanonicalName());
+        userBean = intent.getParcelableExtra(UserBean.class.getCanonicalName());
     }
 
 //    public

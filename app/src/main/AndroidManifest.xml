@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tangzy.tzymvp" >
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TzyActivity"></activity>
-        <activity android:name=".activity.FragmentActivity"></activity>
+        <activity android:name=".activity.FragmentActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"></activity>
     </application>
 
 </manifest>

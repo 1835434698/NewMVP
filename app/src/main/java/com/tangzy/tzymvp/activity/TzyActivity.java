@@ -11,9 +11,11 @@ import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
 import com.tangzy.tzymvp.bean.LoginBean;
 import com.tangzy.tzymvp.bean.TzyBean;
+import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.databind.TzyDataBinder;
 import com.tangzy.tzymvp.listener.NoDoubleClickListener;
 import com.tangzy.tzymvp.presenter.NetPresenter;
+import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.viewbind.TzyDelegate;
 
 public class TzyActivity extends BaseActivity<TzyDelegate>{
@@ -46,6 +48,8 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
                 checkPermission(new CheckPermListener() {
                     @Override
                     public void superPermission() {
+                        Logger.d("tangzy11", viewDelegate.userBean.getAge()+"");
+                        Logger.d("tangzy11", viewDelegate.userBean.getName());
 
                         LoginBean loginBean = new LoginBean();
                         loginBean.setUsername("gaoyuan");

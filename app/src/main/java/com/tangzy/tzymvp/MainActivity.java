@@ -1,12 +1,13 @@
 package com.tangzy.tzymvp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.bean.TzyBean;
+import com.tangzy.tzymvp.bean.UserBean;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -28,8 +29,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button1:
                 TzyBean tzyBean = new TzyBean("关某在此");
+                UserBean userBean = new UserBean();
+                userBean.setAge(15);
+                userBean.setName("I am zhangsan");
                 Intent intent = new Intent(this, TzyActivity.class);
                 intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
+                intent.putExtra(UserBean.class.getCanonicalName(), userBean);
                 startActivity(intent);
                 break;
 //            case R.id.button2:

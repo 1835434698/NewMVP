@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.tangzy.themvp.databind.DataBinder;
@@ -14,6 +15,7 @@ import com.tangzy.tzymvp.databind.FragmentActivityBinder;
 import com.tangzy.tzymvp.fragment.FirstFragment;
 import com.tangzy.tzymvp.fragment.SecondFragment;
 import com.tangzy.tzymvp.listener.NoDoubleClickListener;
+import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.viewbind.FragmentActivityDelegate;
 
 
@@ -105,8 +107,30 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
         currentIndex = tab;
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 
-//    @Override
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN://0
+                Logger.d("TAG", " onTouchEvent按住");
+                break;
+            case MotionEvent.ACTION_UP://1
+                Logger.d("TAG", " onTouchEvent抬起");
+                break;
+            case MotionEvent.ACTION_MOVE://2
+                Logger.d("TAG", " onTouchEvent移动");
+                break;
+        }
+//        return true;
+        return super.onTouchEvent(event);
+    }
+
+    //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_fragment);
