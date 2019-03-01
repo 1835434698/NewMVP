@@ -9,6 +9,8 @@ import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 
+import java.util.LinkedHashMap;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button4).setOnClickListener(this);
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
     }
 
     @Override

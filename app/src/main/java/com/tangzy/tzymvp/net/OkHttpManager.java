@@ -1,6 +1,7 @@
 package com.tangzy.tzymvp.net;
 
 
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -24,9 +25,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -48,15 +52,53 @@ public enum OkHttpManager {
     private OkHttpClient okHttpClient;
 
     private PersistentCookieStore cookieStore;
-    private CookieJarImpl cookieJarImpl = new CookieJarImpl(cookieStore);
+    private CookieJarImpl cookieJarImpl;
     private Handler mDeliverHandler;
 
     private Map<Integer, ResponseListener> map = new HashMap<>();
     private static final String CONTENT_TYPE = "text/html;charset=utf-8; charset=utf-8";
 
     OkHttpManager() {
-        okHttpClient = new OkHttpClient();
-        okHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).cookieJar(cookieJarImpl).build();
+//        okHttpClient = new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (cookieStore == null) {
+            cookieStore = new PersistentCookieStore(Constant.app);
+        }
+        cookieJarImpl = new CookieJarImpl(cookieStore);
+        builder.connectTimeout(10, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).cookieJar(cookieJarImpl)
+                .addInterceptor(new Interceptor() {
+                    @Override
+            public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request();
+                    if (!NetUtil.checkNetType(Constant.app)) {
+                        int offlineCacheTime = 60;//离线的时候的缓存的过期时间
+                        request = request.newBuilder()
+//                        .cacheControl(new CacheControl
+//                                .Builder()
+//                                .maxStale(60,TimeUnit.SECONDS)
+//                                .onlyIfCached()
+//                                .build()
+//                        ) 两种方式结果是一样的，写法不同
+                                .header("Cache-Control", "public, only-if-cached, max-stale=" + offlineCacheTime)
+                                .build();
+                    }
+                    return chain.proceed(request);
+            }
+        }).addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+                Response response = chain.proceed(request);
+                int onlineCacheTime = 30;//在线的时候的缓存过期时间，如果想要不缓存，直接时间设置为0
+                return response.newBuilder()
+                        .header("Cache-Control", "public, max-age="+onlineCacheTime)
+                        .removeHeader("Pragma")
+                        .build();
+            }
+        }).cache(new Cache(new File(Environment.getExternalStorageDirectory() + "/okttpcaches"), 1024 * 1024 * 20));
+//                .build();
+        okHttpClient = builder.build();
+
     }
 
     public void asyncRequest(final String uri, final JSONObject httpParams, final HashMap<String, File> files, final ResponseListener listener) {
@@ -93,6 +135,7 @@ public enum OkHttpManager {
         //创建一个RequestBody(参数1：数据类型 参数2传递的json串)
         Request request = null;
         Logger.d(TAG, "onReq = " + httpParams);
+        Logger.d(TAG, "url = " + url);
         try {
             if (isPost) {
                 if (files != null){
@@ -110,6 +153,7 @@ public enum OkHttpManager {
                 listener.onErr(Constant.ERRORCODE, e.getMessage(), uri);
             }
         }
+//        okHttpClient.newCall(request).execute();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {

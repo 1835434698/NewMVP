@@ -52,8 +52,8 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
                         Logger.d("tangzy11", viewDelegate.userBean.getName());
 
                         LoginBean loginBean = new LoginBean();
-                        loginBean.setUsername("gaoyuan");
-                        loginBean.setPassword("gaoyuan");
+//                        loginBean.setUsername("user01");
+//                        loginBean.setPassword("123456");
                         netPresenter.request(loginBean, true);
                     }
                 }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
