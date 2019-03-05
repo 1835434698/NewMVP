@@ -3,9 +3,10 @@ package com.tangzy.tzymvp.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tangzy.tzymvp.bean.base.BaseRequest;
 import com.tangzy.tzymvp.util.Utils;
 
-public class UserBean implements Parcelable {
+public class UserBean extends BaseRequest implements Parcelable {
 
     public UserBean(){}
 

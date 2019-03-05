@@ -19,13 +19,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name=".MainActivity" >
+        <activity android:name=".activity.WelcomeActivity"
+            android:theme="@style/SplashAppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".activity.TzyActivity"></activity>
         <activity android:name=".activity.FragmentActivity"
             android:windowSoftInputMode="stateAlwaysVisible"></activity>
