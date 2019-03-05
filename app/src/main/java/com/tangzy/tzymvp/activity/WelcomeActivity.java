@@ -19,5 +19,6 @@ public class WelcomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
