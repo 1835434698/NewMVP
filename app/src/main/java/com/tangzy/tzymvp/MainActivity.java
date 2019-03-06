@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Constant.app = this;
+//        Constant.app = this;
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
@@ -40,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra(UserBean.class.getCanonicalName(), userBean);
                 startActivity(intent);
                 break;
-//            case R.id.button2:
-//                startActivity(new Intent(this, DemoActivity.class));
+            case R.id.button2:
+                startActivity(new Intent(this, DemoActivity.class));
 //                break;
 //            case R.id.button3:
 //                startActivity(new Intent(this, ShellActivity.class));

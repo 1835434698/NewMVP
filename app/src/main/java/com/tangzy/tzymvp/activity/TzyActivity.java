@@ -24,7 +24,10 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
 
     @Override
     public DataBinder getDataBinder() {
-        return new TzyDataBinder();
+        if (binder == null){
+            binder = new TzyDataBinder();
+        }
+        return binder;
     }
 
     @Override
@@ -68,6 +71,12 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
     @Override
     protected Class getDelegateClass() {
         return TzyDelegate.class;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        netPresenter = null;
     }
 
     @Override

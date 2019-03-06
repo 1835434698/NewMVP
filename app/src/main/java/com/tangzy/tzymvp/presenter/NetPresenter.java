@@ -17,6 +17,8 @@ import java.util.HashMap;
  * Created by Administrator on 2018/5/31.
  */
 public class NetPresenter extends MvpPresenterIml<NetView> {
+    private ResponseListener listener;
+    private int count = 0;
 
     public NetPresenter(NetView context) {
         super(context);
@@ -35,47 +37,45 @@ public class NetPresenter extends MvpPresenterIml<NetView> {
     public void request(JSONObject json, HashMap<String, File> files, String uri, final boolean isLoading) {
         if (isLoading)
             getView().showLoading();
+        if (listener == null){
+            listener = new ResponseListener() {
+                @Override
+                public void onResp(String respons, String uri) {
+                    if (handleResult(isLoading)) return;
+                    getView().resultSuc(uri, respons);
+                }
+
+                @Override
+                public void onErr(int errorCode, String respons, String uri) {
+                    if (handleResult(isLoading)) return;
+                    getView().resultFail(uri, respons);
+                }
+            };
+        }
+        if (isLoading){
+            count++;
+        }
         if (files != null){
-            OkHttpManager.INSTANCE.asyncRequest(uri, json, files, new ResponseListener() {
-                @Override
-                public void onResp(String respons, String uri) {
-                    if (isLoading)
-                        getView().hideLoading();
-                    getView().resultSuc(uri, respons);
-                }
-
-                @Override
-                public void onErr(int errorCode, String respons, String uri) {
-                    if (isLoading)
-                        getView().hideLoading();
-                    getView().resultFail(uri, respons);
-                }
-            });
+            OkHttpManager.INSTANCE.asyncRequest(uri, json, files, listener);
         }else {
-            OkHttpManager.INSTANCE.asyncRequest(uri, json, new ResponseListener() {
-                @Override
-                public void onResp(String respons, String uri) {
-                    if (getView()==null){
-                        return;
-                    }
-                    if (isLoading)
-                        getView().hideLoading();
-                    getView().resultSuc(uri, respons);
-                }
-
-                @Override
-                public void onErr(int errorCode, String respons, String uri) {
-                    if (getView()==null){
-                        return;
-                    }
-                    if (isLoading)
-                        getView().hideLoading();
-                    getView().resultFail(uri, respons);
-                }
-            });
+            OkHttpManager.INSTANCE.asyncRequest(uri, json, listener);
         }
 
     }
 
+    private boolean handleResult(boolean isLoading) {
+        if (isLoading) {
+            count--;
+        }
+        if (getView() == null) {
+            OkHttpManager.INSTANCE.removeListener(listener);
+            listener = null;
+            return true;
+        }
+        if (isLoading && count == 0) {
+            getView().hideLoading();
+        }
+        return false;
+    }
 }
 

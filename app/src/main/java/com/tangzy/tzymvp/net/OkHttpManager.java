@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -391,5 +392,13 @@ public enum OkHttpManager {
         final Request request1 = new Request.Builder().url(url).build();
         //包装Response使其支持进度回调
         ProgressHelper.addProgressResponseListener(okHttpClient, uiProgressResponseListener).newCall(request1).enqueue(callback);
+    }
+
+    public void removeListener(ResponseListener listener) {
+        if (map.containsValue(listener)){
+            Collection<ResponseListener> values = map.values();
+            values.remove(listener);
+        }
+
     }
 }
