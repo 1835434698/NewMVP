@@ -3,6 +3,7 @@ package com.tangzy.tzymvp.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -17,10 +18,29 @@ import com.tangzy.tzymvp.listener.NoDoubleClickListener;
 import com.tangzy.tzymvp.presenter.NetPresenter;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.viewbind.TzyDelegate;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 public class TzyActivity extends BaseActivity<TzyDelegate>{
 
     private NetPresenter netPresenter;
+    private String TAG = "TzyActivity";
 
     @Override
     public DataBinder getDataBinder() {
@@ -39,31 +59,148 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
         setTitle(viewDelegate.tzyBean.getName());
         netPresenter = new NetPresenter(this);
 
+
+
     }
 
     @Override
     protected void bindEvenListener() {
         super.bindEvenListener();
+//        final List<String> list = new ArrayList<>();
+//        list.add("1111111");
+//        list.add("1111112");
+//        list.add("1111113");
         //模拟数据改变(比如也可以写在网络请求成功的时候改变数据)
         viewDelegate.get(R.id.button1).setOnClickListener(new NoDoubleClickListener() {
             @Override
             public void onNoDoubleClick(View v) {
-                checkPermission(new CheckPermListener() {
+
+                new Thread(new Runnable() {
                     @Override
-                    public void superPermission() {
-                        Logger.d("tangzy11", viewDelegate.userBean.getAge()+"");
-                        Logger.d("tangzy11", viewDelegate.userBean.getName());
+                    public void run() {
 
-                        LoginBean loginBean = new LoginBean();
-//                        loginBean.setUsername("user01");
-//                        loginBean.setPassword("123456");
-                        netPresenter.request(viewDelegate.userBean, true);
+                        for (int ik =0; ik<50000;ik++){
+                            Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+" ,ik = "+ik);
+                        }
                     }
-                }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                }).start();
 
-                viewDelegate.tzyBean.setName("哈哈哈哈");
-//                //通知数据发生了改变
-                notifyModelChanged(viewDelegate.tzyBean);
+
+
+//                Observable
+//                        .create(new ObservableOnSubscribe<String>() {
+//
+//                    @Override
+//                    public void subscribe(ObservableEmitter<String> emitter) {
+//                        Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+"subscribe");
+//                        for (long i =0; i<1050000;i++){
+//                            emitter.onNext("i = "+i);
+//                        }
+//
+//                    }
+//                })
+////                        .just("hahahah")
+////                        .map(new Function<String, Integer>() {
+////                            @Override
+////                            public Integer apply(String s) {
+////                                return s.length();
+////                            }
+////                        })
+////                        .just(list)
+////                        .flatMap(new Function<List<String>, ObservableSource<?>>() {
+////                            @Override
+////                            public ObservableSource<?> apply(List<String> strings) throws Exception {
+////                                return Observable.fromIterable(strings);
+////                            }
+////                        })
+////                        .filter(new Predicate<Object>() {
+////                            @Override
+////                            public boolean test(Object o) {
+////                                String newStr = (String) o;
+////                                if (newStr.equals("1111112")) {
+//////                                if (newStr.charAt(5) - '0' > 5) {
+////                                    return true;
+////                                }
+////                                return false;
+////                            }
+////                        })
+////                        .subscribeOn(Schedulers.io())
+////                        .observeOn(AndroidSchedulers.mainThread())
+////                        .as(AutoDispose.<Object>autoDisposable(AndroidLifecycleScopeProvider.from(TzyActivity.this)))
+////                        .subscribe(new Consumer<Object>() {
+////                            @Override
+////                            public void accept(Object s) throws Exception {
+////                        Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+s);
+////
+////                            }
+////                        })
+////                        .subscribe(new Observer<Object>() {
+////                    @Override
+////                    public void onSubscribe(Disposable d) {
+////                        Logger.d(TAG,"onSubscribe");
+////                    }
+////
+////                    @Override
+////                    public void onNext(Object aLong) {
+////                        Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+aLong);
+////                    }
+////
+////                    @Override
+////                    public void onError(Throwable e) {
+////                        Logger.d(TAG,"onError");
+////                    }
+////
+////                    @Override
+////                    public void onComplete() {
+////                        Logger.d(TAG,"onComplete");
+////                    }
+////                })
+//
+////                Observable.interval(1, TimeUnit.SECONDS)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(Schedulers.io())
+//                        .as(AutoDispose.<String>autoDisposable(AndroidLifecycleScopeProvider.from(TzyActivity.this)))
+//                        .subscribe(new Observer<String>() {
+//                            @Override
+//                            public void onSubscribe(Disposable d) {
+//                                Logger.d(TAG,"onSubscribe");
+//                            }
+//
+//                            @Override
+//                            public void onNext(String aLong) {
+//                                Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+String.valueOf(aLong));
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Logger.d(TAG,"onError");
+//                            }
+//
+//                            @Override
+//                            public void onComplete() {
+//                                Logger.d(TAG,"onComplete");
+//                            }
+//                        })
+//                ;
+
+//                checkPermission(new CheckPermListener() {
+//                    @Override
+//                    public void superPermission() {
+//                        Logger.d("tangzy11", viewDelegate.userBean.getAge()+"");
+//                        Logger.d("tangzy11", viewDelegate.userBean.getName());
+//
+//
+//
+//                        LoginBean loginBean = new LoginBean();
+////                        loginBean.setUsername("user01");
+////                        loginBean.setPassword("123456");
+//                        netPresenter.request(viewDelegate.userBean, true);
+//                    }
+//                }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//
+//                viewDelegate.tzyBean.setName("哈哈哈哈");
+////                //通知数据发生了改变
+//                notifyModelChanged(viewDelegate.tzyBean);
             }
         });
     }
