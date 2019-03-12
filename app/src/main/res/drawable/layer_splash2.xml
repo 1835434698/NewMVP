@@ -9,12 +9,12 @@
         <bitmap
             android:gravity="top|center_horizontal"
             android:scaleType="center"
-            android:src="@drawable/splash_top" />
+            android:src="@mipmap/splash_top" />
     </item>
     <!-- 底部 -->
     <item>
         <bitmap   android:gravity="bottom|center_horizontal"
             android:scaleType="center"
-            android:src="@drawable/splash_bottom" />
+            android:src="@mipmap/splash_bottom" />
     </item>
 </layer-list>

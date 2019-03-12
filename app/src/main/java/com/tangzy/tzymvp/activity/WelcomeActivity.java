@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.tangzy.tzymvp.MainActivity;
+import com.tangzy.tzymvp.util.Logger;
 
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -18,7 +19,13 @@ public class WelcomeActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+//        startActivity(new Intent(this, MainActivity.class));
+//        finish();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        Logger.d("tangzy", "onWindowFocusChanged");
+        super.onWindowFocusChanged(hasFocus);
     }
 }

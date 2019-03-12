@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.tangzy.tzymvp.activity.Demo2Activity;
 import com.tangzy.tzymvp.activity.DemoActivity;
-import com.tangzy.tzymvp.activity.ShowWaveActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
-        startActivity(new Intent(this, ShowWaveActivity.class));
+        startActivity(new Intent(this, Demo2Activity.class));
     }
 
     @Override
