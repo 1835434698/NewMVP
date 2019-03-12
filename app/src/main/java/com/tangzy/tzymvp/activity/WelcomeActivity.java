@@ -19,8 +19,8 @@ public class WelcomeActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        startActivity(new Intent(this, MainActivity.class));
-//        finish();
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
