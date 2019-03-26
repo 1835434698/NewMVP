@@ -8,8 +8,6 @@ import com.tangzy.tzymvp.util.Utils;
 
 public class UserBean extends BaseRequest implements Parcelable {
 
-    public UserBean(){}
-
     private String name;
     private int age;
 
@@ -29,14 +27,12 @@ public class UserBean extends BaseRequest implements Parcelable {
         this.age = age;
     }
 
-    protected UserBean(Parcel in) {
-        Utils.readParcelableBean(this, in);
-    }
-
     public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
         @Override
         public UserBean createFromParcel(Parcel in) {
-            return new UserBean(in);
+            UserBean bean = new UserBean();
+            Utils.readParcelableBean(bean, in);
+            return bean;
         }
 
         @Override
