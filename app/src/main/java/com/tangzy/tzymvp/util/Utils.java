@@ -144,7 +144,7 @@ public class Utils {
         }
     }
 
-    public static Parcelable readParcelableBean(Parcelable classThis, Parcel in){
+    public static void readParcelableBean(Parcelable classThis, Parcel in){
         Logger.d("tangzy", "readParcelableBean");
         try {
             Class aClass = classThis.getClass();
@@ -262,6 +262,5 @@ public class Utils {
             Logger.e("tangzy", "error "+e.getMessage());
             e.printStackTrace();
         }
-        return classThis;
     }
 }
