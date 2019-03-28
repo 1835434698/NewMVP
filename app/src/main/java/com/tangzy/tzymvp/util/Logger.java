@@ -27,6 +27,9 @@ public class Logger {
             if (!TextUtils.isEmpty(tag)){
                 max_str_length = max_str_length - tag.length();
             }
+            if (msg == null){
+                msg = "";
+            }
             //大于4000时
             while (msg.length() > max_str_length) {
                 Log.d(tag, msg.substring(0, max_str_length));

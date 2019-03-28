@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import com.tangzy.themvp.databind.DataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
+import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.LoginBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
@@ -62,7 +63,7 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
         setTitle(viewDelegate.tzyBean.getName());
         netPresenter = new NetPresenter(this);
 
-
+        startHHHH();
 
     }
 
@@ -216,11 +217,37 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
     }
 
     private void startHHHH() {
-        new Thread(() -> {
-            for (int ik =0; ik<500000;ik++){
-                Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+" ,ik = "+ik);
-            }
-        }).start();
+        Logger.d("tangzy11", "Age="+viewDelegate.userBean.getAge()+"");
+        Logger.d("tangzy11", "Name="+viewDelegate.userBean.getName());
+        Logger.d("tangzy11", "Age1="+viewDelegate.userBean.getAge1()+"");
+        Logger.d("tangzy11", "Name1="+viewDelegate.userBean.isName1()+"");
+        Logger.d("tangzy11", "Name2="+viewDelegate.userBean.getName2()+"");
+        Logger.d("tangzy11", "getAge_5="+viewDelegate.userBean.getAge_5()+"");
+        Logger.d("tangzy11", "getAge_="+viewDelegate.userBean.getAge_10()+"");
+        List<DataBean> list = viewDelegate.userBean.getList();
+        if (list == null)
+            return;
+        for (DataBean s: list){
+            Logger.d("tangzy11", "s = "+s.getName());
+        }
+//                checkPermission(() -> {
+//
+//                    LoginBean loginBean = new LoginBean();
+////                        loginBean.setUsername("user01");
+////                        loginBean.setPassword("123456");
+//                    netPresenter.request(viewDelegate.userBean, true);
+//                }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//
+//                viewDelegate.tzyBean.setName("哈哈哈哈");
+////                //通知数据发生了改变
+//                notifyModelChanged(viewDelegate.tzyBean);
+
+//        new Thread(() -> {
+//            for (int ik =0; ik<500000;ik++){
+//                Logger.d(TAG,"接收数据,当前线程" + Thread.currentThread().getName()+" ,ik = "+ik);
+//            }
+//        }).start();
+
 //                new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {

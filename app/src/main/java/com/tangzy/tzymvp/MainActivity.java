@@ -8,10 +8,14 @@ import android.view.View;
 import com.tangzy.tzymvp.activity.Demo2Activity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
+import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
+import com.tangzy.tzymvp.util.Logger;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
-        startActivity(new Intent(this, Demo2Activity.class));
+//        startActivity(new Intent(this, Demo2Activity.class));
     }
 
     @Override
@@ -38,6 +42,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 UserBean userBean = new UserBean();
                 userBean.setAge(15);
                 userBean.setName("I am zhangsan");
+//                userBean.setAge1(156);
+                List<DataBean> list = new ArrayList<>();
+                DataBean dataBean = new DataBean();
+                dataBean.setName("wang ma zi");
+                list.add(dataBean);
+//                list.add(1258);
+//                list.add(1259);
+//                list.add(1260);
+//                list.add(1263);
+//                list.add(1268);
+//                list.add(1269);
+                userBean.setName1(true);
+                userBean.setName2(false);
+                Byte fff = new Byte("123");
+                userBean.setAge_10(fff);
+
+
+                userBean.setList(list);
                 Intent intent = new Intent(this, TzyActivity.class);
                 intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
                 intent.putExtra(UserBean.class.getCanonicalName(), userBean);
@@ -61,5 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.d("tangzy", "onActivityResult");
     }
 }
