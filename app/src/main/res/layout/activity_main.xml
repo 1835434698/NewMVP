@@ -36,4 +36,13 @@
         android:layout_height="wrap_content"
         android:text="示例6:使用EventBus实现数据绑定"/>
 
+    <TextView
+        android:background="@color/color_53B890"
+        android:layout_width="700px"
+        android:layout_height="50dp" />
+    <TextView
+        android:background="@color/color_53B890"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="50dp" />
+
 </LinearLayout>

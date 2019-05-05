@@ -20,6 +20,7 @@ import com.tangzy.tzymvp.view.MyView;
 public class DemoActivity extends AppCompatActivity {
 
     private MyView myview;
+    private int kfc=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class DemoActivity extends AppCompatActivity {
         myview.setOnClickListener(v -> {
             Logger.d("tangzy", "Click");
             Intent intent = new Intent(this, DemoServive.class);
+            intent.putExtra("kfc", kfc);
+            kfc++;
             startService(intent);
             ServiceConnection con= new ServiceConnection() {
                 @Override

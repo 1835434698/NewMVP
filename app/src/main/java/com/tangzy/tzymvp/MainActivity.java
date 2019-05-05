@@ -1,23 +1,38 @@
 package com.tangzy.tzymvp;
 
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.tangzy.tzymvp.activity.Demo2Activity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
+import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
+import com.tangzy.tzymvp.test.AnnotationUse;
+import com.tangzy.tzymvp.test.MyAnnotation;
+import com.tangzy.tzymvp.test.RealSubject;
+import com.tangzy.tzymvp.test.RefInvoke;
+import com.tangzy.tzymvp.test.Subject;
 import com.tangzy.tzymvp.util.Logger;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private String TAG = "tangzy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +46,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button5).setOnClickListener(this);
         findViewById(R.id.button6).setOnClickListener(this);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+
+
+
+
+
 //        startActivity(new Intent(this, Demo2Activity.class));
+//
+//        RealSubject realSubject = new RealSubject();
+//
+//
+//        Subject subject = (Subject) Proxy.newProxyInstance(
+//                realSubject.getClass().getClassLoader(),
+//                realSubject.getClass().getInterfaces(),
+//                new InvocationHandlerForTest(realSubject));
+//        Logger.d(TAG, "operation = "+subject.operation());
+//        Logger.d(TAG, "operation2");
+//        subject.operation2();
+
+    }
+
+    public class EcilInstrumentation extends Instrumentation{
+
+        Instrumentation mBase;
+        public EcilInstrumentation(Instrumentation base){
+            mBase = base;
+        }
+
+//        public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,
+//                                                Intent intent, int requestCode, Bundle options){
+//            Logger.d(TAG, "z s 到此一游");
+//            Class[] p1 = {Context.class, IBinder.class,
+//            IBinder.class, Activity.class,
+//            Intent.class, int.class, Bundle.class};
+//            Object[] v1 = {who, contextThread, token, target,
+//            intent, requestCode, options};
+//            return RefInvoke.invokeInstanceMethod()
+//
+//        }
+
+    }
+
+    public class InvocationHandlerForTest implements InvocationHandler{
+        private Object target;
+        public InvocationHandlerForTest(Object target){
+            this.target = target;
+        }
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            Logger.d(TAG, "日志开始");
+            Object object = method.invoke(target, args);
+            Logger.d(TAG, "日志结束");
+            return object;
+        }
     }
 
     @Override
@@ -66,8 +133,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.button2:
-                startActivity(new Intent(this, DemoActivity.class));
-//                break;
+                startActivity(new Intent(this, WebActivity.class));
+
+//                if (AnnotationUse.class.isAnnotationPresent(MyAnnotation.class)){
+//                    MyAnnotation annotation = AnnotationUse.class.getAnnotation(MyAnnotation.class);
+//                    Logger.d("tangzy", "annotation = "+annotation.color());
+//                }else {
+//                    Logger.d("tangzy", "annotation = no");
+//                }
+
+                break;
 //            case R.id.button3:
 //                startActivity(new Intent(this, ShellActivity.class));
 //                break;
