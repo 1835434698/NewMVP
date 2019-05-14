@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/TzyMVP.iml" filepath="$PROJECT_DIR$/TzyMVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/httpmanagerlib/httpmanagerlib.iml" filepath="$PROJECT_DIR$/httpmanagerlib/httpmanagerlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jnilibrary/jnilibrary.iml" filepath="$PROJECT_DIR$/jnilibrary/jnilibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/testdemo/testdemo.iml" filepath="$PROJECT_DIR$/testdemo/testdemo.iml" />
     </modules>
   </component>
