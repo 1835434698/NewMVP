@@ -5,6 +5,13 @@
      * 3、新建 .c文件
      * 4、创建 Android.mk和Application.mk：
      * 5、 打开 Terminal，到 app/src/main/jni 目录下，使用 ndk-build 命令生成 so 库：
+     * 或者
+     * 1、javac JNITest.java
+     * 2、javah -classpath . -jni  com.tangzy.jnilibrary.jni.JNITest
+     * 3、拷贝到jni文件夹下
+     * 4、新建 .c文件
+     * 5、创建 Android.mk和Application.mk：
+     * 6、 打开 Terminal，到 app/src/main/jni 目录下，使用 ndk-build 命令生成 so 库：
      *
      * 开始生成jar包
      * 1、进入java目录 （com/***）
@@ -12,3 +19,6 @@
      * 3、 jar -cvf JNITest.jar com/tangzy/jnilibrary/jni/JNITest.class
      * 4、JNITest.jar就是目标jar直接放入要使用项目。
      */
+
+
+     javah -d jni -classpath JNITest
