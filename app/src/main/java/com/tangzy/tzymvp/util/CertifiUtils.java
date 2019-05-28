@@ -104,8 +104,9 @@ public enum CertifiUtils {
                 keyStore.setCertificateEntry(certificateAlias, certificateFactory.generateCertificate(certificate));
 
                 try {
-                    if (certificate != null)
+                    if (certificate != null) {
                         certificate.close();
+                    }
                 } catch (IOException e) {
                 }
             }

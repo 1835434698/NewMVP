@@ -11,9 +11,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView text_view;
 
-    static {
-        System.loadLibrary("JNITest");
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

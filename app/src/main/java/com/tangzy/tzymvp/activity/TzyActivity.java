@@ -225,18 +225,19 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
         Logger.d("tangzy11", "getAge_5="+viewDelegate.userBean.getAge_5()+"");
         Logger.d("tangzy11", "getAge_="+viewDelegate.userBean.getAge_10()+"");
         List<DataBean> list = viewDelegate.userBean.getList();
-        if (list == null)
+        if (list == null) {
             return;
+        }
         for (DataBean s: list){
             Logger.d("tangzy11", "s = "+s.getName());
         }
-//                checkPermission(() -> {
-//
-//                    LoginBean loginBean = new LoginBean();
-////                        loginBean.setUsername("user01");
-////                        loginBean.setPassword("123456");
-//                    netPresenter.request(viewDelegate.userBean, true);
-//                }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                checkPermission(() -> {
+
+                    LoginBean loginBean = new LoginBean();
+//                        loginBean.setUsername("user01");
+//                        loginBean.setPassword("123456");
+                    netPresenter.request(viewDelegate.userBean, true);
+                }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 //
 //                viewDelegate.tzyBean.setName("哈哈哈哈");
 ////                //通知数据发生了改变
@@ -272,14 +273,18 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
 
     @Override
     public void resultFail(String uri, String message) {
-        TzyBean tzyBean = new TzyBean("关某在此");
-        Intent intent = new Intent(this, FragmentActivity.class);
-        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
-        startActivity(intent);
+//        TzyBean tzyBean = new TzyBean("关某在此");
+//        Intent intent = new Intent(this, FragmentActivity.class);
+//        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
+//        startActivity(intent);
     }
 
     @Override
     public void resultSuc(String uri, String result) {
+        TzyBean tzyBean = new TzyBean("关某在此");
+        Intent intent = new Intent(this, FragmentActivity.class);
+        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
+        startActivity(intent);
 
     }
 }

@@ -34,7 +34,6 @@ public class WebActivity extends AppCompatActivity {
         settings.setDomStorageEnabled(true);
         settings.setAllowContentAccess(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setSaveFormData(true);
         settings.setAllowFileAccess(true);
         settings.setAppCacheEnabled(false);
         settings.setDatabaseEnabled(true);

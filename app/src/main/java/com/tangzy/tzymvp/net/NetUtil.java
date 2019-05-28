@@ -1,5 +1,6 @@
 package com.tangzy.tzymvp.net;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,17 +24,7 @@ public class NetUtil {
      * @return
      */
     public static boolean checkNetType(Context context) {
-        // 判断手机的链接渠道
-        // WLAN（wi-fi）
-        boolean isWIFI = isWIFIConnectivity(context);
-        // 手机APN接入点
-        boolean isMobile = isMobileConnectivity(context);
-        // 当前无可利用的通信渠道
-        if (!isWIFI && !isMobile) {
-            return false;
-        }
-
-        return true;
+        return isMobileConnectivity(context);
     }
 
     /**
@@ -44,11 +35,9 @@ public class NetUtil {
      */
 
     private static boolean isMobileConnectivity(Context context) {
-        // ConnectivityManager---systemService---Context
         ConnectivityManager manager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager
-                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null) {
             return networkInfo.isConnected();
         }
@@ -64,9 +53,9 @@ public class NetUtil {
     private static boolean isWIFIConnectivity(Context context) {
         // ConnectivityManager---systemService---Context
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (networkInfo != null) {
-            return networkInfo.isConnected();
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
         }
         return false;
     }
@@ -117,6 +106,7 @@ public class NetUtil {
      * @return
      * @throws Exception
      */
+    @SuppressLint("MissingPermission")
     private static String getWIFIIp(Context context) throws Exception {
         // 获取wifi服务
         WifiManager wifiManager = (WifiManager)context

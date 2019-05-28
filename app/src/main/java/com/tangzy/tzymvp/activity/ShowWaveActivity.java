@@ -13,8 +13,10 @@ import android.view.View;
 
 import com.tangzy.tzymvp.R;
 
-import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class ShowWaveActivity extends AppCompatActivity {
     private SurfaceHolder holder;
@@ -29,7 +31,11 @@ public class ShowWaveActivity extends AppCompatActivity {
     private int cx = X_OFFSET;
     // 实际的Y轴的位置
     private int centerY = HEIGHT / 2;
-    private Timer timer = new Timer();
+//    private Timer timer = new Timer();
+    /**
+     * 线程任务
+     */
+    private ScheduledExecutorService time = new ScheduledThreadPoolExecutor(4);
     private TimerTask task = null;
 
 
@@ -75,7 +81,8 @@ public class ShowWaveActivity extends AppCompatActivity {
                 holder.unlockCanvasAndPost(canvas);
             }
         };
-        timer.schedule(task, 0, 30);
+//        timer.schedule(task, 0, 30);
+        time.scheduleAtFixedRate(task, 0, 30, TimeUnit.MILLISECONDS);
         holder.addCallback(new SurfaceHolder.Callback() {
 
             @Override
@@ -90,7 +97,8 @@ public class ShowWaveActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                timer.cancel();
+//                timer.cancel();
+                time.shutdown();
             }
         });
     }

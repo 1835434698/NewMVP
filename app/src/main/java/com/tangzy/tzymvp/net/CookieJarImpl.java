@@ -17,15 +17,18 @@ public class CookieJarImpl implements CookieJar {
     private CookieStore cookieStore;
 
     public CookieJarImpl(CookieStore cookieStore) {
-        if (cookieStore == null) new IllegalArgumentException("cookieStore can not be null.");
+        if (cookieStore == null) {
+            new IllegalArgumentException("cookieStore can not be null.");
+        }
         this.cookieStore = cookieStore;
     }
 
     @Override
     public synchronized void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
         Logger.v(TAG, "saveFromResponse ----- url = "+url);
-        if (cookies != null)
+        if (cookies != null) {
             Logger.v(TAG, "saveFromResponse ----- cookies = "+cookies);
+        }
         cookieStore.add(url, cookies);
     }
 

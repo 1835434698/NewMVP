@@ -35,19 +35,24 @@ public class NetPresenter extends MvpPresenterIml<NetView> {
     }
 
     public void request(JSONObject json, HashMap<String, File> files, String uri, final boolean isLoading) {
-        if (isLoading)
+        if (isLoading) {
             getView().showLoading();
+        }
         if (listener == null){
             listener = new ResponseListener() {
                 @Override
                 public void onResp(String respons, String uri) {
-                    if (handleResult(isLoading)) return;
+                    if (handleResult(isLoading)) {
+                        return;
+                    }
                     getView().resultSuc(uri, respons);
                 }
 
                 @Override
                 public void onErr(int errorCode, String respons, String uri) {
-                    if (handleResult(isLoading)) return;
+                    if (handleResult(isLoading)) {
+                        return;
+                    }
                     getView().resultFail(uri, respons);
                 }
             };

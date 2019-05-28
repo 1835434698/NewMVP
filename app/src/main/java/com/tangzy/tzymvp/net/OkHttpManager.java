@@ -127,8 +127,9 @@ public enum OkHttpManager {
     private void getResult(final String uri, JSONObject httpParams, final HashMap<String, File> files, boolean isPost, boolean isEnc) {
         final ResponseListener listener = map.get(uri.hashCode());
         map.remove(uri.hashCode());
-        if (listener == null)
+        if (listener == null) {
             return;
+        }
         url = Constant.url + uri;
         if (cookieStore == null) {
             cookieStore = new PersistentCookieStore(Constant.app);
@@ -342,7 +343,9 @@ public enum OkHttpManager {
      */
     public RequestBody create(final MediaType contentType, final byte[] content,
                               final int offset, final int byteCount) {
-        if (content == null) throw new NullPointerException("content == null");
+        if (content == null) {
+            throw new NullPointerException("content == null");
+        }
         Util.checkOffsetAndCount(content.length, offset, byteCount);
         return new RequestBody() {
             @Override

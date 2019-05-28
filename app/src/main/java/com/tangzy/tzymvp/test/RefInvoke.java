@@ -81,8 +81,9 @@ public class RefInvoke {
 
     //多个参数
     public static Object invokeInstanceMethod(Object obj, String methodName, Class[] pareTyples, Object[] pareVaules) {
-        if (obj == null)
+        if (obj == null) {
             return null;
+        }
 
         try {
             //调用一个private方法

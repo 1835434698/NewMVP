@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -70,7 +71,7 @@ public abstract class BaseActivity <T extends IDelegate> extends
                 }
             });
             tv_title = findViewById(R.id.tv_title);
-            title.setBackgroundColor(getResources().getColor(id));
+            title.setBackgroundColor(ContextCompat.getColor(this, id));
         }
     }
     /**
@@ -138,8 +139,9 @@ public abstract class BaseActivity <T extends IDelegate> extends
     public abstract DataBinder getDataBinder();
 
     public <D extends IModel> void notifyModelChanged(D data) {
-        if (binder != null)
+        if (binder != null) {
             binder.viewBindModel(viewDelegate, data);
+        }
     }
 
     public void addPresenter(MvpPresenterIml presenterIml){
@@ -156,8 +158,9 @@ public abstract class BaseActivity <T extends IDelegate> extends
             int size = mvpPresenterImls.size();
             for (int i=0; i < size; i ++){
                 MvpPresenterIml mvpPresenterIml = mvpPresenterImls.get(i);
-                if (mvpPresenterIml != null)
+                if (mvpPresenterIml != null) {
                     Logger.d(TAG, "detachView");
+                }
                 mvpPresenterIml.detachView(false);
             }
         }
@@ -189,8 +192,9 @@ public abstract class BaseActivity <T extends IDelegate> extends
             EasyPermissions.requestPermissions(this, getString(resString),
                     RC_PERM, perms);
         }else {
-            if (mListener != null)
+            if (mListener != null) {
                 mListener.superPermission();
+            }
         }
     }
 
@@ -201,8 +205,9 @@ public abstract class BaseActivity <T extends IDelegate> extends
 
     @Override
     public void onPermissionsAllGranted() {
-        if (mListener != null)
+        if (mListener != null) {
             mListener.superPermission();//同意了全部权限的回调
+        }
     }
 
     @Override

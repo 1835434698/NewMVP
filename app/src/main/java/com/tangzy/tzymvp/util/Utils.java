@@ -107,7 +107,9 @@ public class Utils {
                     case "interface java.util.List":
                         // 如果是List类型，得到其Generic的类型
                         Type genericType = fie.getGenericType();
-                        if(genericType == null) continue;
+                        if(genericType == null) {
+                            continue;
+                        }
                         // 如果是泛型参数的类型
                         if(genericType instanceof ParameterizedType){
                             ParameterizedType pt = (ParameterizedType) genericType;
@@ -229,7 +231,9 @@ public class Utils {
                     case "interface java.util.List":
                         // 如果是List类型，得到其Generic的类型
                         Type genericType = fie.getGenericType();
-                        if(genericType == null) continue;
+                        if(genericType == null) {
+                            continue;
+                        }
                         // 如果是泛型参数的类型
                         if(genericType instanceof ParameterizedType){
                             ParameterizedType pt = (ParameterizedType) genericType;

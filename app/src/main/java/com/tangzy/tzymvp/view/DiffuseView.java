@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -15,9 +16,9 @@ import java.util.List;
 public class DiffuseView  extends View {
 
     /** 扩散圆圈颜色 */
-    private int mColor = getResources().getColor(R.color.colorAccent);
+    private int mColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
     /** 圆圈中心颜色 */
-    private int mCoreColor = getResources().getColor(R.color.colorPrimary);
+    private int mCoreColor =  ContextCompat.getColor(getContext(), R.color.colorPrimary);
     /** 中心圆半径 */
     private float mCoreRadius = 150;
     /** 扩散圆宽度 */

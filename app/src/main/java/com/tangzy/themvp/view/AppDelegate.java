@@ -68,6 +68,7 @@ public abstract class AppDelegate implements IDelegate {
         return intent;
     }
 
+    @Override
     public void setIntent(Intent intent) {
         this.intent = intent;
     }

@@ -42,7 +42,8 @@ public abstract class DataBindFragment<T extends IDelegate> extends
     public abstract DataBinder getDataBinder();
 
     public <D extends IModel> void notifyModelChanged(D data) {
-        if (binder != null)
+        if (binder != null) {
             binder.viewBindModel(viewDelegate, data);
+        }
     }
 }
