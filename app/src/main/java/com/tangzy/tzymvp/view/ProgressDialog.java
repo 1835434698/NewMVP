@@ -15,7 +15,7 @@ import com.tangzy.tzymvp.R;
 public class ProgressDialog extends Dialog {
 
     Context context;
-    private TextView tv_message;
+    private TextView tvMessage;
     private ImageView imageView;
 
     private RotateAnimation refreshingAnimation;
@@ -44,7 +44,7 @@ public class ProgressDialog extends Dialog {
 
     private void init(Context context) {
         setContentView(R.layout.progress_custom);
-        tv_message = findViewById(R.id.message);
+        tvMessage = findViewById(R.id.message);
         imageView = findViewById(R.id.loadingImageView);
         refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.progress_rotating);
         // 添加匀速转动动画
@@ -53,8 +53,8 @@ public class ProgressDialog extends Dialog {
         getWindow().getAttributes().gravity = Gravity.CENTER;
     }
     public ProgressDialog setMessage(String message){
-        if (tv_message != null && message != null){
-            tv_message.setText(message);
+        if (tvMessage != null && message != null){
+            tvMessage.setText(message);
         }
         return this;
     }

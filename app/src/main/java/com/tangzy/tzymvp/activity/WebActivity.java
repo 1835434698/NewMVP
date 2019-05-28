@@ -49,7 +49,7 @@ public class WebActivity extends AppCompatActivity {
                 Log.d("tangzy", "onReceivedSslError");
 //                super.onReceivedSslError(view, handler, error);
 //                handler.proceed();
-                CertifiUtils.INSTANCE.OnCertificateOfVerification(handler, view.getUrl());
+                CertifiUtils.INSTANCE.onCertificateOfVerification(handler, view.getUrl());
             }
         });
 

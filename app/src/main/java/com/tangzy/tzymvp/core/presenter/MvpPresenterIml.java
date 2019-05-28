@@ -1,9 +1,8 @@
 package com.tangzy.tzymvp.core.presenter;
 
-import com.tangzy.themvp.presenter.ActivityPresenter;
+import com.tangzy.themvp.presenter.BaseActivityPresenter;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
 import com.tangzy.tzymvp.core.view.MvpView;
-import com.tangzy.tzymvp.fragment.base.BaseFragment;
 
 import java.lang.ref.WeakReference;
 
@@ -15,7 +14,7 @@ public class MvpPresenterIml<V extends MvpView> implements MvpPresenter<V>{
 
     public MvpPresenterIml(V context) {
         attachView(context);
-        if (context != null && context instanceof ActivityPresenter) {
+        if (context != null && context instanceof BaseActivityPresenter) {
             ((BaseActivity)context).addPresenter(this);
 //        }else if (context != null && context instanceof BaseFragment){
 //            ((BaseFragment)context).addPresenter(this);

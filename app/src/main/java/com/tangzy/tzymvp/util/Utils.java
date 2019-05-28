@@ -81,8 +81,8 @@ public class Utils {
                         dest.writeInt(Integer.parseInt(fie.get(classThis).toString()));
                         break;
                     case "class java.lang.Short":
-                        Object short_V = fie.get(classThis);
-                        dest.writeInt(short_V != null ? Integer.parseInt(short_V.toString()) : Integer.MAX_VALUE);
+                        Object shortV = fie.get(classThis);
+                        dest.writeInt(shortV != null ? Integer.parseInt(shortV.toString()) : Integer.MAX_VALUE);
                         break;
                     case "byte":
                         dest.writeByte(Byte.parseByte(fie.get(classThis).toString()));

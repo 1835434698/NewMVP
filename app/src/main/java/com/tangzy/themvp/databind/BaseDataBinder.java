@@ -23,7 +23,7 @@ import com.tangzy.themvp.view.IDelegate;
  *
  * @author tangzy (http://www.tangzy.com/) on 10/30/15.
  */
-public interface DataBinder<T extends IDelegate, D extends IModel> {
+public interface BaseDataBinder<T extends IDelegate, D extends IModel> {
 
     /**
      * 将数据与View绑定，这样当数据改变的时候，框架就知道这个数据是和哪个View绑定在一起的，就可以自动改变ui

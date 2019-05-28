@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.tangzy.themvp.databind.DataBinder;
+import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
 import com.tangzy.tzymvp.databind.FragmentActivityBinder;
@@ -28,7 +28,7 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
     }
 
     @Override
-    public DataBinder getDataBinder() {
+    public BaseDataBinder getDataBinder() {
         return new FragmentActivityBinder();
     }
 
@@ -66,6 +66,8 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
                 case R.id.btn_two:
                     setClientFragment(1);
                     break;
+                    default:
+                        break;
             }
         }
     };
@@ -102,6 +104,8 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
                     fragmentTransaction.show(tab1);
                 }
                 break;
+            default:
+                break;
         }
         fragmentTransaction.commitAllowingStateLoss();
         currentIndex = tab;
@@ -124,6 +128,8 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
                 break;
             case MotionEvent.ACTION_MOVE://2
                 Logger.d("TAG", " onTouchEvent移动");
+                break;
+            default:
                 break;
         }
 //        return true;

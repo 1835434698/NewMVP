@@ -16,30 +16,28 @@
 package com.tangzy.themvp.databind;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.tangzy.themvp.model.IModel;
-import com.tangzy.themvp.presenter.FragmentPresenter;
+import com.tangzy.themvp.presenter.BaseActivityPresenter;
 import com.tangzy.themvp.view.IDelegate;
 
 /**
- * 集成数据-视图绑定的Fragment基类(Presenter层)
+ * 集成数据-视图绑定的Activity基类(Presenter层)
  *
  * @param <T> View层代理类
- * @author tangzy (http://www.tangzy.com/) on 10/26/15.
+ * @author tangzy (http://www.tangzy.com/) on 10/23/15.
  */
-public abstract class DataBindFragment<T extends IDelegate> extends
-        FragmentPresenter<T> {
-
-    protected DataBinder binder;
+public abstract class BaseDataBindActivity<T extends IDelegate> extends
+        BaseActivityPresenter<T> {
+    protected BaseDataBinder binder;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         binder = getDataBinder();
     }
 
-    public abstract DataBinder getDataBinder();
+    public abstract BaseDataBinder getDataBinder();
 
     public <D extends IModel> void notifyModelChanged(D data) {
         if (binder != null) {

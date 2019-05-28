@@ -5,41 +5,21 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 
-import com.tangzy.themvp.databind.DataBinder;
+import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.activity.base.BaseActivity;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.LoginBean;
 import com.tangzy.tzymvp.bean.TzyBean;
-import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.databind.TzyDataBinder;
-import com.tangzy.tzymvp.listener.NoDoubleClickListener;
 import com.tangzy.tzymvp.presenter.NetPresenter;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.viewbind.TzyDelegate;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
 
 public class TzyActivity extends BaseActivity<TzyDelegate>{
 
@@ -47,7 +27,7 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
     private String TAG = "TzyActivity";
 
     @Override
-    public DataBinder getDataBinder() {
+    public BaseDataBinder getDataBinder() {
         if (binder == null){
             binder = new TzyDataBinder();
         }

@@ -30,11 +30,16 @@ import okhttp3.Response;
 import okhttp3.internal.platform.Platform;
 
 /**
- * 作用 ：证书验证的方法
+ * * 作用 ：证书验证的方法
+ * @author TANZH
+ * @date 2019/05/28
  */
 public enum CertifiUtils {
+    /**
+     * 单例
+     */
     INSTANCE;
-    private List<String> VERIFY_HOST_NAME_ARRAY;
+    private List<String> verifyHostNameArray;
 
     /**
      * 单项验证验证证书
@@ -56,10 +61,10 @@ public enum CertifiUtils {
      * @param handler
      * @param url
      */
-    public void OnCertificateOfVerification(final SslErrorHandler handler, String url) {
-        if (VERIFY_HOST_NAME_ARRAY == null) {
-            VERIFY_HOST_NAME_ARRAY = new ArrayList<>();
-            VERIFY_HOST_NAME_ARRAY.add("192.168.70.85");
+    public void onCertificateOfVerification(final SslErrorHandler handler, String url) {
+        if (verifyHostNameArray == null) {
+            verifyHostNameArray = new ArrayList<>();
+            verifyHostNameArray.add("192.168.70.85");
         }
 
         OkHttpClient.Builder builder = null;
@@ -70,7 +75,7 @@ public enum CertifiUtils {
                     if (TextUtils.isEmpty(hostname)) {
                         return false;
                     }//192.168.70.85:8443
-                    return !Arrays.asList(VERIFY_HOST_NAME_ARRAY).contains(hostname);
+                    return !Arrays.asList(verifyHostNameArray).contains(hostname);
                 }
             });
         } catch (IOException e) {

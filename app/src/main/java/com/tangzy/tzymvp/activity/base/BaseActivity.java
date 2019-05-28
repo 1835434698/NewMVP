@@ -11,9 +11,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tangzy.themvp.databind.DataBinder;
+import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.themvp.model.IModel;
-import com.tangzy.themvp.presenter.ActivityPresenter;
+import com.tangzy.themvp.presenter.BaseActivityPresenter;
 import com.tangzy.themvp.view.IDelegate;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.core.presenter.MvpPresenterIml;
@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseActivity <T extends IDelegate> extends
-        ActivityPresenter<T> implements NetView, EasyPermissions.PermissionCallbacks {
+        BaseActivityPresenter<T> implements NetView, EasyPermissions.PermissionCallbacks {
     private static final String TAG = "BaseActivity";
-    protected DataBinder binder;
-    private TextView tv_title;
-    private ImageView iv_title_back;
+    protected BaseDataBinder binder;
+    private TextView tvTitle;
+    private ImageView ivTitleBack;
 
     private List<MvpPresenterIml> mvpPresenterImls;
     protected int colorTitle = R.color.color_53B890;
@@ -50,27 +50,27 @@ public abstract class BaseActivity <T extends IDelegate> extends
     }
 
     protected void setTitleBack(int gone) {
-        if (iv_title_back != null){
-            iv_title_back.setVisibility(gone);
+        if (ivTitleBack != null){
+            ivTitleBack.setVisibility(gone);
         }
     }
     protected void setTitle(String title){
-        if (tv_title != null){
-            tv_title.setText(title);
+        if (tvTitle != null){
+            tvTitle.setText(title);
         }
     }
 
     public void setTitleLayout(@ColorRes int id) {
         View title = findViewById(R.id.title);
         if (title  != null){
-            iv_title_back = findViewById(R.id.iv_title_back);
-            iv_title_back.setOnClickListener(new NoDoubleClickListener() {
+            ivTitleBack = findViewById(R.id.iv_title_back);
+            ivTitleBack.setOnClickListener(new NoDoubleClickListener() {
                 @Override
                 public void onNoDoubleClick(View v) {
                     finish();
                 }
             });
-            tv_title = findViewById(R.id.tv_title);
+            tvTitle = findViewById(R.id.tv_title);
             title.setBackgroundColor(ContextCompat.getColor(this, id));
         }
     }
@@ -136,7 +136,7 @@ public abstract class BaseActivity <T extends IDelegate> extends
         cleanPresenter();
     }
 
-    public abstract DataBinder getDataBinder();
+    public abstract BaseDataBinder getDataBinder();
 
     public <D extends IModel> void notifyModelChanged(D data) {
         if (binder != null) {

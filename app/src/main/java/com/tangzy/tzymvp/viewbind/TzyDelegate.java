@@ -3,12 +3,12 @@ package com.tangzy.tzymvp.viewbind;
 import android.content.Intent;
 import android.widget.TextView;
 
-import com.tangzy.themvp.view.AppDelegate;
+import com.tangzy.themvp.view.BaseAppDelegate;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 
-public class TzyDelegate extends AppDelegate {
+public class TzyDelegate extends BaseAppDelegate {
     public TzyBean tzyBean;
     public UserBean userBean;
 

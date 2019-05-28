@@ -43,9 +43,14 @@ import okio.BufferedSink;
 
 /**
  * Created by Administrator on 2017/10/26.
+ * @author TANZH
+ * @date 2019/05/28
  */
 
 public enum OkHttpManager {
+    /**
+     * 单例
+     */
     INSTANCE;
 
     private final String TAG = "OkHttpManager";
@@ -58,6 +63,11 @@ public enum OkHttpManager {
 
     private Map<Integer, ResponseListener> map = new HashMap<>();
     private static final String CONTENT_TYPE = "text/html;charset=utf-8; charset=utf-8";
+
+    private final String OK = "ok";
+    private final String STATUS = "status";
+    private final String MSG = "msg";
+    private final String WNNHAO = "?";
 
     OkHttpManager() {
 //        okHttpClient = new OkHttpClient();
@@ -130,7 +140,7 @@ public enum OkHttpManager {
         if (listener == null) {
             return;
         }
-        url = Constant.url + uri;
+        url = Constant.URL + uri;
         if (cookieStore == null) {
             cookieStore = new PersistentCookieStore(Constant.app);
         }
@@ -216,12 +226,12 @@ public enum OkHttpManager {
             JSONObject jsonObject = new JSONObject(strResult);
 
 
-            if ("ok".equals(jsonObject.optString("status"))) {
+            if (OK.equals(jsonObject.optString(STATUS))) {
                 if (listener != null) {
                     listener.onResp(strResult, uri);
                 }
             } else {
-                String msg = jsonObject.optString("msg");
+                String msg = jsonObject.optString(MSG);
                 Toasts.showToastShort(msg);
                 if (listener != null) {
                     listener.onErr(1, msg, uri);
@@ -291,12 +301,12 @@ public enum OkHttpManager {
                 sb.append("=");
                 sb.append(URLEncoder.encode(aes, "UTF-8"));
             }
-            if (url.indexOf("?") >= 0) {
+            if (url.indexOf(WNNHAO) >= 0) {
                 if (sb.length() > 0) {
                     url = url + "&" + sb.substring(0, sb.length() - 1);
                 }
             } else if (sb.length() > 0) {
-                url = url + "?" + sb.substring(0, sb.length() - 1);
+                url = url + WNNHAO + sb.substring(0, sb.length() - 1);
             }
             Request.Builder builder1 = new Request.Builder().url(url);
             request = builder1.build();
@@ -317,12 +327,12 @@ public enum OkHttpManager {
                         sb.append("&");
                     }
                 }
-                if (url.indexOf("?") >= 0) {
+                if (url.indexOf(WNNHAO) >= 0) {
                     if (sb.length() > 0) {
                         url = url + "&" + sb.substring(0, sb.length() - 1);
                     }
                 } else if (sb.length() > 0) {
-                    url = url + "?" + sb.substring(0, sb.length() - 1);
+                    url = url + WNNHAO + sb.substring(0, sb.length() - 1);
                 }
                 request = new Request.Builder().url(url).build();
             }
@@ -379,12 +389,12 @@ public enum OkHttpManager {
                     }
                     sb.append("&");
                 }
-                if (url.indexOf("?") >= 0) {
+                if (url.indexOf(WNNHAO) >= 0) {
                     if (sb.length() > 0) {
                         url = url + "&" + sb.substring(0, sb.length() - 1);
                     }
                 } else if (sb.length() > 0) {
-                    url = url + "?" + sb.substring(0, sb.length() - 1);
+                    url = url + WNNHAO + sb.substring(0, sb.length() - 1);
                 }
             }
         } catch (Exception e) {

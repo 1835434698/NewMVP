@@ -3,11 +3,11 @@ package com.tangzy.tzymvp.viewbind;
 import android.content.Intent;
 import android.widget.TextView;
 
-import com.tangzy.themvp.view.AppDelegate;
+import com.tangzy.themvp.view.BaseAppDelegate;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.TzyBean;
 
-public class FragmentActivityDelegate extends AppDelegate {
+public class FragmentActivityDelegate extends BaseAppDelegate {
     public TzyBean tzyBean;
 
     @Override

@@ -78,6 +78,8 @@ public class DiffuseView  extends View {
         }
     }
 
+    int size = 10;
+
     @Override
     public void onDraw(Canvas canvas) {
         // 绘制扩散圆
@@ -101,7 +103,7 @@ public class DiffuseView  extends View {
             mWidths.add(0);
         }
         // 超过10个扩散圆，删除最外层
-        if(mWidths.size() >= 10){
+        if(mWidths.size() >= size){
             mWidths.remove(0);
             mAlphas.remove(0);
         }

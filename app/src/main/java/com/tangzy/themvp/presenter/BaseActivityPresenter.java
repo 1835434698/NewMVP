@@ -27,10 +27,10 @@ import com.tangzy.themvp.view.IDelegate;
  * @param <T> View delegate class type
  * @author tangzy (http://www.tangzy.com/) on 10/23/15.
  */
-public abstract class ActivityPresenter<T extends IDelegate> extends AppCompatActivity {
+public abstract class BaseActivityPresenter<T extends IDelegate> extends AppCompatActivity {
     protected T viewDelegate;
 
-    public ActivityPresenter() {
+    public BaseActivityPresenter() {
         try {
             viewDelegate = getDelegateClass().newInstance();
         } catch (InstantiationException e) {

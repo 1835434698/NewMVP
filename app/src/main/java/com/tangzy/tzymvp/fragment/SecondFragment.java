@@ -2,7 +2,7 @@ package com.tangzy.tzymvp.fragment;
 
 import android.view.View;
 
-import com.tangzy.themvp.databind.DataBinder;
+import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.databind.FragmentActivityBinder;
 import com.tangzy.tzymvp.fragment.base.BaseFragment;
@@ -19,7 +19,7 @@ public class SecondFragment extends BaseFragment<SecondFragDelegate> {
     }
 
     @Override
-    public DataBinder getDataBinder() {
+    public BaseDataBinder getDataBinder() {
         return new FragmentActivityBinder();
     }
 
@@ -41,6 +41,8 @@ public class SecondFragment extends BaseFragment<SecondFragDelegate> {
                     break;
                 case R.id.button2:
                     diffuseView.stop();
+                    break;
+                default:
                     break;
             }
         }

@@ -67,6 +67,8 @@ public class MyView extends View {
             case MeasureSpec.UNSPECIFIED:
                 Logger.d("tangzy", "---speMode = UNSPECIFIED");
                 defaultWidth = Math.max(defaultWidth, specSize);
+            default:
+                break;
         }
         return defaultWidth;
     }
@@ -94,6 +96,8 @@ public class MyView extends View {
 //        4.leading：是上一行字符的descent到下一行的ascent之间的距离,也就是相邻行间的空白距离
 //        5.top：是指的是最高字符到baseline的值,即ascent的最大值
 //        6.bottom：是指最低字符到baseline的值,即descent的最大值
+                break;
+            default:
                 break;
         }
         return defaultHeight;

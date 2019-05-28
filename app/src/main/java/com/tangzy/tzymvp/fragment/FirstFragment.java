@@ -1,6 +1,5 @@
 package com.tangzy.tzymvp.fragment;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.tangzy.themvp.databind.DataBinder;
+import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.databind.FragmentActivityBinder;
 import com.tangzy.tzymvp.fragment.base.BaseFragment;
@@ -20,7 +19,6 @@ import com.tangzy.tzymvp.listener.NoDoubleClickListener;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.viewbind.FirstFragDelegate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FirstFragment extends BaseFragment<FirstFragDelegate> {
@@ -31,7 +29,7 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
     }
 
     @Override
-    public DataBinder getDataBinder() {
+    public BaseDataBinder getDataBinder() {
 
 
 
@@ -66,6 +64,8 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
                         break;
                     case MotionEvent.ACTION_MOVE://2
                         Logger.d("TAG", " onTouch移动");
+                        break;
+                    default:
                         break;
                 }
                 return false;
@@ -155,6 +155,8 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
 //                    getAppList();
 
 
+                    break;
+                default:
                     break;
             }
         }

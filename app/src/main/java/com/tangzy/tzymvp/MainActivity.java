@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "tangzy";
+    private final String TAG = "tangzy";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

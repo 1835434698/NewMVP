@@ -33,7 +33,7 @@ import com.tangzy.themvp.view.IDelegate;
  * @param <T> View delegate class type
  * @author tangzy (http://www.tangzy.com/) on 10/23/15.
  */
-public abstract class FragmentPresenter<T extends IDelegate> extends Fragment {
+public abstract class BaseFragmentPresenter<T extends IDelegate> extends Fragment {
     public T viewDelegate;
 
     @Override

@@ -215,9 +215,10 @@ public class PersistentCookieStore implements CookieStore {
      * @return decoded byte array
      */
     protected byte[] hexStringToByteArray(String hexString) {
+        int size = 2;
         int len = hexString.length();
         byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
+        for (int i = 0; i < len; i += size) {
             data[i / 2] = (byte) ((Character.digit(hexString.charAt(i), 16) << 4) + Character.digit(hexString.charAt(i + 1), 16));
         }
         return data;
