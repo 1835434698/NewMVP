@@ -1,34 +1,32 @@
 package com.tangzy.tzymvp;
 
-import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.tangzy.tzymvp.activity.Demo2Activity;
-import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
-import com.tangzy.tzymvp.test.AnnotationUse;
-import com.tangzy.tzymvp.test.MyAnnotation;
-import com.tangzy.tzymvp.test.RealSubject;
-import com.tangzy.tzymvp.test.RefInvoke;
-import com.tangzy.tzymvp.test.Subject;
+import com.tangzy.tzymvp.test.BaseUser;
+import com.tangzy.tzymvp.test.ChredUser;
+import com.tangzy.tzymvp.test.DynamicProxy;
+import com.tangzy.tzymvp.test.Iuser;
+import com.tangzy.tzymvp.test.UserImpl;
 import com.tangzy.tzymvp.util.Logger;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.xml.transform.Transformer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,9 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
 
-
-
-
 //        startActivity(new Intent(this, Demo2Activity.class));
 //
 //        RealSubject realSubject = new RealSubject();
@@ -66,10 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public class EcilInstrumentation extends Instrumentation{
+    public class EcilInstrumentation extends Instrumentation {
 
         Instrumentation mBase;
-        public EcilInstrumentation(Instrumentation base){
+
+        public EcilInstrumentation(Instrumentation base) {
             mBase = base;
         }
 
@@ -87,11 +83,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public class InvocationHandlerForTest implements InvocationHandler{
+    public class InvocationHandlerForTest implements InvocationHandler {
         private Object target;
-        public InvocationHandlerForTest(Object target){
+
+        public InvocationHandlerForTest(Object target) {
             this.target = target;
         }
+
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             Logger.d(TAG, "日志开始");
@@ -152,9 +150,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            case R.id.button5:
 //                startActivity(new Intent(this, Demo5Activity.class));
 //                break;
-//            case R.id.button6:
+            case R.id.button6:
 //                startActivity(new Intent(this, Demo6Activity.class));
-//                break;
+
+//                Iuser user = new UserImpl();
+//                InvocationHandler h = new DynamicProxy(user);
+//                Iuser proxy = (Iuser) Proxy.newProxyInstance(Iuser.class.getClassLoader(), new Class[]{Iuser.class}, h);
+//                proxy.eat("苹果");
+//                proxy.eat2("juzi");
+                ChredUser chredUser = new ChredUser();
+
+                break;
             default:
                 break;
         }

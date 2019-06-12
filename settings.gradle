@@ -1,1 +1,1 @@
-include ':app', ':httpmanagerlib', ':testdemo' , ':jnilibrary'
+include ':app', ':testdemo' , ':jnilibrary'
