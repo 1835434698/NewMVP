@@ -109,6 +109,7 @@ public enum OkHttpManager {
         }).cache(new Cache(new File(Environment.getExternalStorageDirectory() + "/okttpcaches"), 1024 * 1024 * 20));
 //                .build();
         okHttpClient = builder.build();
+        mDeliverHandler = new Handler(Looper.getMainLooper());
 
     }
 
@@ -129,7 +130,6 @@ public enum OkHttpManager {
             listener.onErr(Constant.ERRORCODE, Constant.MESSSAGENET, uri);
             return;
         }
-        mDeliverHandler = new Handler(Looper.getMainLooper());
         map.put(uri.hashCode(), listener);
         getResult(uri, httpParams, files, isPost, isEnc);
     }
