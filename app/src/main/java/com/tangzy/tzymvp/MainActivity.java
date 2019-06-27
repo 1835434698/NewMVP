@@ -3,7 +3,7 @@ package com.tangzy.tzymvp;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 import com.tangzy.tzymvp.activity.TzyActivity;
@@ -11,22 +11,14 @@ import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
-import com.tangzy.tzymvp.test.BaseUser;
 import com.tangzy.tzymvp.test.ChredUser;
-import com.tangzy.tzymvp.test.DynamicProxy;
-import com.tangzy.tzymvp.test.Iuser;
-import com.tangzy.tzymvp.test.UserImpl;
 import com.tangzy.tzymvp.util.Logger;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import javax.xml.transform.Transformer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

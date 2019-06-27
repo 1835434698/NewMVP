@@ -16,7 +16,7 @@
 package com.tangzy.themvp.presenter;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import com.tangzy.themvp.view.IDelegate;
 
