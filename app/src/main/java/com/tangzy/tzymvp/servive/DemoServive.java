@@ -2,12 +2,19 @@ package com.tangzy.tzymvp.servive;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.tangzy.tzymvp.util.Logger;
 
 public class DemoServive extends Service {
+    private MyBinder binder = new MyBinder();
+
+    public class MyBinder extends Binder{
+
+    }
+
     private int kfc = -1;
     Thread thread =new Thread(() -> {
         while (true){
@@ -26,7 +33,7 @@ public class DemoServive extends Service {
         kfc = intent.getIntExtra("kfc", -2);
         Logger.d("tangzy", "onBind kfc = "+kfc);
 //        thread.start();
-        return null;
+        return binder;
     }
 
     @Override

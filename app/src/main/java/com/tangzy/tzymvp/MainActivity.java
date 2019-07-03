@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
+import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.bean.DataBean;
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                startActivity(new Intent(this, Demo5Activity.class));
 //                break;
             case R.id.button6:
-//                startActivity(new Intent(this, Demo6Activity.class));
+                startActivity(new Intent(this, DemoActivity.class));
 
 //                Iuser user = new UserImpl();
 //                InvocationHandler h = new DynamicProxy(user);
