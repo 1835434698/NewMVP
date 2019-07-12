@@ -36,6 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="获取一帧图片"/>
+    <Button android:id="@+id/get_text"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="转换文字"/>
 
     <ImageView
         android:id="@+id/imageView"

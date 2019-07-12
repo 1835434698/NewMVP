@@ -1,26 +1,37 @@
 package com.tangzy.tzymvp.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaMuxer;
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+//import javax.sound.sampled.AudioFileFormat;
+//import javax.sound.sampled.AudioFormat;
+//import javax.sound.sampled.AudioInputStream;
+//import javax.sound.sampled.AudioSystem;
+//import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -364,17 +375,18 @@ public class Utils {
         //获取第一帧图像的bitmap对象
         Bitmap bitmap = mmr.getFrameAtTime();
         String s = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        int time=0;
-        if (!TextUtils.isEmpty(s)){
+        int time = 0;
+        if (!TextUtils.isEmpty(s)) {
             time = Integer.parseInt(s);
         }
 //        String s1 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_FRAME_COUNT);
 //                    mmr.getFrameAtIndex(1);
-        Bitmap bitmap1 = mmr.getFrameAtTime(time/2);
+        Bitmap bitmap1 = mmr.getFrameAtTime(time / 2);
         saveBitmap(output, bitmap1);
         return true;
     }
-    public static void saveBitmap(String filePath, Bitmap mBitmap){
+
+    public static void saveBitmap(String filePath, Bitmap mBitmap) {
         makesureFileExist(filePath);
         try {
             FileOutputStream outputStream = new FileOutputStream(filePath);
@@ -388,6 +400,7 @@ public class Utils {
 
     /**
      * 确定指定文件是否存在，如果不存在，则创建空文件
+     *
      * @param fileName
      */
     public static void makesureFileExist(String fileName) {
@@ -412,6 +425,236 @@ public class Utils {
             }
         }
     }
+
+    /**
+     * 读取asset目录下文件。
+     *
+     * @return content
+     */
+    public static String readFile(Context mContext, String file, String code) {
+        int len = 0;
+        byte[] buf = null;
+        String result = "";
+        try {
+            InputStream in = mContext.getAssets().open(file);
+            len = in.available();
+            buf = new byte[len];
+            in.read(buf, 0, len);
+
+            result = new String(buf, code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 读取asset目录下音频文件。
+     *
+     * @return 二进制文件数据
+     */
+    public static byte[] readAudioFile(Context context, String filename) {
+        try {
+            InputStream ins = context.getAssets().open(filename);
+            byte[] data = new byte[ins.available()];
+
+            ins.read(data);
+            ins.close();
+
+            return data;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * 读取asset目录下音频文件。
+     *
+     * @return 二进制文件数据
+     */
+    public static byte[] readAudioFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            fis.close();
+            return data;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+//    /**
+//     * mp3的字节数组生成wav文件
+//     * @param sourceBytes
+//     * @param targetPath
+//     */
+//    public static boolean byteToWav(byte[] sourceBytes, String targetPath) {
+//        if (sourceBytes == null || sourceBytes.length == 0) {
+//            System.out.println("Illegal Argument passed to this method");
+//            return false;
+//        }
+//
+//        try (final ByteArrayInputStream bais = new ByteArrayInputStream(sourceBytes); final AudioInputStream sourceAIS = AudioSystem.getAudioInputStream(bais)) {
+//            AudioFormat sourceFormat = sourceAIS.getFormat();
+//            // 设置MP3的语音格式,并设置16bit
+//            AudioFormat mp3tFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, sourceFormat.getSampleRate(), 16, sourceFormat.getChannels(), sourceFormat.getChannels() * 2, sourceFormat.getSampleRate(), false);
+//            // 设置百度语音识别的音频格式
+//            AudioFormat pcmFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, 16000, 16, 1, 2, 16000, false);
+//            try (
+//                    // 先通过MP3转一次，使音频流能的格式完整
+//                    final AudioInputStream mp3AIS = AudioSystem.getAudioInputStream(mp3tFormat, sourceAIS);
+//                    // 转成百度需要的流
+//                    final AudioInputStream pcmAIS = AudioSystem.getAudioInputStream(pcmFormat, mp3AIS)) {
+//                // 根据路径生成wav文件
+//                AudioSystem.write(pcmAIS, AudioFileFormat.Type.WAVE, new File(targetPath));
+//            }
+//            return true;
+//        } catch (IOException e) {
+//            System.out.println("文件转换异常：" + e.getMessage());
+//            return false;
+//        } catch (UnsupportedAudioFileException e) {
+//            System.out.println("文件转换异常：" + e.getMessage());
+//            return false;
+//        }
+//    }
+
+    /**
+     * 将文件转成字节流
+     *
+     * @param filePath
+     * @return
+     */
+    public static byte[] getBytes(String filePath) {
+        byte[] buffer = null;
+        try {
+            File file = new File(filePath);
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+            byte[] b = new byte[1000];
+            int n;
+            while ((n = fis.read(b)) != -1) {
+                bos.write(b, 0, n);
+            }
+            fis.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+
+//
+//    /**
+//     * @param mp3FilePath mp3文件路径
+//     * @param pcmFilePath 保存pcm文件路径
+//     */
+//
+//    public static void mp3ToPcm(String mp3FilePath, String pcmFilePath) {
+//        //获取MP3文件的流
+//        AudioInputStream audioInputStream = getPcmAudioInputStream(mp3FilePath);
+//        try {
+//            //生成pcm文件
+//            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE, new File(pcmFilePath));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//    private static AudioInputStream getPcmAudioInputStream(String mp3filepath) {
+//        File mp3 = new File(mp3filepath);
+//        AudioInputStream audioInputStream = null;
+//        AudioFormat targetFormat = null;
+//        AudioInputStream in = null;
+//        try {
+//
+//            //读取音频文件的类
+//            MpegAudioFileReader mp = new MpegAudioFileReader();
+//
+//            in = mp.getAudioInputStream(mp3);
+//            AudioFormat baseFormat = in.getFormat();
+//            //设定输出格式为pcm格式的音频文件
+//            targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
+//                    baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
+//            //输出到音频
+//            audioInputStream = AudioSystem.getAudioInputStream(targetFormat, in);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            /**
+//             * 释放资源
+//             */
+//            free(audioInputStream, in);
+//        }
+//        return audioInputStream;
+//    }
+//
+//    /**
+//     * 关闭流
+//     */
+//    private static void free(AudioInputStream audioInputStream, AudioInputStream in) {
+//
+//        if (in != null) {
+//            try {
+//                in.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (audioInputStream != null) {
+//            try {
+//                audioInputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+
+//    /**
+//     * 检查返回消息
+//     *
+//     * @param pcm
+//     */
+//    public static void CheckAudio(AudioBean pcm) {
+//        if (pcm.getErr_no() == 3301) {
+//            throw new CheckException("语音质量太差,请重新录音");
+//        }
+//        if (pcm.getErr_no() == 3309) {
+//            throw new CheckException("音频数据问题,请重新录音");
+//        }
+//    }
+//
+//    /**
+//     * 语音识别返回文本
+//     *
+//     * @param pcmPath
+//     * @param voidetype
+//     * @return
+//     */
+//
+//    public static AudioBean getBaiduMessage(String pcmPath, String voidetype) {
+//        AipSpeech instance = AudioSingleton.getInstance();
+//        instance.setConnectionTimeoutInMillis(2000);
+//        instance.setSocketTimeoutInMillis(6000);
+//        JSONObject asr = instance.asr(pcmPath, voidetype, 16000, null);
+//        AudioBean audioBean = JsonUtil.jsonToObject(asr.toString(), AudioBean.class);
+//        return audioBean;
+//    }
+
 
     /**
      * 合成视频1的音频和视频2的图像
