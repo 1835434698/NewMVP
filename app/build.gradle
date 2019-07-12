@@ -9,15 +9,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
-        ndk {
-            abiFilters "armeabi-v7a"
-        }
+//
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags ""
+//            }
+//        }
+//        ndk {
+//            abiFilters "armeabi-v7a"
+//        }
     }
     buildTypes {
         release {
@@ -25,12 +25,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+//
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -53,6 +53,12 @@ android {
     }
 }
 
+// 保证引用jar包最新，建议使用
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds' // 动态版本 x.x.+
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'//  变化版本 x.x.x
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api 'androidx.appcompat:appcompat:1.0.0'
@@ -64,4 +70,5 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.0.0-RC2'
     implementation files('libs/Msc.jar')
+    api project(':ffmpeg')
 }

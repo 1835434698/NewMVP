@@ -27,6 +27,7 @@ import java.util.LinkedHashMap;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.frank.ffmpeg.FFmpegCmd;
+import com.frank.ffmpeg.FFmpegUtil;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -35,8 +36,6 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.tangzy.tzymvp.R;
-//import com.tangzy.tzymvp.util.FFmpegCmd;
-import com.tangzy.tzymvp.util.FFmpegUtil;
 import com.tangzy.tzymvp.util.JsonParser;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.Toasts;
@@ -105,15 +104,10 @@ public class AiduActivity extends AppCompatActivity {
         muxerAudioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Utils.muxerAudio(SDCARD_PATH + "/input.mp4", voicePath);
                 getVoice(SDCARD_PATH + "/input.mp4", voicePath);
-
             }
         });
         get_text.setOnClickListener(v -> {
-//            Utils.byteToWav(Utils.getBytes(voicePath), SDCARD_PATH + "/output_audio.wav");
-
-//            Utils.mp3ToPcm(voicePath, SDCARD_PATH + "/output_audio.pcm");
             executeStream();
         });
 
@@ -156,7 +150,7 @@ public class AiduActivity extends AppCompatActivity {
         int sampleRate = 16000;
         //pcm数据的声道，单声道为1，立体声道为2
         int channel = 1;
-        commandLine = FFmpegUtil.encodeAudio(srcFile, wavFile, sampleRate, channel);
+        commandLine = FFmpegUtil.Mp4toWav(srcFile, wavFile, sampleRate, channel);
         executeFFmpegCmd(commandLine);
     }
     /**
@@ -178,6 +172,7 @@ public class AiduActivity extends AppCompatActivity {
             public void onEnd(int result) {
                 Log.i(TAG, "handle audio onEnd...");
 //                mHandler.obtainMessage(MSG_FINISH).sendToTarget();
+                muxerAudioBtn.post(() -> executeStream());
             }
         });
     }
@@ -480,7 +475,6 @@ public class AiduActivity extends AppCompatActivity {
 
     //执行音频流识别操作
     private void executeStream() {
-
         buffer.setLength(0);
         mIatResults.clear();
         // 设置参数
@@ -494,7 +488,7 @@ public class AiduActivity extends AppCompatActivity {
         if (ret != ErrorCode.SUCCESS) {
             Toasts.showToastShort("识别失败,错误码：" + ret+",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
         } else {
-            byte[] audioData = Utils.readAudioFile(voicePath);
+            byte[] audioData = FFmpegUtil.readAudioFile(voicePath);
 
             if (null != audioData) {
                 Toasts.showToastShort(getString(R.string.text_begin_recognizer));

@@ -1,11 +1,14 @@
-package com.tangzy.tzymvp.util;
+package com.frank.ffmpeg;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-//import com.frank.ffmpeg.format.VideoLayout;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Locale;
+
+//import com.frank.ffmpeg.format.VideoLayout;
 
 /**
  * ffmpeg工具：拼接命令行处理音视频
@@ -13,6 +16,26 @@ import java.util.Locale;
  */
 
 public class FFmpegUtil {
+
+    /**
+     * 读取asset目录下音频文件。
+     *
+     * @return 二进制文件数据
+     */
+    public static byte[] readAudioFile(String filename) {
+        try {
+            File file = new File(filename);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            fis.close();
+            return data;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * 使用ffmpeg命令行进行音频转码
@@ -225,11 +248,24 @@ public class FFmpegUtil {
      * @return 音频编码的命令行
      */
     @SuppressLint("DefaultLocale")
-    public static  String[] encodeAudio(String srcFile, String targetFile, int sampleRate, int channel){
+    public static  String[] Mp4toWav(String srcFile, String targetFile, int sampleRate, int channel){
         String combineVideo = "ffmpeg -i .%s -f wav -ac %d -ar %d %s";
         combineVideo = String.format(combineVideo, srcFile, channel, sampleRate, targetFile);
-//        String combineVideo = "ffmpeg -i %s -acodec pcm_s16le -ac %d -ar %d %s";
-//        combineVideo = String.format(combineVideo, srcFile, channel, sampleRate, targetFile);
+        return combineVideo.split(" ");
+    }
+
+    /**
+     * 音频编码
+     * @param srcFile 源文件mp3
+     * @param targetFile 编码后目标文件
+     * @param sampleRate 采样率
+     * @param channel 声道:单声道为1/立体声道为2
+     * @return 音频编码的命令行
+     */
+    @SuppressLint("DefaultLocale")
+    public static  String[] Mp3toWav(String srcFile, String targetFile, int sampleRate, int channel){
+        String combineVideo = "ffmpeg -i %s -acodec pcm_s16le -ac %d -ar %d %s";
+        combineVideo = String.format(combineVideo, srcFile, channel, sampleRate, targetFile);
         return combineVideo.split(" ");
     }
 
