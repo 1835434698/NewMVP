@@ -1,1 +1,1 @@
-include ':app', ':testdemo', ':ffmpeg'
+include ':app', ':testdemo', ':ffmpeg', ':filelibrary'

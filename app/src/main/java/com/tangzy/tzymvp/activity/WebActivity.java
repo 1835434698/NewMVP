@@ -1,62 +1,91 @@
 package com.tangzy.tzymvp.activity;
 
-import android.net.http.SslError;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.tangzy.tzymvp.R;
-import com.tangzy.tzymvp.util.CertifiUtils;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class WebActivity extends AppCompatActivity {
+    private static final String TAG = "WebActivity";
 
-    private WebView webview;
-    protected WebSettings settings;
+    private WebView mWebView;
+    private WebSettings mWebSettings;
+    private String fileName;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
-        webview = findViewById(R.id.webview);
+//        setContentView(R.layout.activity_web);
+        fileName = getIntent().getStringExtra("path");
+        mWebView = new WebView(this);
+        setContentView(mWebView);
+
+        mWebView.setHorizontalScrollBarEnabled(false);
+        mWebView.getSettings().setSupportZoom(false);
+        // 设置支持JavaScript等
+        mWebSettings = mWebView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebView.setWebViewClient(new MyWebViewClient());
+
+        mWebView.loadUrl("file:///"+fileName);
+        mWebView.addJavascriptInterface(new MyContact(), "ui");
+    }
+
+    private final class MyContact {
+        @JavascriptInterface
+        public void goback(String index) {
+            Log.d("11111111", index);
+        }
+
+        @JavascriptInterface
+        public void goback() {
+//            goback();
+            finish();
+        }
+
+        @JavascriptInterface
+        public void getPictuer() {
+//            dsdsfa
+        }
 
 
-        webview.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        settings = webview.getSettings();
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setUseWideViewPort(true);
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAllowContentAccess(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setAllowFileAccess(true);
-        settings.setAppCacheEnabled(false);
-        settings.setDatabaseEnabled(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setLoadsImagesAutomatically(true);
+    }
 
-        webview.setWebChromeClient(new WebChromeClient(){
+    class MyWebViewClient extends WebViewClient {
+        public MyWebViewClient() {
+            super();
+        }
 
-        });
-        webview.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                Log.d("tangzy", "onReceivedSslError");
-//                super.onReceivedSslError(view, handler, error);
-//                handler.proceed();
-                CertifiUtils.INSTANCE.onCertificateOfVerification(handler, view.getUrl());
-            }
-        });
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
 
-//        webview.loadUrl("https://m.xiangqianjinfu.com/appstatic/index.html#/info/aboutXq/informationDisclosureChild?hideHeader=1");
-//        webview.loadUrl("https://app.xiangqianjinfu.com/xqAppServer/wap/info/index.html#/index");
-//        webview.loadUrl("https://www.baidu.com");
-        webview.loadUrl("https://192.168.70.85:8443/");
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+        }
+
+        @Override
+        public void onPageCommitVisible(WebView view, String url) {
+            super.onPageCommitVisible(view, url);
+        }
     }
 
 }

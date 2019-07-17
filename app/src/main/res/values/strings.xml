@@ -28,4 +28,45 @@
     <string name="title_face_idf">人脸1:N检索示例</string>
     <string name="title_vocal_idf">声纹1:N检索示例</string>
 
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forget">忘记密码</string>
+    <string name="back">返回</string>
+    <string name="firstPage">firstPage</string>
+    <string name="twoPage">twoPage</string>
+    <string name="threePage">threePage</string>
+
+    <string name="login_account">账号/手机号</string>
+    <string name="login_key">密码</string>
+
+
+    <string name="login_wjmm">忘记密码?</string>
+
+
+    <string name="register_account">请输入手机号</string>
+    <string name="register_code">请输入验证码</string>
+    <string name="register_password">请输入密码</string>
+    <string name="register_conf_pw">确认密码</string>
+
+    <string name="register_send_code">发送验证码</string>
+    <string name="forget_password">设置新密码</string>
+    <string name="forget_conf_pw">确认新密码</string>
+    <string name="confirm">确认</string>
+    <string name="make_sure">确定</string>
+
+    <string name="dialog_text1">这是自定义Dialog</string>
+    <string name="dialog_text2">这是自定义Dialog：</string>
+    <string name="trip_text">未完成</string>
+    <string name="trip_text2">已完成</string>
+
+
+
+
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="pulluo_no_more">没有更多数据了</string>
+    <string name="loading">正在加载...</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="release_to_load">释放立即加载</string>
 </resources>

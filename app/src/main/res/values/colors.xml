@@ -5,4 +5,22 @@
     <color name="colorAccent">#D81B60</color>
     <color name="color_53B890">#53B890</color>
     <color name="white">#ffffff</color>
+
+
+    <color name="bottom_background">#f5f5f5</color>
+    <color name="title_background">#062e56</color>
+    <color name="title_text_color">#fdb913</color>
+
+    <color name="text_color_un">#a7a6a6</color>
+    <color name="button_press_color">#fdb300</color>
+    <color name="line">#dddddd</color>
+    <color name="listView_background">#eeeeee</color>
+    <color name="confirm_background">#03c130</color>
+
+    <color name="transparent_background">#50000000</color>
+
+    <color name="light_blue">#6593cb</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="black">#000000</color>
+    <color name="personal_background">#eaeaeb</color>
 </resources>

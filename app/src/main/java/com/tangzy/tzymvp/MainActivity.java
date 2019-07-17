@@ -9,6 +9,7 @@ import android.view.View;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
+import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.bean.DataBean;
@@ -136,9 +137,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                }
 
                 break;
-//            case R.id.button3:
-//                startActivity(new Intent(this, ShellActivity.class));
-//                break;
+            case R.id.button3:
+                startActivity(new Intent(this, TwoActivity.class));
+                break;
             case R.id.button4:
                 startActivity(new Intent(this, AiduActivity.class));
                 break;

@@ -186,7 +186,8 @@ public enum OkHttpManager {
                 mDeliverHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        handleResult(strResult, listener, uri);
+                        listener.onResp(strResult, uri);
+//                        handleResult(strResult, listener, uri);
                     }
                 });
             }
