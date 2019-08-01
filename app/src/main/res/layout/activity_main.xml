@@ -35,6 +35,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="示例6:使用EventBus实现数据绑定"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="videoRecord"
+        android:text="视频录制"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getPicture"
+        android:text="提取图片"/>
 
     <TextView
         android:background="@color/color_53B890"

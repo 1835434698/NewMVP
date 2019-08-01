@@ -1,11 +1,18 @@
 package com.tangzy.tzymvp;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 
+import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
+import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
+import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
@@ -23,6 +30,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -55,6 +64,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Logger.d(TAG, "operation2");
 //        subject.operation2();
 
+    }
+
+    public void videoRecord(View view) {
+        RecordVideoRequestOption option = new RecordVideoRequestOption();
+        option.setMaxDuration(20);
+//        option.setFilePath(Environment.getExternalStorageDirectory().getPath()+"/aaaaa/123456.mp4");
+        RecorderManagerFactory.getRecordVideoRequest().startRecordVideo(this, 0, option);
+    }
+
+    public void getPicture(View view) {
     }
 
     public class EcilInstrumentation extends Instrumentation {
@@ -166,5 +185,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Logger.d("tangzy", "onActivityResult");
+        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
+//            Uri uri = data.getData();
+            RecordVideoResultInfo info = data.getParcelableExtra(EXTRA_RECORD_VIDEO_RESULT_INFO);
+            Log.e("MainActivity", "onActivityResult: " + " "
+                    + info.getDuration() + " " + info.getFilePath());
+        }
     }
 }

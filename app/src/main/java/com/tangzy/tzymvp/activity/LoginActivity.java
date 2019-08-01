@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Logger.d("hanyang", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_login:
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                 if (netCheck()&&textCheck()){
                     final JSONObject httpParams =  new JSONObject();
@@ -168,5 +170,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        Logger.d("hanyang", "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        Logger.d("hanyang", "onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        Logger.d("hanyang", "onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        Logger.d("hanyang", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Logger.d("hanyang", "onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Logger.d("hanyang", "onDestroy");
+        super.onDestroy();
     }
 }

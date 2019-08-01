@@ -72,4 +72,5 @@ dependencies {
     implementation files('libs/Msc.jar')
     api project(':ffmpeg')
     api project(':filelibrary')
+    api project(':recordermanager')
 }
