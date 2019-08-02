@@ -104,7 +104,7 @@ public class AiduActivity extends AppCompatActivity {
         muxerAudioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getVoice(SDCARD_PATH + "/input.mp4", voicePath);
+                getVoice(SDCARD_PATH + "/123456.mp4", voicePath);
             }
         });
         get_text.setOnClickListener(v -> {
