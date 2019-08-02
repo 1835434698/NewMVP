@@ -7,10 +7,13 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaMuxer;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -367,13 +370,15 @@ public class Utils {
      * @param output 输出音频文件
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public static boolean muxerImg(String input, String output) {
         //创建MediaMetadataRetriever对象
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         //绑定资源
         mmr.setDataSource(input);
         //获取第一帧图像的bitmap对象
-        Bitmap bitmap = mmr.getFrameAtTime();
+//        Bitmap bitmap = mmr.getFrameAtTime();
+//        saveBitmap(output+"1.png", bitmap);
         String s = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         int time = 0;
         if (!TextUtils.isEmpty(s)) {
@@ -381,8 +386,15 @@ public class Utils {
         }
 //        String s1 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_FRAME_COUNT);
 //                    mmr.getFrameAtIndex(1);
-        Bitmap bitmap1 = mmr.getFrameAtTime(time / 2);
-        saveBitmap(output, bitmap1);
+//        bitmap = mmr.getFrameAtIndex(2);
+        List<Bitmap> framesAtIndex = mmr.getFramesAtIndex(4, 4);
+        for (int i=0;i<4;i++){
+
+            saveBitmap(output+i+"0.png", framesAtIndex.get(i));
+        }
+//        saveBitmap(output+"2.png", bitmap);
+//        bitmap = mmr.getFrameAtIndex(3);
+//        saveBitmap(output+"3.png", bitmap);
         return true;
     }
 

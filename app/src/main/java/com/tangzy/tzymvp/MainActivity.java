@@ -25,6 +25,7 @@ import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.util.Utils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final String TAG = "tangzy";
 
+    String filePath = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/123456.mp4";
+    String SDCARD_PATH = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void videoRecord(View view) {
-        String filePath = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/123456.mp4";
         FileUtils.makesureFileExist(filePath);
         RecordVideoRequestOption option = new RecordVideoRequestOption();
         option.setMaxDuration(20);
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getPicture(View view) {
+        Utils.muxerImg(filePath, SDCARD_PATH);
     }
 
     public class EcilInstrumentation extends Instrumentation {
