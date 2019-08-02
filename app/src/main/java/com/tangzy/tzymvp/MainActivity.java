@@ -23,6 +23,7 @@ import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.test.ChredUser;
+import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
 
 import java.lang.reflect.InvocationHandler;
@@ -67,9 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void videoRecord(View view) {
+        String filePath = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/123456.mp4";
+        FileUtils.makesureFileExist(filePath);
         RecordVideoRequestOption option = new RecordVideoRequestOption();
         option.setMaxDuration(20);
-//        option.setFilePath(Environment.getExternalStorageDirectory().getPath()+"/aaaaa/123456.mp4");
+        option.setFilePath(filePath);
+        option.setmCameraType(1);
         RecorderManagerFactory.getRecordVideoRequest().startRecordVideo(this, 0, option);
     }
 

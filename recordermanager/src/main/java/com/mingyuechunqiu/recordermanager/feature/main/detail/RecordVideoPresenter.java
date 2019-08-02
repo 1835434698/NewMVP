@@ -77,7 +77,7 @@ class RecordVideoPresenter extends RecordVideoContract.Presenter<RecordVideoCont
         ivConfirmRef = new WeakReference<>(ivConfirm);
         ivBackRef = new WeakReference<>(ivBack);
         mOption = option;
-        mCameraType = CAMERA_NOT_SET;
+        mCameraType =  mOption.getmCameraType() == null ? CAMERA_NOT_SET : mOption.getmCameraType();
     }
 
     /**

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
+import com.mingyuechunqiu.recordermanager.data.constants.Constants;
+
 /**
  * <pre>
  *     author : xyj
@@ -20,12 +22,14 @@ public class RecordVideoRequestOption implements Parcelable {
     private int maxDuration;//最大录制时长
 
     private String filePath;//文件保存路径
+    private int mCameraType;//摄像头类型 0默认  1前置  2后置
 
     public RecordVideoRequestOption() {
     }
 
     public RecordVideoRequestOption(@NonNull Parcel in) {
         maxDuration = in.readInt();
+        mCameraType = in.readInt();
         filePath = in.readString();
     }
 
@@ -40,6 +44,14 @@ public class RecordVideoRequestOption implements Parcelable {
             return new RecordVideoRequestOption[size];
         }
     };
+
+    public int getmCameraType() {
+        return mCameraType;
+    }
+
+    public void setmCameraType(int mCameraType) {
+        this.mCameraType = mCameraType;
+    }
 
     public int getMaxDuration() {
         return maxDuration;
@@ -65,6 +77,7 @@ public class RecordVideoRequestOption implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(maxDuration);
+        dest.writeInt(mCameraType);
         dest.writeString(filePath);
     }
 
@@ -89,6 +102,15 @@ public class RecordVideoRequestOption implements Parcelable {
 
         public Builder setMaxDuration(int maxDuration) {
             mOption.maxDuration = maxDuration;
+            return this;
+        }
+
+        public int getCameraType() {
+            return mOption.mCameraType;
+        }
+
+        public Builder setCameraType(int mCameraType) {
+            mOption.mCameraType = mCameraType;
             return this;
         }
 

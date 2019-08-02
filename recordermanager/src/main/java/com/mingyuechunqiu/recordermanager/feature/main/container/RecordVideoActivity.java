@@ -13,6 +13,7 @@ import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.data.bean.RecorderOption;
+import com.mingyuechunqiu.recordermanager.data.constants.Constants;
 import com.mingyuechunqiu.recordermanager.feature.main.detail.RecordVideoFragment;
 import com.mingyuechunqiu.recordermanager.ui.activity.BaseRecordVideoActivity;
 import com.mingyuechunqiu.recordermanager.ui.widget.CircleProgressButton;
@@ -53,11 +54,20 @@ public class RecordVideoActivity extends BaseRecordVideoActivity implements Easy
         if (getSupportFragmentManager() != null) {
             String filePath = getFilesDir().getAbsolutePath() + File.separator +
                     System.currentTimeMillis() + SUFFIX_MP4;
+            Constants.CameraType mCameraType = Constants.CameraType.CAMERA_NOT_SET;
             int maxDuration = 120;
             if (getIntent() != null) {
                 RecordVideoRequestOption option = getIntent().getParcelableExtra(EXTRA_RECORD_VIDEO_REQUEST_OPTION);
                 maxDuration = option == null ? 120 : option.getMaxDuration();
                 filePath = option == null ? null : option.getFilePath();
+                switch (option.getmCameraType()){
+                    case 1:
+                        mCameraType = Constants.CameraType.CAMERA_FRONT;
+                        break;
+                    case 2:
+                        mCameraType = Constants.CameraType.CAMERA_BACK;
+                        break;
+                };
             }
             if (TextUtils.isEmpty(filePath)) {
                 File file = getExternalFilesDir(Environment.DIRECTORY_MOVIES);
@@ -70,6 +80,7 @@ public class RecordVideoActivity extends BaseRecordVideoActivity implements Easy
                     .setRecorderOption(new RecorderOption.Builder()
                             .buildDefaultVideoBean(filePath))
                     .setMaxDuration(maxDuration)
+                    .setCameraType(mCameraType)
                     .setOnRecordVideoListener(new RecordVideoOption.OnRecordVideoListener() {
 
                         @Override

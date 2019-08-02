@@ -1,5 +1,7 @@
 package com.mingyuechunqiu.recordermanager.data.bean;
 
+import com.mingyuechunqiu.recordermanager.data.constants.Constants;
+
 /**
  * <pre>
  *     author : xyj
@@ -16,8 +18,11 @@ public class RecordVideoOption {
     private int maxDuration;//最大录制时间（秒数）
     private OnRecordVideoListener listener;//录制视频监听器
 
+    private Constants.CameraType mCameraType;//摄像头类型
+
     public RecordVideoOption() {
         maxDuration = 30;//默认30秒
+        mCameraType = Constants.CameraType.CAMERA_NOT_SET;
     }
 
     public RecorderOption getRecorderOption() {
@@ -42,6 +47,14 @@ public class RecordVideoOption {
 
     public void setOnRecordVideoListener(OnRecordVideoListener listener) {
         this.listener = listener;
+    }
+
+    public Constants.CameraType getmCameraType() {
+        return mCameraType;
+    }
+
+    public void setmCameraType(Constants.CameraType mCameraType) {
+        this.mCameraType = mCameraType;
     }
 
     /**
@@ -73,6 +86,15 @@ public class RecordVideoOption {
 
         public Builder setMaxDuration(int maxDuration) {
             mOption.maxDuration = maxDuration;
+            return this;
+        }
+
+        public Constants.CameraType getCameraType() {
+            return mOption.mCameraType;
+        }
+
+        public Builder setCameraType(Constants.CameraType mCameraType) {
+            mOption.mCameraType = mCameraType;
             return this;
         }
 
