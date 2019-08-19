@@ -132,9 +132,9 @@ public enum CertifiUtils {
 
             sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            X509TrustManager trustManager = Platform.get().trustManager(sslSocketFactory);
+//            X509TrustManager trustManager = Platform.get().trustManager(sslSocketFactory);
 
-            client.sslSocketFactory(sslSocketFactory, trustManager);
+            client.sslSocketFactory(sslSocketFactory);
         } catch (Exception e) {
             Logger.e(e.getMessage());
             e.printStackTrace();

@@ -45,6 +45,11 @@
         android:layout_height="wrap_content"
         android:onClick="getPicture"
         android:text="提取图片"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toSufaceView"
+        android:text="SufaceView"/>
 
     <TextView
         android:background="@color/color_53B890"

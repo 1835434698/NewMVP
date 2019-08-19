@@ -18,6 +18,11 @@ android {
 //        ndk {
 //            abiFilters "armeabi-v7a"
 //        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -73,4 +78,6 @@ dependencies {
     api project(':ffmpeg')
     api project(':filelibrary')
     api project(':recordermanager')
+    api 'com.alibaba:arouter-api:1.5.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }

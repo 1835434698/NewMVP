@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.tangzy.tzymvp.R;
+import com.tangzy.tzymvp.util.Logger;
 
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -87,6 +88,7 @@ public class ShowWaveActivity extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                Logger.d("tangzy", "surfaceChanged");
                 drawBackGround(holder);
             }
 

@@ -9,8 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.tangzy.tzymvp.MainActivity;
 import com.tangzy.tzymvp.R;
+import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.net.NetUtil;
 import com.tangzy.tzymvp.net.OkHttpManager;
 import com.tangzy.tzymvp.net.ResponseListener;
@@ -63,7 +65,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_login:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));// 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
+//                ARouter.getInstance().build("/test/activity").navigation();
+                DataBean dataBean = new DataBean();
+                dataBean.setName("张三");
+                // 2. 跳转并携带参数
+                ARouter.getInstance().build("/test/activity")
+                        .withLong("key1", 666L)
+                        .withString("key3", "888")
+                        .withParcelable("key4", dataBean)
+                        .navigation();
 
                 if (netCheck()&&textCheck()){
                     final JSONObject httpParams =  new JSONObject();
