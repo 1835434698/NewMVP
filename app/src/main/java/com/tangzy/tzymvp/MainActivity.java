@@ -25,6 +25,8 @@ import com.tangzy.tzymvp.activity.ShowWaveActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
+import com.tangzy.tzymvp.annotation.ParseAnnotation;
+import com.tangzy.tzymvp.annotation.Test;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
@@ -114,6 +116,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void toSufaceView(View view) {
         startActivity(new Intent(this, ShowWaveActivity.class));
+    }
+
+    /**
+     * 注解
+     * 注解就是给类起了一个别名。
+     * @param view
+     */
+    public void toAnnotation(View view) {
+        /**
+         * 直接调用
+         */
+        Test.main(null);
+        /**
+         * 遍历获取
+         * 通过获取注解方法获取
+         */
+        ParseAnnotation.main(null);
     }
 
     public class EcilInstrumentation extends Instrumentation {
