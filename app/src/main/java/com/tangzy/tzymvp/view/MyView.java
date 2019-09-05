@@ -135,8 +135,8 @@ public class MyView extends View {
 //        canvas.drawOval(0,0,100,100,paint);//画一个椭圆.
 //        canvas.drawRoundRect(0,0,200,400,100, 50 ,paint);//圆角矩形
 //        canvas.drawArc(300,500,500,900,0, 200, true ,paint);//扇面弓形（可椭圆）
-        Drawable drawable = context.getDrawable(R.mipmap.ic_launcher);
-        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
-        canvas.drawBitmap(bitmap, 50, 50, paint);
+//        Drawable drawable = context.getDrawable(R.mipmap.ic_launcher);
+//        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+//        canvas.drawBitmap(bitmap, 50, 50, paint);
     }
 }

@@ -22,6 +22,9 @@ import com.tangzy.tzymvp.util.Toasts;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.HashMap;
+
 /**
  * ${CLASS} class
  *
@@ -81,7 +84,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     try {
                         httpParams.put("userName",userName);
                         httpParams.put("userPassword",userPassword);
-                        OkHttpManager.INSTANCE.asyncRequest("loginPost", httpParams, listener,true);
+                        HashMap<String, File> files = new HashMap<>();
+                        OkHttpManager.INSTANCE.asyncRequest("loginPost", httpParams, files, listener, true, false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -18,7 +18,7 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="示例2:最简单的数据绑定" />
+            android:text="toWebView" />
 
         <Button
             android:id="@+id/button3"
@@ -42,7 +42,7 @@
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="示例6:使用EventBus实现数据绑定" />
+            android:text="service" />
 
         <Button
             android:layout_width="match_parent"
@@ -66,6 +66,11 @@
             android:layout_height="wrap_content"
             android:onClick="toAnnotation"
             android:text="注解测试" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loader"
+            android:text="Loader" />
 
         <TextView
             android:layout_width="700px"

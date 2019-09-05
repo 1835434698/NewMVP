@@ -20,7 +20,7 @@ public class DemoServive extends Service {
         while (true){
             try {
                 Thread.sleep(1000);
-                Logger.d("tangzy", "sleep kfc = "+kfc);
+                Logger.d("tangzy", "sleep kfc = "+kfc++);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -38,9 +38,12 @@ public class DemoServive extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        kfc = intent.getIntExtra("kfc", -2);
-        Logger.d("tangzy", "onStartCommand kfc = "+kfc);
-        thread.start();
+        Logger.d("tangzy", "onStartCommand_init kfc = "+kfc);
+        if (kfc == -1){
+            kfc = intent.getIntExtra("kfc", -2);
+            Logger.d("tangzy", "onStartCommand kfc = "+kfc);
+            thread.start();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 

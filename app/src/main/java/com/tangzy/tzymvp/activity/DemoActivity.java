@@ -33,9 +33,8 @@ public class DemoActivity extends AppCompatActivity {
             Logger.d("tangzy", "Click");
             Intent intent = new Intent(this, DemoServive.class);
             intent.putExtra("kfc", kfc);
-            kfc++;
-//            startService(intent);
-            bindService(intent, con, Context.BIND_AUTO_CREATE);
+            startService(intent);
+//            bindService(intent, con, Context.BIND_AUTO_CREATE);
         });
         button7.setOnClickListener(v -> {
             unbindService(con);

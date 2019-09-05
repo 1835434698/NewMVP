@@ -135,6 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ParseAnnotation.main(null);
     }
 
+    public void loader(View view) {
+        ARouter.getInstance().build("/demoLoader/mainActivity")
+                .navigation();
+    }
+
     public class EcilInstrumentation extends Instrumentation {
 
         Instrumentation mBase;
