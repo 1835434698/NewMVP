@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.Nullable;
@@ -130,6 +131,24 @@ public class MyView extends View {
         float cy = 50;
         Paint paint = new Paint();       //实例化一个Paint对象
         paint.setColor(Color.BLUE);      //设置圆的颜色
+        paint.setStrokeWidth(5);
+
+//        canvas.drawLine(10,30,100,200, paint);
+//        float[] pts = {10,350, 100, 50, 500,500,600,600};
+//        float[] pts = new float[1000];
+//        for (int i = 0; i <1000;){
+//            pts[i] = i;
+//            pts[i+1] = i%50;
+//            i=i+2;
+//        }
+
+//        canvas.drawLines(pts, paint);
+//        canvas.drawLines(pts, 10, 20, paint);
+
+//        canvas.drawPoints(pts, paint);
+
+//        saveMatrix(canvas);
+
         //通过canvas的drawCircle方法画一个圆圈.
 //        canvas.drawCircle(cx, cy, radius, paint);//
 //        canvas.drawOval(0,0,100,100,paint);//画一个椭圆.
@@ -138,5 +157,38 @@ public class MyView extends View {
 //        Drawable drawable = context.getDrawable(R.mipmap.ic_launcher);
 //        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
 //        canvas.drawBitmap(bitmap, 50, 50, paint);
+
+
+        Path path = new Path();
+        path.addArc(10,10,500,500,500,300);
+//        canvas.drawPath(path, paint);
+        canvas.drawArc(10,10,500,500,500,300, true, paint);
+    }
+
+    private void saveMatrix(Canvas canvas) {
+        Paint mPaint = new Paint();       //实例化一个Paint对象
+        mPaint.setColor(Color.BLUE);      //设置圆的颜色
+        mPaint.setStrokeWidth(5);
+        //绘制蓝色矩形
+        mPaint.setColor(getResources().getColor(android.R.color.holo_blue_light));
+        canvas.drawRect(0, 0, 200, 200, mPaint);
+        //保存
+        canvas.save();
+        //裁剪画布,并绘制红色矩形
+        mPaint.setColor(getResources().getColor(android.R.color.holo_red_light));
+        //平移.
+        canvas.translate(100, 0);
+        //缩放.
+        canvas.scale(0.5f, 0.5f);
+        //旋转
+        canvas.rotate(-45);
+        //倾斜
+        canvas.skew(0, 0.5f);
+        canvas.drawRect(0, 0, 200, 200, mPaint);
+        //恢复画布
+        canvas.restore();
+        //绘制绿色矩形
+        mPaint.setColor(getResources().getColor(android.R.color.holo_green_light));
+        canvas.drawRect(0, 0, 50, 200, mPaint);
     }
 }
