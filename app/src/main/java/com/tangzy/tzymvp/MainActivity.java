@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -53,21 +53,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     long key1;
     @Autowired(name = "key3")
     String key3;
-//    long key4;
+    //    long key4;
     @Autowired(name = "key4")
     DataBean key4;
 //    long key4;
 
 
-
     String filePath = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/123456.mp4";
     String SDCARD_PATH = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/";
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button6).setOnClickListener(this);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
-        Logger.d("tangzy", "key1 = "+key1+".key3 = "+key3+".key4 = "+key4.getName());
+        Logger.d("tangzy", "key1 = " + key1 + ".key3 = " + key3 + ".key4 = " + key4.getName());
 
 
 //        startActivity(new Intent(this, Demo2Activity.class));
@@ -98,6 +98,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Logger.d(TAG, "operation = "+subject.operation());
 //        Logger.d(TAG, "operation2");
 //        subject.operation2();
+
+        com.tangzy.tzymvp.test.Test test = new com.tangzy.tzymvp.test.Test();
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                test.add();
+            }).start();
+
+        }
+        for (int i = 0; i < 100; i++) {
+            new Thread(() -> {
+                test.minus();
+            }).start();
+        }
 
     }
 
@@ -121,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 注解
      * 注解就是给类起了一个别名。
+     *
      * @param view
      */
     public void toAnnotation(View view) {
