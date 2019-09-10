@@ -8,8 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Binder;
-import android.os.Build;
 import android.os.IBinder;
+
 import androidx.annotation.Nullable;
 
 import com.tangzy.tzymvp.MainActivity;
@@ -19,8 +19,7 @@ import com.tangzy.tzymvp.util.Logger;
 import static android.app.Notification.FLAG_NO_CLEAR;
 import static android.app.Notification.FLAG_ONGOING_EVENT;
 
-public class DemoServive extends Service {
-    public static final int NOTIFICATION_FLAG = 0X11;
+public class Demo2Servive extends Service {
     private MyBinder binder = new MyBinder();
 
     public class MyBinder extends Binder{
@@ -51,19 +50,15 @@ public class DemoServive extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logger.d("tangzy", "onStartCommand_init kfc = "+kfc);
-//        if (kfc == -1){
-//            kfc = intent.getIntExtra("kfc", -2);
-//            Logger.d("tangzy", "onStartCommand kfc = "+kfc);
-//            thread.start();
-//        }
-//        startNotification();
-        if (Build.VERSION.SDK_INT < 18) {
-            startForeground(NOTIFICATION_FLAG, new Notification());
-        } else {
-            startForeground(NOTIFICATION_FLAG, new Notification());
-            Intent sendIntend = new Intent(this, Demo2Servive.class);
-            startService(sendIntend);
+        if (kfc == -1){
+            kfc = intent.getIntExtra("kfc", -2);
+            Logger.d("tangzy", "onStartCommand kfc = "+kfc);
+            thread.start();
         }
+//        startNotification();
+        startForeground(DemoServive.NOTIFICATION_FLAG, new Notification());
+        stopForeground(true);
+        stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -119,5 +114,6 @@ public class DemoServive extends Service {
         startForeground(NOTIFICATION_FLAG, notification);// 开始前台服务
     }
 
+    private static final int NOTIFICATION_FLAG =0X11;
 
 }

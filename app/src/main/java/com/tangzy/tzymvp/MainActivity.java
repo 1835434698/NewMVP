@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DataBean key4;
 //    long key4;
 
+    com.tangzy.tzymvp.test.Test test = new com.tangzy.tzymvp.test.Test();
 
     String filePath = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/123456.mp4";
     String SDCARD_PATH = Environment.getExternalStorageDirectory().getPath() + "/aaaaa/";
@@ -99,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Logger.d(TAG, "operation2");
 //        subject.operation2();
 
-        com.tangzy.tzymvp.test.Test test = new com.tangzy.tzymvp.test.Test();
         for (int i = 0; i < 100; i++) {
             new Thread(() -> {
                 test.add();
@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 test.minus();
             }).start();
         }
-
     }
 
     public void videoRecord(View view) {
@@ -152,6 +151,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void loader(View view) {
         ARouter.getInstance().build("/demoLoader/mainActivity")
                 .navigation();
+    }
+
+    public void notification(View view) {
+        test.notifyKJ(this);
     }
 
     public class EcilInstrumentation extends Instrumentation {
