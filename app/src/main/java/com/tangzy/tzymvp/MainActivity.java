@@ -33,6 +33,7 @@ import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.Utils;
 
 import java.lang.reflect.InvocationHandler;
@@ -155,6 +156,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void notification(View view) {
         test.notifyKJ(this);
+    }
+
+    public void RSA(View view) {
+        RsaUtils.main();
+
+//        String publicKey = "fhasflajkdsfalksff";
+////        String publicKey = "fhasflajkdsfalksfQ";
+//        byte[] a = RsaUtils.getA(publicKey);
+//        Logger.d("tangzy1", Rsa2Utils.getA(a));
+//        Logger.d("tangzy1", a);
     }
 
     public class EcilInstrumentation extends Instrumentation {

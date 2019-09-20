@@ -50,11 +50,11 @@ public class Demo2Servive extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logger.d("tangzy", "onStartCommand_init kfc = "+kfc);
-        if (kfc == -1){
-            kfc = intent.getIntExtra("kfc", -2);
-            Logger.d("tangzy", "onStartCommand kfc = "+kfc);
-            thread.start();
-        }
+//        if (kfc == -1){
+//            kfc = intent.getIntExtra("kfc", -2);
+//            Logger.d("tangzy", "onStartCommand kfc = "+kfc);
+//            thread.start();
+//        }
 //        startNotification();
         startForeground(DemoServive.NOTIFICATION_FLAG, new Notification());
         stopForeground(true);
