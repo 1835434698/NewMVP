@@ -1,16 +1,20 @@
 package com.tangzy.tzymvp.servive;
 
+import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.tangzy.tzymvp.MainActivity;
 import com.tangzy.tzymvp.R;
@@ -56,6 +60,8 @@ public class DemoServive extends Service {
             Logger.d("tangzy", "onStartCommand kfc = "+kfc);
             thread.start();
         }
+//        notifyKJ(this);
+
 //        startNotification();
 //        if (Build.VERSION.SDK_INT < 18) {
 //            startForeground(NOTIFICATION_FLAG, new Notification());
@@ -76,46 +82,43 @@ public class DemoServive extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // 停止前台服务--参数：表示是否移除之前的通知
+        stopForeground(true);
         Logger.d("tangzy", "Service - onDestroy kfc = "+kfc);
     }
 
-    public void startNotification(){
-
-        // 在Android进行通知处理，首先需要重系统哪里获得通知管理器NotificationManager，它是一个系统Service。
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // 设置点击通知跳转的Intent
-        Intent nfIntent = new Intent(this, MainActivity.class);
-        // 设置 延迟Intent
-        // 最后一个参数可以为PendingIntent.FLAG_CANCEL_CURRENT 或者 PendingIntent.FLAG_UPDATE_CURRENT
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, nfIntent, 0);
-
-        //构建一个Notification构造器
-        Notification.Builder builder = new Notification.Builder(this.getApplicationContext());
-
-        builder.setContentIntent(pendingIntent)   // 设置点击跳转界面
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
-                        R.mipmap.ic_launcher)) // 设置下拉列表中的图标(大图标)
-                .setTicker("您有一个notification")// statusBar上的提示
-                .setContentTitle("这是标题") // 设置下拉列表里的标题
-                .setSmallIcon(R.mipmap.ic_launcher) // 设置状态栏内的小图标24X24
-                .setContentText("这是内容") // 设置详细内容
-                .setContentIntent(pendingIntent) // 设置点击跳转的界面
-                .setWhen(System.currentTimeMillis()); // 设置该通知发生的时间
-//				.setDefaults(Notification.DEFAULT_VIBRATE) //默认震动方式
-//                .setPriority(Notification.PRIORITY_HIGH);   //优先级高
-
-        Notification notification = builder.build(); // 获取构建好的Notification
-
-        notification.defaults = Notification.DEFAULT_SOUND; //设置为默认的声音
-        notification.flags |= Notification.FLAG_AUTO_CANCEL; // FLAG_AUTO_CANCEL表明当通知被用户点击时，通知将被清除。
-        notification.flags |= FLAG_ONGOING_EVENT; //将此通知放到通知栏的"Ongoing"即"正在运行"组中
-        notification.flags |= FLAG_NO_CLEAR; //表明在点击了通知栏中的"清除通知"后，此通知不清除，常与FLAG_ONGOING_EVENT一起使用
-
-
+    public void notifyKJ(Context context) {
+        NotificationCompat.Builder builder;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channel = null;
+            channel = new NotificationChannel("1",
+                    "Channel1", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.enableLights(true); //是否在桌面icon右上角展示小红点
+            channel.setLightColor(Color.GREEN); //小红点颜色
+            channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
+            notificationManager.createNotificationChannel(channel);
+            builder = new NotificationCompat.Builder(context, channel.getId());
+        }else {
+            builder = new NotificationCompat.Builder(context, null);
+        }
+        Intent intent = null;
+        intent = new Intent(context, MainActivity.class);//将要跳转的界面
+        //Intent intent = new Intent();//只显示通知，无页面跳转
+        builder.setAutoCancel(true);//点击后消失
+        builder.setSmallIcon(R.drawable.pullup_icon_big);//设置通知栏消息标题的头像
+        builder.setDefaults(NotificationCompat.DEFAULT_SOUND);//设置通知铃声
+        builder.setTicker("ticker");
+        builder.setContentTitle("通知");//设置标题
+        builder.setContentText("message");//设置内容
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher));   //设置大图标
+        //利用PendingIntent来包装我们的intent对象,使其延迟跳转
+        PendingIntent intentPend = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentIntent(intentPend);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
+        Notification notification = builder.build();
         manager.notify(NOTIFICATION_FLAG, notification);
         // 启动前台服务
-        // 参数一：唯一的通知标识；参数二：通知消息。
         startForeground(NOTIFICATION_FLAG, notification);// 开始前台服务
     }
 
