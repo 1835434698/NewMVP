@@ -16,6 +16,7 @@ import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.net.NetUtil;
 import com.tangzy.tzymvp.net.OkHttpManager;
 import com.tangzy.tzymvp.net.ResponseListener;
+import com.tangzy.tzymvp.test.Outer;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.Toasts;
 
@@ -68,8 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_login:
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));// 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
-//                ARouter.getInstance().build("/test/activity").navigation();
+                ARouter.getInstance().build("/test/activity").navigation();
                 DataBean dataBean = new DataBean();
                 dataBean.setName("张三");
                 // 2. 跳转并携带参数

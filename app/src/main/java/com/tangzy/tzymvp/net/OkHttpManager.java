@@ -108,6 +108,21 @@ public enum OkHttpManager {
             }
         }).cache(new Cache(new File(Environment.getExternalStorageDirectory() + "/okttpcaches"), 1024 * 1024 * 20));
 //                .build();
+        builder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Logger.d(TAG, "addInterceptor : "+chain.request().toString());
+//                return null;
+                return chain.proceed(chain.request());
+            }
+        })
+                .addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Logger.d(TAG, "addNetworkInterceptor : "+chain.request().toString());
+                return chain.proceed(chain.request());
+            }
+        });
         okHttpClient = builder.build();
         mDeliverHandler = new Handler(Looper.getMainLooper());
 
@@ -169,6 +184,7 @@ public enum OkHttpManager {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
+                Logger.d(TAG, uri + "onFailure = " + e.getLocalizedMessage());
                 mDeliverHandler.post(new Runnable() {
                     @Override
                     public void run() {

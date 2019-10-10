@@ -22,4 +22,10 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="10dp"
 		android:text="点我看效果"/>
+	<Button
+		android:onClick="getImei"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:text="获取imei"/>
 </LinearLayout>

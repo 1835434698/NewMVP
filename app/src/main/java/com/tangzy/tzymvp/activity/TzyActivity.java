@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
+
+import android.provider.Settings;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.tangzy.themvp.databind.BaseDataBinder;
@@ -16,6 +19,7 @@ import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.databind.TzyDataBinder;
 import com.tangzy.tzymvp.presenter.NetPresenter;
 import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.util.PackageAndDeviceUtils;
 import com.tangzy.tzymvp.viewbind.TzyDelegate;
 
 import java.util.Arrays;
@@ -249,6 +253,19 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
     protected void onDestroy() {
         super.onDestroy();
         netPresenter = null;
+    }
+
+
+    public void getImei(View view) {
+        checkPermission(() -> {
+            String deviceUniqueId = PackageAndDeviceUtils.getDeviceUniqueId(TzyActivity.this);
+            Logger.d("tangzy1", "deviceUniqueId = "+deviceUniqueId);
+
+        }, R.string.ask_again, Manifest.permission.READ_PHONE_STATE);
+        String android_id = Settings.System.getString(
+                getContentResolver(), Settings.Secure.ANDROID_ID);
+        Logger.d("tangzy1", "android_id = "+android_id);
+
     }
 
     @Override
