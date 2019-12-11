@@ -61,7 +61,8 @@
         <activity android:name=".activity.TzyActivity"></activity>
         <activity android:name=".activity.FragmentActivity"
             android:windowSoftInputMode="stateAlwaysVisible"></activity>
-        <activity android:name=".activity.DemoActivity"></activity>
+        <activity android:name=".activity.DemoActivity"
+            ></activity>
         <activity android:name=".activity.Demo2Activity"></activity>
         <activity android:name=".activity.ShowWaveActivity"></activity>
         <activity android:name=".activity.WebActivity"></activity>

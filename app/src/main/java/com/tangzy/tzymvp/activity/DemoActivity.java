@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -26,6 +27,9 @@ public class DemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_demo);
+        int pid = android.os.Process.myPid();
+        Log.d("tangzypid", "DemoActivity -> pid = "+pid);
+        Log.d("tangzypid", "DemoActivity -> Thread = "+Thread.currentThread().getName());
 
         button7 = findViewById(R.id.button7);
         myview = findViewById(R.id.myview);

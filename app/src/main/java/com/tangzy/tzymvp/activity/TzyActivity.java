@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -48,6 +49,9 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
         netPresenter = new NetPresenter(this);
 
         startHHHH();
+        int pid = android.os.Process.myPid();
+        Log.d("tangzypid", "TzyActivity -> pid = "+pid);
+        Log.d("tangzypid", "TzyActivity -> Thread = "+Thread.currentThread().getName());
 
     }
 

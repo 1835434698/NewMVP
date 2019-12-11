@@ -3,18 +3,27 @@ package com.tangzy.tzymvp;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
@@ -41,6 +50,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
@@ -70,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    private ImageView iv_gif;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +105,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
         Logger.d("tangzy", "key1 = " + key1 + ".key3 = " + key3 + ".key4 = " + key4.getName());
+
+        iv_gif = findViewById(R.id.iv_gif);
+        Glide.with(this).load(R.drawable.qqqqq)
+//                .listener(new RequestListener<Drawable>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                if (resource instanceof GifDrawable) {
+//                    //加载一次
+//                    ((GifDrawable)resource).setLoopCount(1);
+//                }
+//                return false;
+//            }
+//        })
+                .into(iv_gif);
 
 
 //        startActivity(new Intent(this, Demo2Activity.class));
@@ -168,6 +206,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Logger.d("tangzy1", a);
     }
 
+    private static final String SUCCESS = "success";
+
+    public void threadPool(View view) {
+//        ExecutorService service = Executors.newFixedThreadPool(4);//全部核心线程
+//        Executors.newCachedThreadPool()//全部非核心线程
+//        Executors.newScheduledThreadPool(4);//有数量固定的核心线程，且有数量无限多的非核心线程
+//        Executors.newSingleThreadExecutor();//内部只有一个核心线程
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+       for (int i=0; i<10;i++){
+           threadPoolExecutor.execute(new Runnable() {
+               @Override
+               public void run() {
+                   Log.d("tangzy", "execute");
+
+               }
+           });
+
+       }
+        Future<Object> submit = threadPoolExecutor.submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                Log.d("tangzy", "call");
+                Thread.sleep(5000);
+
+                return SUCCESS;
+            }
+        });
+        try {
+            String s = (String) submit.get();
+            if (SUCCESS.equals(s)) {
+                String name = Thread.currentThread().getName();
+                Log.d("tangzy","经过返回值比较，submit方法执行任务成功    thread name: " + name);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
     public class EcilInstrumentation extends Instrumentation {
 
         Instrumentation mBase;
@@ -210,6 +292,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
+                int pid = android.os.Process.myPid();
+                Log.d("tangzypid", "mainActivity -> pid = "+pid);
+                Log.d("tangzypid", "mainActivity -> Thread = "+Thread.currentThread().getName());
                 TzyBean tzyBean = new TzyBean("关某在此");
                 UserBean userBean = new UserBean();
                 userBean.setAge(15);

@@ -13,6 +13,8 @@ import android.graphics.Color;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
@@ -55,6 +57,9 @@ public class DemoServive extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Logger.d("tangzy", "onStartCommand_init kfc = "+kfc);
+        int pid = android.os.Process.myPid();
+        Log.d("tangzypid", "DemoService -> pid = "+pid);
+        Log.d("tangzypid", "DemoService -> Thread = "+Thread.currentThread().getName());
         if (kfc == -1){
             kfc = intent.getIntExtra("kfc", -2);
             Logger.d("tangzy", "onStartCommand kfc = "+kfc);
