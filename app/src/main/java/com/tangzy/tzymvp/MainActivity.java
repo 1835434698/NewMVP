@@ -40,6 +40,7 @@ import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.Utils;
+import com.tangzy.tzymvp.view.CustomDialogFragment;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -263,6 +264,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Toast(View view) {
         showToast("1213234");
+    }
+
+    public void DialogFragment(View view) {
+        CustomDialogFragment.showDialog(this);
     }
 
     public class EcilInstrumentation extends Instrumentation {
