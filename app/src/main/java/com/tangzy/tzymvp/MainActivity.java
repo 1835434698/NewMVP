@@ -1,6 +1,7 @@
 package com.tangzy.tzymvp;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 test.minus();
             }).start();
         }
+        mApp = getApplication();
     }
 
     public void videoRecord(View view) {
@@ -243,6 +246,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void snackBar(View view) {
         Snackbar.make(view, "1234556", Snackbar.LENGTH_SHORT).show();
+    }
+    public static Toast toast;
+    public static Application mApp;
+    public static void showToast(String content) {
+        Logger.d("tangzy", "showToast");
+        if (toast == null) {
+            Logger.d("tangzy", "toast == null");
+            toast = Toast.makeText(mApp, content, Toast.LENGTH_SHORT);
+        } else {
+            Logger.d("tangzy", "setText");
+            toast.setText(content);
+        }
+        toast.show();
+    }
+
+    public void Toast(View view) {
+        showToast("1213234");
     }
 
     public class EcilInstrumentation extends Instrumentation {
