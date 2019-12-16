@@ -107,6 +107,16 @@
             android:layout_height="wrap_content"
             android:onClick="nestedScrollView"
             android:text="NestedScrollView" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="leetCode"
+            android:text="leetCode" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="proxy"
+            android:text="Proxy" />
 
         <TextView
             android:layout_width="700px"

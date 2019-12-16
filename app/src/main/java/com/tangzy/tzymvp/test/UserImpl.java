@@ -9,4 +9,9 @@ public class UserImpl implements Iuser {
     public void eat2(String s) {
         System.out.println("我要吃2"+s);
     }
+
+    @Override
+    public void eat2(String s, String s1) {
+        System.out.println("我要吃2"+s+" and "+s1);
+    }
 }

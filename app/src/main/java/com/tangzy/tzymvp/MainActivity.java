@@ -37,6 +37,9 @@ import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.test.ChredUser;
+import com.tangzy.tzymvp.test.DynamicProxy;
+import com.tangzy.tzymvp.test.Iuser;
+import com.tangzy.tzymvp.test.UserImpl;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.RsaUtils;
@@ -45,9 +48,12 @@ import com.tangzy.tzymvp.view.CustomDialogFragment;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -249,8 +255,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void snackBar(View view) {
         Snackbar.make(view, "1234556", Snackbar.LENGTH_SHORT).show();
     }
+
     public static Toast toast;
     public static Application mApp;
+
     public static void showToast(String content) {
         Logger.d("tangzy", "showToast");
         if (toast == null) {
@@ -275,42 +283,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(this, NestedScrollViewActivity.class));
     }
 
-    public class EcilInstrumentation extends Instrumentation {
-
-        Instrumentation mBase;
-
-        public EcilInstrumentation(Instrumentation base) {
-            mBase = base;
-        }
-
-//        public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,
-//                                                Intent intent, int requestCode, Bundle options){
-//            Logger.d(TAG, "z s 到此一游");
-//            Class[] p1 = {Context.class, IBinder.class,
-//            IBinder.class, Activity.class,
-//            Intent.class, int.class, Bundle.class};
-//            Object[] v1 = {who, contextThread, token, target,
-//            intent, requestCode, options};
-//            return RefInvoke.invokeInstanceMethod()
-//
-//        }
-
-    }
-
-    public class InvocationHandlerForTest implements InvocationHandler {
-        private Object target;
-
-        public InvocationHandlerForTest(Object target) {
-            this.target = target;
-        }
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Logger.d(TAG, "日志开始");
-            Object object = method.invoke(target, args);
-            Logger.d(TAG, "日志结束");
-            return object;
-        }
+    public void proxy(View view) {
+        Iuser user = new UserImpl();
+        InvocationHandler h = new DynamicProxy(user);
+        Iuser proxy = (Iuser) Proxy.newProxyInstance(Iuser.class.getClassLoader(), new Class[]{Iuser.class}, h);
+        proxy.eat("苹果");
+        proxy.eat2("juzi");
+        proxy.eat2("123", "456");
     }
 
     @Override
@@ -370,11 +349,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button6:
                 startActivity(new Intent(this, DemoActivity.class));
 
-//                Iuser user = new UserImpl();
-//                InvocationHandler h = new DynamicProxy(user);
-//                Iuser proxy = (Iuser) Proxy.newProxyInstance(Iuser.class.getClassLoader(), new Class[]{Iuser.class}, h);
-//                proxy.eat("苹果");
-//                proxy.eat2("juzi");
                 ChredUser chredUser = new ChredUser();
 
                 break;
@@ -394,4 +368,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     + info.getDuration() + " " + info.getFilePath());
         }
     }
+
+    public void leetCode(View view) {
+//        int nums[] = {2,7,11,15};
+//        int target = 18;
+//        int i1 = nums.length;
+//        for (int i = 0; i < i1-1; i++){
+//            for (int k = i+1;k < i1; k ++){
+//                if (nums[i]+nums[k] == target){
+//                    Log.d(TAG, "i = "+i+", k = "+k);
+//                    return;
+//                }
+//            }
+//        }
+        int asdfghjkasvb = lengthOfLongestSubstring("asdfghjkasvb");
+
+        Log.d(TAG, "asdfghjkasvb = " + asdfghjkasvb);
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j <= n; j++)
+                if (allUnique(s, i, j)) ans = Math.max(ans, j - i);
+        return ans;
+    }
+
+    public boolean allUnique(String s, int start, int end) {
+        Set<Character> set = new HashSet<>();
+        for (int i = start; i < end; i++) {
+            Character ch = s.charAt(i);
+            if (set.contains(ch)) return false;
+            set.add(ch);
+        }
+        return true;
+    }
+
+
 }
