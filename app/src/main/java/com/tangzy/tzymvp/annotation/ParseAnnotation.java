@@ -1,5 +1,7 @@
 package com.tangzy.tzymvp.annotation;
 
+import android.util.Log;
+
 import com.tangzy.tzymvp.annotation.MyAnnotation.MyClassAndMethodAnnotation;
 import com.tangzy.tzymvp.annotation.MyAnnotation.MyClassAndMethodAnnotation.EnumType;
 import com.tangzy.tzymvp.annotation.MyAnnotation.MyClassAnnotation;
@@ -26,7 +28,7 @@ public class ParseAnnotation {
             for (Method method : clazz.getDeclaredMethods()) {
                 MyMethodAnnotation methodAnnotation = method.getAnnotation(MyMethodAnnotation.class);
                 if (methodAnnotation != null) {
-                        System.out.println("methodAnnotation.uri() = "+methodAnnotation.uri());
+                         Log.d("注解", "methodAnnotation.uri() = "+methodAnnotation.uri());
                     // 通过反射调用带有此注解的方法
                     method.invoke(obj, methodAnnotation.uri());
                 }
@@ -34,14 +36,14 @@ public class ParseAnnotation {
                         .getAnnotation(MyClassAndMethodAnnotation.class);
                 if (myClassAndMethodAnnotation != null) {
                     if (EnumType.util.equals(myClassAndMethodAnnotation.classType())) {
-                        System.out.println("this is a util method");
+                        Log.d("注解", "this is a util method");
                     } else {
-                        System.out.println("this is a other method");
+                        Log.d("注解", "this is a other method");
                     }
-                    System.out.println(Arrays.toString(myClassAndMethodAnnotation.arr()));// 打印数组
-                    System.out.println(myClassAndMethodAnnotation.color());// 输出颜色
+                     Log.d("注解", Arrays.toString(myClassAndMethodAnnotation.arr()));// 打印数组
+                     Log.d("注解", myClassAndMethodAnnotation.color());// 输出颜色
                 }
-                System.out.println("\t\t-----------------------");
+                Log.d("注解", "\t\t-----------------------");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,15 +56,15 @@ public class ParseAnnotation {
                     .getAnnotation(MyClassAndMethodAnnotation.class);
             if (myClassAndMethodAnnotation != null) {
                 if (EnumType.util.equals(myClassAndMethodAnnotation.classType())) {
-                    System.out.println("this is a util class");
+                    Log.d("注解", "this is a util class");
                 } else {
-                    System.out.println("this is a other class");
+                    Log.d("注解", "this is a other class");
                 }
             }
             MyClassAnnotation myClassAnnotation = clazz.getAnnotation(MyClassAnnotation.class);
             if (myClassAnnotation != null) {
-                System.err.println(" class uri: " + myClassAnnotation.uri());
-                System.err.println(" class desc: " + myClassAnnotation.desc());
+                Log.d("注解", " class uri: " + myClassAnnotation.uri());
+                Log.d("注解", " class desc: " + myClassAnnotation.desc());
             }
         } catch (Exception e) {
             e.printStackTrace();

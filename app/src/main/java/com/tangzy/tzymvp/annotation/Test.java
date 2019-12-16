@@ -1,5 +1,7 @@
 package com.tangzy.tzymvp.annotation;
 
+import android.util.Log;
+
 /**
  * ${CLASS} class
  *
@@ -10,12 +12,13 @@ package com.tangzy.tzymvp.annotation;
 public class Test {
 
     public static void showKevin(Class c) {
-        System.out.println(c.getName());
+        Log.d("注解", "c.name() = "+c.getName());
         boolean isExist = c.isAnnotationPresent(Kevin.class);
 
         if (isExist) {
             Kevin kevin = (Kevin) c.getAnnotation(Kevin.class);
             System.out.println(kevin.name());
+            Log.d("注解", "kevin.name() = "+kevin.name());
         }
     }
 
