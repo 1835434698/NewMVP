@@ -117,6 +117,16 @@
             android:layout_height="wrap_content"
             android:onClick="proxy"
             android:text="Proxy" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="producerConsumer"
+            android:text="生产消费者" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="hook"
+            android:text="Hook" />
 
         <TextView
             android:layout_width="700px"
