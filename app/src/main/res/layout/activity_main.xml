@@ -125,6 +125,11 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="reentrantLock"
+            android:text="重入锁" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="hook"
             android:text="Hook" />
         <Button

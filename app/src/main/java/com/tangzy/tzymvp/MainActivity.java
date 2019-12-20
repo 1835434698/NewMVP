@@ -64,6 +64,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
@@ -463,6 +466,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void reentrantLock(View view) {
+        //线程一
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                serviceC();
+                serviceA();
+            }
+        }).start();
+
+        //线程二
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                serviceD();
+                serviceB();
+
+            }
+        }).start();
+
+    }
+
     class Producer implements Runnable {
         @Override
         public void run() {
@@ -481,7 +506,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                     count++;
-                    System.out.println(Thread.currentThread().getName() + "生产者生产，目前总共有" + count);
+                    Log.d(TAG, Thread.currentThread().getName() + "生产者生产，目前总共有" + count);
                     LOCK.notifyAll();
                 }
             }
@@ -505,10 +530,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                     count--;
-                    System.out.println(Thread.currentThread().getName() + "消费者消费，目前总共有" + count);
+                    Log.d(TAG, Thread.currentThread().getName() + "消费者消费，目前总共有" + count);
                     LOCK.notifyAll();
                 }
             }
         }
+    }
+
+    private Lock lock = new ReentrantLock();
+    private Condition condition = lock.newCondition();
+
+    private Condition condition2 = lock.newCondition();
+
+    public void serviceA() {
+        try {
+            lock.lock();
+            condition.await();//线程挂起，进入等待中,和wait一样。
+            Log.d(TAG, Thread.currentThread().getName() + "----Ai=");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public void serviceB() {
+        try {
+            lock.lock();
+            Log.d(TAG, Thread.currentThread().getName() + "----Bi=");
+            condition.signal();//唤醒被await的线程
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+
+    }
+
+    public void serviceC() {
+        try {
+            lock.lock();
+            Log.d(TAG, Thread.currentThread().getName() + "----Ci=");
+            condition2.await();//condition2的等候，只有condition2.signal才能唤醒哦
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+
+    }
+
+    public void serviceD() {
+        try {
+            lock.lock();
+            Log.d(TAG, Thread.currentThread().getName() + "----Di=");
+            condition2.signal();//唤醒被condition2.await的线程
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+
     }
 }
