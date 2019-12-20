@@ -45,6 +45,7 @@ import com.tangzy.tzymvp.test.Iuser;
 import com.tangzy.tzymvp.test.UserImpl;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
@@ -432,10 +433,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void genericity(View view) {
         ArrayList arrayList = new ArrayList();
 
-//        arrayList.add("hahaha");
-//        arrayList.add(123);
-//        arrayList.add("fdsfalsf");
-//        arrayList.get(0);
+        arrayList.add("hahaha");
+        arrayList.add(123);
+        arrayList.add("fdsfalsf");
+        arrayList.get(0);
         String respone = "[{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"}]";
 
         List<Info> infos = parseArray(respone, Info.class);
@@ -448,13 +449,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return modelList;
     }
 
-
-
-
-
-
-
-
+    public void wayLinkedList(View view) {
+        OnyWayLinkedList<String> onyWayLinkedList = new OnyWayLinkedList<>();
+        for (int i=0;i<10;i++){
+            onyWayLinkedList.add("i = "+i);
+        }
+        for (int i = 0; i<onyWayLinkedList.size(); i++) {
+            Log.d(TAG, onyWayLinkedList.get(i));
+        }
+        onyWayLinkedList.reverse();
+        for (int i = 0; i<onyWayLinkedList.size(); i++) {
+            Log.d(TAG, onyWayLinkedList.get(i));
+        }
+    }
 
     class Producer implements Runnable {
         @Override
