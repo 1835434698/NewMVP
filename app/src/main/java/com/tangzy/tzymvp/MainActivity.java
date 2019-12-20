@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
@@ -34,6 +35,7 @@ import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.annotation.ParseAnnotation;
 import com.tangzy.tzymvp.annotation.Test;
 import com.tangzy.tzymvp.bean.DataBean;
+import com.tangzy.tzymvp.bean.Info;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.hook.HookSetOnClickListenerHelper;
@@ -426,6 +428,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         HookSetOnClickListenerHelper.hook(this, view);
 
     }
+
+    public void genericity(View view) {
+        ArrayList arrayList = new ArrayList();
+
+//        arrayList.add("hahaha");
+//        arrayList.add(123);
+//        arrayList.add("fdsfalsf");
+//        arrayList.get(0);
+        String respone = "[{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"}]";
+
+        List<Info> infos = parseArray(respone, Info.class);
+        Log.d(TAG, "size = "+infos.size());
+
+    }
+
+    public <T> List<T> parseArray(String response, Class<T> object){
+        List<T> modelList = JSON.parseArray(response, object);
+        return modelList;
+    }
+
+
+
+
+
+
+
+
 
     class Producer implements Runnable {
         @Override
