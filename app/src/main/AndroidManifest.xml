@@ -69,6 +69,7 @@
         <activity android:name=".activity.AiduActivity"></activity>
         <activity android:name=".activity.IatDemo"></activity>
         <activity android:name=".activity.NestedScrollViewActivity"></activity>
+        <activity android:name=".activity.RecyclerViewActivity"></activity>
         <service android:name=".servive.DemoServive"></service>
         <service android:name=".servive.Demo2Servive"></service>
     </application>

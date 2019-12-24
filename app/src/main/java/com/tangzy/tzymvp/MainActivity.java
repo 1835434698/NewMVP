@@ -28,6 +28,7 @@ import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
+import com.tangzy.tzymvp.activity.RecyclerViewActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
@@ -486,6 +487,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }).start();
 
+    }
+
+    public void recyclerView(View view) {
+        startActivity(new Intent(this, RecyclerViewActivity.class));
     }
 
     class Producer implements Runnable {
