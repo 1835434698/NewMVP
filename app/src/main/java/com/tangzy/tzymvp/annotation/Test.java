@@ -17,12 +17,11 @@ public class Test {
 
         if (isExist) {
             Kevin kevin = (Kevin) c.getAnnotation(Kevin.class);
-            System.out.println(kevin.name());
             Log.d("注解", "kevin.name() = "+kevin.name());
         }
     }
 
     public static void main(String[] args) {
-        Test.showKevin(Test.class);
+        showKevin(Test.class);
     }
 }
