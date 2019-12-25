@@ -30,6 +30,7 @@ import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
+import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
@@ -50,6 +51,8 @@ import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -68,6 +71,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
@@ -491,6 +501,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void recyclerView(View view) {
         startActivity(new Intent(this, RecyclerViewActivity.class));
+    }
+    CompositeDisposable compositeDisposable=new CompositeDisposable();
+    public void RxJava(View view) {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                emitter.onNext("连载1");
+                emitter.onNext("连载2");
+                emitter.onNext("连载3");
+                emitter.onNext("2");
+//                emitter.onComplete();
+            }
+        })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e(TAG,"onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(String value) {
+                        if ("2".equals(value)){
+                            onComplete();
+                            return;
+                        }
+                        Log.e(TAG,"onNext:"+value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError="+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e(TAG,"onComplete()");
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
+
+    public void newActivity(View view) {
+        startActivity(new Intent(this, TestActivity.class));
     }
 
     class Producer implements Runnable {

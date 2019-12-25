@@ -147,6 +147,17 @@
             android:layout_height="wrap_content"
             android:onClick="recyclerView"
             android:text="RecyclerView" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="RxJava"
+            android:text="RxJava" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="newActivity"
+            android:text="newActivity" />
 
         <TextView
             android:layout_width="700px"
