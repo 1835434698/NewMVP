@@ -2,7 +2,6 @@ package com.tangzy.tzymvp;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -41,6 +40,11 @@ import com.tangzy.tzymvp.bean.Info;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.hook.HookSetOnClickListenerHelper;
+import com.tangzy.tzymvp.net.api.APIService;
+import com.tangzy.tzymvp.net.bean.ListBean;
+import com.tangzy.tzymvp.net.bean.ResultBean;
+import com.tangzy.tzymvp.net.bean.TestBean;
+import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
 import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.test.DynamicProxy;
 import com.tangzy.tzymvp.test.Iuser;
@@ -55,12 +59,13 @@ import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -76,8 +81,10 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
@@ -124,8 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button6).setOnClickListener(this);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
-        Logger.d("tangzy", "key1 = " + key1 + ".key3 = " + key3 + ".key4 = " + key4.getName());
+        try {
+            Logger.d("tangzy", "key1 = " + key1 + ".key3 = " + key3 + ".key4 = " + key4.getName());
+        }catch (Exception e){
 
+        }
         iv_gif = findViewById(R.id.iv_gif);
         Glide.with(this).load(R.drawable.qqqqq)
 //                .listener(new RequestListener<Drawable>() {
@@ -550,6 +560,138 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void newActivity(View view) {
         startActivity(new Intent(this, TestActivity.class));
+    }
+
+    public void Retrofit(View view) {
+
+        Map<String, String> mapParams = new HashMap<>();
+        mapParams.put("userName","user01");
+        mapParams.put("passWord","123456");
+        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Observer<ResultBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e(TAG,"onSubscribe:");
+                    }
+
+                    @Override
+                    public void onNext(ResultBean loginBeanResponse) {
+//                        try {
+                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e(TAG,"onComplete:");
+                    }
+                })
+        ;
+
+        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+//                .subscribe(new Observer<List<ListBean>>() {
+                .subscribe(new Observer<ListBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e(TAG,"onSubscribe:");
+                    }
+
+                    @Override
+                    public void onNext(ListBean loginBeanResponse) {
+//                    public void onNext(List<ListBean> loginBeanResponse) {
+//                        try {
+                        for (TestBean listBean: loginBeanResponse.data){
+                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
+                        }
+//                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e(TAG,"onComplete:");
+                    }
+                })
+        ;
+
+        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Observer<List<TestBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e(TAG,"onSubscribe:");
+                    }
+
+                    @Override
+                    public void onNext(List<TestBean> loginBeanResponse) {
+//                        try {
+//                        for (TestBean listBean: loginBeanResponse.data){
+//                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
+//                        }
+                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e(TAG,"onComplete:");
+                    }
+                })
+        ;
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new CusObserver<Response<LoginBean>>() {
+//                    @Override
+//                    public void onNext(Response<LoginBean> value) {
+//                        Logger.d(LoginPresenter.class.getSimpleName(),"onNext");
+//                        Dictionary.replaceLoginBean(value.body());
+//                        if (isViewAttached()) {
+//                            Dictionary.getLoginBean().setLoginName(loginName);
+//                            if (needsSaveData) {
+//                                Utils.savePhone(getView().obtainContext(), loginName);
+//                            } else {
+//                                Utils.cleanPhone(getView().obtainContext());
+//                            }
+//                            getView().connectSuccess(null);
+//                            getView().login(value.body());
+//                        }
+//                    }
+//
+//                    @Override
+//                    protected void onError(AppException ex) {
+//                        if (isViewAttached())
+//                            getView().connectError(ex);
+//                    }
+//                });
     }
 
     class Producer implements Runnable {

@@ -69,23 +69,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_login:
-//                ARouter.getInstance().build("/test/activity").navigation();
-                DataBean dataBean = new DataBean();
-                dataBean.setName("张三");
-                // 2. 跳转并携带参数
-                ARouter.getInstance().build("/test/activity")
-                        .withLong("key1", 666L)
-                        .withString("key3", "888")
-                        .withParcelable("key4", dataBean)
-                        .navigation();
+////                ARouter.getInstance().build("/test/activity").navigation();
+//                DataBean dataBean = new DataBean();
+//                dataBean.setName("张三");
+//                // 2. 跳转并携带参数
+//                ARouter.getInstance().build("/test/activity")
+//                        .withLong("key1", 666L)
+//                        .withString("key3", "888")
+//                        .withParcelable("key4", dataBean)
+//                        .navigation();
 
                 if (netCheck()&&textCheck()){
                     final JSONObject httpParams =  new JSONObject();
                     try {
                         httpParams.put("userName",userName);
-                        httpParams.put("userPassword",userPassword);
+                        httpParams.put("passWord",userPassword);
                         HashMap<String, File> files = new HashMap<>();
-                        OkHttpManager.INSTANCE.asyncRequest("loginPost", httpParams, files, listener, true, false);
+                        OkHttpManager.INSTANCE.asyncRequest("test/login.php", httpParams, files, listener, true, false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 json = new JSONObject(respons);
                 Toasts.showToastShort(json.optString("retMessage"));
-                if (json.optString("retCode").equals("000000")){
+                if (json.optString("retCode").equals("0")){
 //                    MiddleView.getInstance().startCleanActivity(FirstPageAc.class, null);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
