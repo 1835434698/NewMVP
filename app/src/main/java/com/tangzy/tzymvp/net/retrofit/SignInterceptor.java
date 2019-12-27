@@ -25,7 +25,7 @@ import okhttp3.Response;
  */
 public class SignInterceptor implements Interceptor {
 
-    private static final String TAG = "Retrofit";
+    private final String TAG = "Retrofit";
     //    private BodyUtils bodyUtils;
     private SimpleDateFormat DATETIME = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
 
@@ -37,7 +37,7 @@ public class SignInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Logger.d(TAG, "SignInterceptor");
         Request request = chain.request();
-        Logger.d(TAG, "SignInterceptor -> request = "+request.toString());
+        Logger.d(TAG, "request = "+request.body().toString());
         if (!NetUtil.checkNetType(Constant.app)) {
             int offlineCacheTime = 60;//离线的时候的缓存的过期时间
             request = request.newBuilder()

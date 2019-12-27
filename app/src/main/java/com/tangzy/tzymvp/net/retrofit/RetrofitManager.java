@@ -29,7 +29,8 @@ public enum  RetrofitManager {
         //设置忽略证书
         HttpsUtils.SSLParams ssl = HttpsUtils.getSslSocketFactory(HttpsUtils.UnSafeTrustManager, null, null, null);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new SignInterceptor())
+                .addInterceptor(new SignInterceptor())//请求拦截器
+                .addNetworkInterceptor(new VerificationInterceptor())
                 .hostnameVerifier(HttpsUtils.UnSafeHostnameVerifier)
                 .sslSocketFactory(ssl.sSLSocketFactory, ssl.trustManager)
                 .connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
