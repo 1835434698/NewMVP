@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.tangzy.tzymvp.R;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -24,6 +25,7 @@ import io.reactivex.disposables.Disposable;
  * @author Administrator
  * @date 2019/12/25
  */
+@Route(path = "/test/TestActivity")
 public class TestActivity extends AppCompatActivity {
 
     private final String TAG = "tangzy";

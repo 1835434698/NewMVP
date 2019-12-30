@@ -49,6 +49,7 @@ import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.test.DynamicProxy;
 import com.tangzy.tzymvp.test.Iuser;
 import com.tangzy.tzymvp.test.UserImpl;
+import com.tangzy.tzymvp.util.FileType;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.OnyWayLinkedList;
@@ -88,7 +89,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
-@Route(path = "/test/activity")
+@Route(path = "/test/MainActivity")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = "tangzy";
@@ -216,6 +217,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          * 通过获取注解方法获取
          */
         ParseAnnotation.main(null);
+
+        /**
+         * 注解枚举
+         */
+        FileType fileType = new FileType(FileType.TYPE_MUSIC);
+//        FileType fileType = new FileType("affs");
+
+        Logger.d(TAG, "fileType = "+fileType.fileType);
+
     }
 
     public void loader(View view) {

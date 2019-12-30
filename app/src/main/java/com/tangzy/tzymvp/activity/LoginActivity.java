@@ -69,26 +69,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_login:
-////                ARouter.getInstance().build("/test/activity").navigation();
-//                DataBean dataBean = new DataBean();
-//                dataBean.setName("张三");
-//                // 2. 跳转并携带参数
-//                ARouter.getInstance().build("/test/activity")
-//                        .withLong("key1", 666L)
-//                        .withString("key3", "888")
-//                        .withParcelable("key4", dataBean)
-//                        .navigation();
+//                ARouter.getInstance().build("/test/TestActivity").navigation();
+                DataBean dataBean = new DataBean();
+                dataBean.setName("张三");
+                // 2. 跳转并携带参数
+                ARouter.getInstance().build("/test/MainActivity")
+                        .withLong("key1", 666L)
+                        .withString("key3", "888")
+                        .withParcelable("key4", dataBean)
+                        .navigation();
 
-                if (netCheck()&&textCheck()){
-                    final JSONObject httpParams =  new JSONObject();
-                    try {
-                        httpParams.put("userName",userName);
-                        httpParams.put("passWord",userPassword);
-                        HashMap<String, File> files = new HashMap<>();
-                        OkHttpManager.INSTANCE.asyncRequest("test/login.php", httpParams, files, listener, true, false);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                if (netCheck()&&textCheck()){
+//                    final JSONObject httpParams =  new JSONObject();
+//                    try {
+//                        httpParams.put("userName",userName);
+//                        httpParams.put("passWord",userPassword);
+//                        HashMap<String, File> files = new HashMap<>();
+//                        OkHttpManager.INSTANCE.asyncRequest("test/login.php", httpParams, files, listener, true, false);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
 //                    httpParams.put("devicecode", "343257687798790");
 //                    final String url = Constant.url+"login";
 //                    final String url = "http://www.baidu.com";
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    stopProgressDialog();
 //                    MiddleView.getInstance().startCleanActivity(FirstPageAc.class, null);
 
-                }
+//                }
 
 
                 break;
