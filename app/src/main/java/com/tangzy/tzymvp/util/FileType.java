@@ -18,10 +18,8 @@ public class FileType {
     public static final String TYPE_PHOTO = "png";
     public static final String TYPE_TEXT = "txt";
 
-
     //Retention 是元注解，简单地讲就是系统提供的，用于定义注解的“注解”
     @Retention(RetentionPolicy.SOURCE)
-    //这里指定int的取值只能是以下范围
     @StringDef({TYPE_MUSIC, TYPE_PHOTO, TYPE_TEXT})
 //    @IntDef({})
     @interface FileTypeDef {
