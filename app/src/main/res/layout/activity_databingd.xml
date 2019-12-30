@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="userInfo"
+            type="com.tangzy.tzymvp.bean.User" />
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginTop="@dimen/dp_3"
+            android:id="@+id/tv_userName"
+            android:text="@{userInfo.name}"
+            android:layout_gravity="center"
+            android:background="@color/color_53B890"
+            android:layout_width="150dp"
+            android:layout_height="50dp"/>
+        <TextView
+            android:layout_marginTop="@dimen/dp_3"
+            android:id="@+id/tv_passWord"
+            android:text="@{userInfo.password}"
+            android:layout_gravity="center"
+            android:background="@color/color_53B890"
+            android:layout_width="150dp"
+            android:layout_height="50dp"/>
+
+    </LinearLayout>
+</layout>

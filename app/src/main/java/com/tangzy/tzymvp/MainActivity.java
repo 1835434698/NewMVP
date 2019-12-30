@@ -24,6 +24,7 @@ import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.tzymvp.activity.AiduActivity;
+import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
@@ -702,6 +703,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                            getView().connectError(ex);
 //                    }
 //                });
+    }
+
+    public void dataBinding(View view) {
+        startActivity(new Intent(this, DataBindingActivity.class));
     }
 
     class Producer implements Runnable {

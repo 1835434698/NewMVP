@@ -163,6 +163,11 @@
             android:layout_height="wrap_content"
             android:onClick="Retrofit"
             android:text="Retrofit" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="dataBinding"
+            android:text="DataBinding" />
 
         <TextView
             android:layout_width="700px"

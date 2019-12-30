@@ -66,6 +66,9 @@ android {
             universalApk true
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 // 保证引用jar包最新，建议使用
