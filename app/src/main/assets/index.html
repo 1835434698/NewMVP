@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>webView</title>
+    <script type="text/javascript">
+        function showAlert() {
+            alert("helloworld");
+        }
+        // Android需要调用的方法
+       function callJS(){
+          alert("Android调用了JS的callJS方法");
+            return "1321323";
+       }
+    </script>
+</head>
+<body>
+<button onclick="showAlert()">showAlert</button>
+<button onclick="callJS()">callJS</button>
+<div>
+    <p>
+        <button onclick="android.showToast()">调用Java无参方法</button>
+    </p>
+    <p>
+        <button onclick="android.showToast('I am come from js.')">调用Java有参方法</button>
+    </p>
+</div>
+</body>
+</html>

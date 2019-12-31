@@ -366,7 +366,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.button2:
-                startActivity(new Intent(this, WebActivity.class));
+                Intent intent1 = new Intent(this, WebActivity.class);
+                intent1.putExtra("path", "android_asset/index.html");
+                startActivity(intent1);
 
 //                if (AnnotationUse.class.isAnnotationPresent(MyAnnotation.class)){
 //                    MyAnnotation annotation = AnnotationUse.class.getAnnotation(MyAnnotation.class);

@@ -3,13 +3,17 @@ package com.tangzy.tzymvp.activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.tangzy.tzymvp.R;
 
 public class WebActivity extends AppCompatActivity {
     private static final String TAG = "WebActivity";
@@ -23,24 +27,47 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_web);
         fileName = getIntent().getStringExtra("path");
-        mWebView = new WebView(this);
-        setContentView(mWebView);
+        setContentView(R.layout.activity_webview);
+        mWebView = findViewById(R.id.webview);
 
-        mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.getSettings().setSupportZoom(false);
+//        mWebView.setHorizontalScrollBarEnabled(false);
         // 设置支持JavaScript等
         mWebSettings = mWebView.getSettings();
+//        mWebSettings.setSupportZoom(false);
+
+        //允许使用JS
         mWebSettings.setJavaScriptEnabled(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
+        // 设置允许JS弹窗
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+
+        mWebView.setWebViewClient(new WebViewClient());
 
         mWebView.loadUrl("file:///"+fileName);
-        mWebView.addJavascriptInterface(new MyContact(), "ui");
+        mWebView.addJavascriptInterface(new MyContact(), "android");
+    }
+
+    public void toJs(View view) {
+        mWebView.evaluateJavascript("javascript:callJS()", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                Log.d(TAG, "onReceiveValue = "+value);
+            }
+        });
     }
 
     private final class MyContact {
         @JavascriptInterface
         public void goback(String index) {
-            Log.d("11111111", index);
+            Log.d(TAG, index);
+        }
+
+        @JavascriptInterface
+        public void showToast() {
+            Log.d(TAG, "showToast");
+        }
+        @JavascriptInterface
+        public void showToast(String index) {
+            Log.d(TAG, "showToast ( "+index+" )");
         }
 
         @JavascriptInterface
