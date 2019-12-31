@@ -173,6 +173,11 @@
             android:layout_height="wrap_content"
             android:onClick="RunAndStart"
             android:text="Run And Start" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="suanfa"
+            android:text="算法" />
 
         <TextView
             android:layout_width="700px"

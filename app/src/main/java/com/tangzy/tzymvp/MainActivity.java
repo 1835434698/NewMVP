@@ -93,7 +93,7 @@ import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_
 @Route(path = "/test/MainActivity")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private final String TAG = "tangzy";
+    private final String TAG = "MainActivity";
 
 
     @Autowired(name = "key1")
@@ -723,6 +723,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        thread.start();
         thread.run();
         Logger.d(TAG, "----------------");
+    }
+
+    public void suanfa(View view) {
+        int[] array = {10,9,50,12,82,64,02,42,35,45,03,54,65,56,22,33,78};
+        maopao(array);
+        int zheban = zheban(array, 82, 0, array.length);
+        Logger.d(TAG, "zheban = "+zheban);
+        zheban = zheban(array, 82);
+        Logger.d(TAG, "zheban = "+zheban);
+
+    }
+
+    private int zheban(int[] array, int i) {
+        int ritht = array.length;
+        int left = 0;
+        int middle = (ritht+left)/2;
+        Logger.d(TAG, "left = "+left+"；ritht = "+ritht);
+        while (left < ritht){
+            middle = (ritht+left)/2;
+            if (array[middle] > i){
+                ritht = middle-1;
+            }else if (array[middle] < i){
+                left = middle +1;
+            }else {
+                return array[middle];
+            }
+        }
+        return 0;
+    }
+
+    private int zheban(int[] array, int i, int left, int right) {
+        int length;
+        int middle;
+        length = right - left;
+        middle = (right + left)/2;
+        if (length <= 1 ){
+            return 0;
+        }
+        Logger.d(TAG, "length = "+length+"；middle = "+middle);
+        if (i>array[middle]){
+            return zheban(array, i, middle, right);
+        }else if (i == array[middle]){
+            return array[middle];
+        }else if (i < array[middle]){
+            return zheban(array, i, left, middle);
+        }else {
+            return 0;
+        }
+    }
+
+
+    private void maopao(int[] array) {
+        int length = array.length;
+        int temp;
+        for (int i =0; i < length-1; i++){
+            for (int j = i+1; j < length; j++){
+                if (array[i] > array[j]){
+                    temp = array[j];
+                    array[j] = array[i];
+                    array[i] = temp;
+                }
+            }
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int item: array){
+            stringBuffer.append(item+",");
+        }
+        Logger.d(TAG, stringBuffer.toString());
     }
 
     class Producer implements Runnable {
