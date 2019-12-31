@@ -168,6 +168,11 @@
             android:layout_height="wrap_content"
             android:onClick="dataBinding"
             android:text="DataBinding" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="RunAndStart"
+            android:text="Run And Start" />
 
         <TextView
             android:layout_width="700px"

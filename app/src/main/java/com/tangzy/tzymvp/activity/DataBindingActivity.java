@@ -21,29 +21,29 @@ import com.tangzy.tzymvp.util.Logger;
 public class DataBindingActivity extends AppCompatActivity {
 
     private static final String TAG = "DataBindingActivity";
-    ActivityDatabingdBinding binding;
+//    ActivityDatabingdBinding binding;
+//
+//    Handler handler = new Handler();
 
-    Handler handler = new Handler();
-
-    User user = new User();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding  = DataBindingUtil.setContentView(this, R.layout.activity_databingd);
+        ActivityDatabingdBinding binding  = DataBindingUtil.setContentView(this, R.layout.activity_databingd);
 
-        user.setName("11111111");
-        user.setPassword("24324234");
+        User user = new User();
+//        user.setName("11111111");
+//        user.setPassword("24324234");
 
         binding.setUserInfo(user);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Logger.d(TAG, "postDelayed");
-                user.setPassword("123456");
-                binding.setUserInfo(user);
-            }
-        }, 10*1000);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Logger.d(TAG, "postDelayed");
+////                user.setPassword("123456");
+////                binding.setUserInfo(user);
+//            }
+//        }, 10*1000);
     }
 
 

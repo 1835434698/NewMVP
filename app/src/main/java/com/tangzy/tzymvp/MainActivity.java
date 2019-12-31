@@ -709,6 +709,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(this, DataBindingActivity.class));
     }
 
+    public void RunAndStart(View view) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i< 100; i++){
+                    Logger.d(TAG, "1111111111"+i);
+                }
+            }
+        });
+//        thread.start();
+        thread.run();
+        Logger.d(TAG, "----------------");
+    }
+
     class Producer implements Runnable {
         @Override
         public void run() {
