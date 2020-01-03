@@ -274,10 +274,10 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
 
     @Override
     public void resultFail(String uri, String message) {
-//        TzyBean tzyBean = new TzyBean("关某在此");
-//        Intent intent = new Intent(this, FragmentActivity.class);
-//        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
-//        startActivity(intent);
+        TzyBean tzyBean = new TzyBean("关某在此");
+        Intent intent = new Intent(this, FragmentActivity.class);
+        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
+        startActivity(intent);
     }
 
     @Override

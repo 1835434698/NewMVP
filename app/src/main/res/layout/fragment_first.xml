@@ -23,4 +23,13 @@
         android:layout_width="200dp"
         android:layout_height="50dp" />
 
+    <com.tangzy.tzymvp.view.CustomFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.tangzy.tzymvp.view.CustomTextView
+            android:text="hahahah"
+            android:layout_width="200dp"
+            android:layout_height="50dp" />
+    </com.tangzy.tzymvp.view.CustomFrameLayout>
+
 </LinearLayout>
