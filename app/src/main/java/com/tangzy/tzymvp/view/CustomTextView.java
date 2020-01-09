@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,32 @@ public class CustomTextView extends TextView {
 
     public CustomTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.d("TangzyCu", "TextView:dispatchTouchEvent");
+        return super.dispatchTouchEvent(event);
+//        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.d("TangzyCu", "TextView:onTouchEvent");
+        boolean isUser = true;
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+//                isUser = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+//                isUser = true;
+                break;
+            case MotionEvent.ACTION_UP:
+//                isUser = true;
+                break;
+        }
+        return super.onTouchEvent(event);
+//        return isUser;
     }
 
     private static final int DEFAULT_WIDTH = 100;

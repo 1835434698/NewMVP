@@ -6,10 +6,14 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
@@ -22,7 +26,22 @@ import com.tangzy.tzymvp.viewbind.FirstFragDelegate;
 import java.util.List;
 
 public class FirstFragment extends BaseFragment<FirstFragDelegate> {
-    private static final String TAG = "tzy11";
+    private static final String TAG = "FirstFragment";
+
+    Handler handler = new Handler(){
+        @Override
+        public void dispatchMessage(@NonNull Message msg) {
+            super.dispatchMessage(msg);
+            Logger.d(TAG, "dispatchMessage : "+Thread.currentThread().getId());
+        }
+
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Logger.d(TAG, "handleMessage : "+Thread.currentThread().getId());
+        }
+    };
+
     @Override
     protected Class<FirstFragDelegate> getDelegateClass() {
         return FirstFragDelegate.class;
@@ -31,7 +50,29 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
     @Override
     public BaseDataBinder getDataBinder() {
 
+        Logger.d(TAG, "getDataBinder : "+Thread.currentThread().getId());
+        handler.sendEmptyMessage(0);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Logger.d(TAG, "Thread : "+Thread.currentThread().getId());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Logger.d(TAG, "Thread -》 Runnable : "+Thread.currentThread().getId());
 
+                    }
+                });
+
+            }
+        }).start();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Logger.d(TAG, "Runnable : "+Thread.currentThread().getId());
+
+            }
+        });
 
 
         return new FragmentActivityBinder();
