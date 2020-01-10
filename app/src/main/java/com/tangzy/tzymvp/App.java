@@ -1,6 +1,7 @@
 package com.tangzy.tzymvp;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,12 +15,17 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.tangzy.tzymvp.util.Logger;
 
+import java.util.List;
+
 public class App extends Application {
+    private final String TAG = "Application";
     public int count = 0;
     @Override
     public void onCreate() {
         super.onCreate();
         Constant.app = this;
+        Logger.d(TAG, "onCreate");
+        shouldInit();
         SpeechUtility.createUtility(this, SpeechConstant.APPID +"=5d25bb1d");
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog();     // 打印日志
@@ -78,11 +84,22 @@ public class App extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        Logger.d("tangzy", "attachBaseContext");
+        Logger.d(TAG, "attachBaseContext");
         super.attachBaseContext(base);
     }
 
-
-
-
+    private boolean shouldInit() {
+        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = getPackageName();
+        int myPid = android.os.Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            Logger.d(TAG,  "my.pid -> " + myPid + ",mainProcessName -> " + mainProcessName);
+            Logger.d(TAG,  "info.pid -> " + info.pid + ",info.processName -> " + info.processName);
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

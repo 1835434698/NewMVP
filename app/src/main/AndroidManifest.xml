@@ -56,7 +56,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:process=":p"
+            ></activity>
         <activity android:name=".activity.TwoActivity"></activity>
         <activity android:name=".activity.TzyActivity"></activity>
         <activity android:name=".activity.FragmentActivity"

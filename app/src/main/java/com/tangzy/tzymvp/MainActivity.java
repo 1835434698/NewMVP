@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -183,6 +185,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }).start();
         }
         mApp = getApplication();
+//        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+//            @Override
+//            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityStarted(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityResumed(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityPaused(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityStopped(@NonNull Activity activity) {
+//
+//            }
+//
+//            @Override
+//            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+//
+//            }
+//
+//            @Override
+//            public void onActivityDestroyed(@NonNull Activity activity) {
+//
+//            }
+//        });
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     public void videoRecord(View view) {
