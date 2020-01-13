@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/bt_glide"
+        android:text="glide尺寸"
+        android:onClick="onGlide"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
