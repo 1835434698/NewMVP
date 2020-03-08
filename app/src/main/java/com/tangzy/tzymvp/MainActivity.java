@@ -2,10 +2,14 @@ package com.tangzy.tzymvp;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +40,7 @@ import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
+import com.tangzy.tzymvp.activity.YuanChengActivity;
 import com.tangzy.tzymvp.annotation.ParseAnnotation;
 import com.tangzy.tzymvp.annotation.Test;
 import com.tangzy.tzymvp.bean.DataBean;
@@ -48,6 +53,8 @@ import com.tangzy.tzymvp.net.bean.ListBean;
 import com.tangzy.tzymvp.net.bean.ResultBean;
 import com.tangzy.tzymvp.net.bean.TestBean;
 import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
+import com.tangzy.tzymvp.servive.DemoIntentService;
+import com.tangzy.tzymvp.servive.DemoServive;
 import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.test.DynamicProxy;
 import com.tangzy.tzymvp.test.Iuser;
@@ -437,6 +444,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, IatDemo.class));
                 break;
             case R.id.button6:
+                intent = new Intent(this, DemoServive.class);
+                intent.putExtra("kfc", 10);
+//            intent.putExtra("kfc", kfc);
+//                startService(intent);
+                bindService(intent, con, Context.BIND_AUTO_CREATE);
                 startActivity(new Intent(this, DemoActivity.class));
 
                 ChredUser chredUser = new ChredUser();
@@ -446,18 +458,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Logger.d("tangzy", "onActivityResult");
-        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
-//            Uri uri = data.getData();
-            RecordVideoResultInfo info = data.getParcelableExtra(EXTRA_RECORD_VIDEO_RESULT_INFO);
-            Log.e("MainActivity", "onActivityResult: " + " "
-                    + info.getDuration() + " " + info.getFilePath());
+    ServiceConnection con= new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Logger.d("tangzy", "onServiceConnected");
         }
-    }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Logger.d("tangzy", "onServiceDisconnected");
+        }
+    };
 
     public void leetCode(View view) {
 //        int nums[] = {2,7,11,15};
@@ -842,6 +853,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Logger.d(TAG, stringBuffer.toString());
     }
 
+    public void yuanchengIntent(View view) {
+
+//        DemoIntentService intentService = new DemoIntentService("dsfsf");
+//        intentService.start
+        Intent intent = new Intent(this, DemoIntentService.class);
+        intent.putExtra("qqqqqq", 20);
+        startService(intent);
+        startActivityForResult(new Intent(this, YuanChengActivity.class), 101);
+
+    }
+
+
     class Producer implements Runnable {
         @Override
         public void run() {
@@ -946,4 +969,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.d("tangzy", "onActivityResult");
+        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
+//            Uri uri = data.getData();
+            RecordVideoResultInfo info = data.getParcelableExtra(EXTRA_RECORD_VIDEO_RESULT_INFO);
+            Log.e("MainActivity", "onActivityResult: " + " "
+                    + info.getDuration() + " " + info.getFilePath());
+        }else if (resultCode == Activity.RESULT_OK && requestCode == 101) {
+            Logger.d("tangzy", "onActivityResult 101");
+           String hhhhhh =  data.getStringExtra("hhhhhh");
+            Logger.d("tangzy", "hhhhhh = "+hhhhhh);
+
+        }
+
+    }
+
 }

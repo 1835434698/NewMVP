@@ -74,8 +74,12 @@
         <activity android:name=".activity.TestActivity"></activity>
         <activity android:name=".activity.DataBindingActivity"></activity>
         <activity android:name=".activity.GlideActivity"></activity>
+        <activity android:name=".activity.YuanChengActivity"
+            android:process=":hhhhh">
+        </activity>
         <service android:name=".servive.DemoServive"></service>
         <service android:name=".servive.Demo2Servive"></service>
+        <service android:name=".servive.DemoIntentService" />
     </application>
 
 </manifest>

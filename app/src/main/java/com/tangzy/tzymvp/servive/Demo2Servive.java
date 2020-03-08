@@ -26,12 +26,12 @@ public class Demo2Servive extends Service {
 
     }
 
-    private int kfc = -1;
+    private int kfc = 1;
     Thread thread =new Thread(() -> {
-        while (true){
+        while (kfc != 0){
             try {
                 Thread.sleep(1000);
-                Logger.d("tangzy", "sleep kfc = "+kfc++);
+                Logger.d("tangzy", "sleep kfc = "+kfc--);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -43,7 +43,7 @@ public class Demo2Servive extends Service {
     public IBinder onBind(Intent intent) {
         kfc = intent.getIntExtra("kfc", -2);
         Logger.d("tangzy", "onBind kfc = "+kfc);
-//        thread.start();
+        thread.start();
         return binder;
     }
 
@@ -56,9 +56,9 @@ public class Demo2Servive extends Service {
 //            thread.start();
 //        }
 //        startNotification();
-        startForeground(DemoServive.NOTIFICATION_FLAG, new Notification());
-        stopForeground(true);
-        stopSelf();
+//        startForeground(DemoServive.NOTIFICATION_FLAG, new Notification());
+//        stopForeground(true);
+//        stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
 

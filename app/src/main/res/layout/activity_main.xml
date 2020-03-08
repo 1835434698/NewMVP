@@ -179,6 +179,12 @@
             android:onClick="suanfa"
             android:text="算法" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="yuanchengIntent"
+            android:text="跨进程intent" />
+
         <TextView
             android:layout_width="700px"
             android:layout_height="50dp"

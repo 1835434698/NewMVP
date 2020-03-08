@@ -35,10 +35,10 @@ public class DemoServive extends Service {
 
     private int kfc = -1;
     Thread thread =new Thread(() -> {
-        while (true){
+        while (kfc != 0){
             try {
                 Thread.sleep(1000);
-                Logger.d("tangzy", "sleep kfc = "+kfc++);
+                Logger.d("tangzy", "sleep kfc = "+kfc--);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -48,7 +48,7 @@ public class DemoServive extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        kfc = intent.getIntExtra("kfc", -2);
+        kfc = intent.getIntExtra("kfc", 2);
         Logger.d("tangzy", "onBind kfc = "+kfc);
 //        thread.start();
         return binder;
@@ -60,11 +60,11 @@ public class DemoServive extends Service {
         int pid = android.os.Process.myPid();
         Log.d("tangzypid", "DemoService -> pid = "+pid);
         Log.d("tangzypid", "DemoService -> Thread = "+Thread.currentThread().getName());
-        if (kfc == -1){
-            kfc = intent.getIntExtra("kfc", -2);
+//        if (kfc == -1){
+            kfc = intent.getIntExtra("kfc", 2);
             Logger.d("tangzy", "onStartCommand kfc = "+kfc);
             thread.start();
-        }
+//        }
 //        notifyKJ(this);
 
 //        startNotification();
