@@ -17,13 +17,15 @@ import com.tangzy.tzymvp.util.Logger;
 
 import java.util.List;
 
-public class App extends Application {
+public class PerformanceApp extends Application {
     private final String TAG = "Application";
     public int count = 0;
     @Override
     public void onCreate() {
         super.onCreate();
         Constant.app = this;
+        initBugly();
+        inithhhh();
         Logger.d(TAG, "onCreate");
         if (shouldInit()){
             SpeechUtility.createUtility(this, SpeechConstant.APPID +"=5d25bb1d");
@@ -81,11 +83,26 @@ public class App extends Application {
         }
     }
 
+    private void inithhhh() {
+        String jjj = "12313";
+    }
+
+    private void initBugly() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String j1jj = "12313";
+
+            }
+        }).start();
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         Logger.d(TAG, "attachBaseContext");
         super.attachBaseContext(base);
     }
+
 
     private boolean shouldInit() {
         ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));

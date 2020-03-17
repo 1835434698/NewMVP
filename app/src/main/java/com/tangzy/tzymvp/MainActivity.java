@@ -1,5 +1,6 @@
 package com.tangzy.tzymvp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentName;
@@ -134,12 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         handler.sendEmptyMessage(0);
 //        Constant.app = this;
-        findViewById(R.id.button1).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
-        findViewById(R.id.button3).setOnClickListener(this);
-        findViewById(R.id.button4).setOnClickListener(this);
-        findViewById(R.id.button5).setOnClickListener(this);
-        findViewById(R.id.button6).setOnClickListener(this);
+        setListener();
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
         try {
@@ -147,27 +143,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
 
         }
-        iv_gif = findViewById(R.id.iv_gif);
-        Glide.with(this).load(R.drawable.qqqqq)
-//                .listener(new RequestListener<Drawable>() {
-//            @Override
-//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                if (resource instanceof GifDrawable) {
-//                    //加载一次
-//                    ((GifDrawable)resource).setLoopCount(1);
-//                }
-//                return false;
-//            }
-//        })
-                .into(iv_gif);
+        init();
+        initNet();
+        initData();
 
 
-//        startActivity(new Intent(this, Demo2Activity.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hhhhhh();
+    }
+
+    private void hhhhhh() {
+        String fsa ="sda;fs";
+    }
+
+    private void initData() {
+        //        startActivity(new Intent(this, Demo2Activity.class));
 //
 //        RealSubject realSubject = new RealSubject();
 //
@@ -228,7 +222,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //            }
 //        });
+    }
 
+    private void initNet() {
+        Glide.with(this).load(R.drawable.qqqqq)
+//                .listener(new RequestListener<Drawable>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                if (resource instanceof GifDrawable) {
+//                    //加载一次
+//                    ((GifDrawable)resource).setLoopCount(1);
+//                }
+//                return false;
+//            }
+//        })
+                .into(iv_gif);
+    }
+
+    private void init() {
+        iv_gif = findViewById(R.id.iv_gif);
+    }
+
+    private void setListener() {
+        findViewById(R.id.button1).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.button3).setOnClickListener(this);
+        findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.button5).setOnClickListener(this);
+        findViewById(R.id.button6).setOnClickListener(this);
     }
 
     @Override
@@ -853,6 +879,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Logger.d(TAG, stringBuffer.toString());
     }
 
+    @SuppressLint("AutoDispose")
     public void yuanchengIntent(View view) {
 
 //        DemoIntentService intentService = new DemoIntentService("dsfsf");
@@ -861,6 +888,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("qqqqqq", 20);
         startService(intent);
         startActivityForResult(new Intent(this, YuanChengActivity.class), 101);
+        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+
+            }
+        });
+        Observer<String> observer = new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(String s) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+
+        observable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .subscribe(observer);
 
     }
 
