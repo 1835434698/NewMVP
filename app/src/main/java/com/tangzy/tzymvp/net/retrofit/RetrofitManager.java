@@ -1,7 +1,5 @@
 package com.tangzy.tzymvp.net.retrofit;
 
-import com.tangzy.tzymvp.Constant;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -14,13 +12,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * @author Administrator
  * @date 2019/12/26
  */
-public enum  RetrofitManager {
+public enum RetrofitManager {
     /**
      * 单例
      */
     INSTANCE;
+    public final String URL = "http://192.168.69.162/case_prpc/";
+
     public final int DEFAULT_MILLISECONDS = 12 * 1000;//默认超时时间
-    private String URL_BASE = Constant.URL;
+    private String URL_BASE = URL;
 
     public <T> T create(Class<T> service) {
         return create(service, URL_BASE);

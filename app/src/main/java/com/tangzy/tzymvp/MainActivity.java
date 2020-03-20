@@ -53,6 +53,7 @@ import com.tangzy.tzymvp.net.api.APIService;
 import com.tangzy.tzymvp.net.bean.ListBean;
 import com.tangzy.tzymvp.net.bean.ResultBean;
 import com.tangzy.tzymvp.net.bean.TestBean;
+import com.tangzy.tzymvp.net.retrofit.ObserverIm;
 import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
 import com.tangzy.tzymvp.servive.DemoIntentService;
 import com.tangzy.tzymvp.servive.DemoServive;
@@ -666,16 +667,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Map<String, String> mapParams = new HashMap<>();
         mapParams.put("userName","user01");
         mapParams.put("passWord","123456");
-        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams).builder()
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-                .subscribe(new Observer<ResultBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.e(TAG,"onSubscribe:");
-                    }
-
+                .subscribe(new ObserverIm<ResultBean>() {
                     @Override
                     public void onNext(ResultBean loginBeanResponse) {
 //                        try {
@@ -684,30 +678,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                            e.printStackTrace();
 //                        }
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG,"onError:"+e.getMessage());
                     }
-
-                    @Override
-                    public void onComplete() {
-                        Log.e(TAG,"onComplete:");
-                    }
                 })
         ;
 
-        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams).builder()
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-//                .subscribe(new Observer<List<ListBean>>() {
-                .subscribe(new Observer<ListBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.e(TAG,"onSubscribe:");
-                    }
-
+                .subscribe(new ObserverIm<ListBean>() {
                     @Override
                     public void onNext(ListBean loginBeanResponse) {
 //                    public void onNext(List<ListBean> loginBeanResponse) {
@@ -725,24 +705,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onError(Throwable e) {
                         Log.e(TAG,"onError:"+e.getMessage());
                     }
-
-                    @Override
-                    public void onComplete() {
-                        Log.e(TAG,"onComplete:");
-                    }
                 })
         ;
 
-        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams).builder()
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-                .subscribe(new Observer<List<TestBean>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.e(TAG,"onSubscribe:");
-                    }
-
+                .subscribe(new ObserverIm<List<TestBean>>() {
                     @Override
                     public void onNext(List<TestBean> loginBeanResponse) {
 //                        try {
@@ -760,37 +728,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(TAG,"onError:"+e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
-                        Log.e(TAG,"onComplete:");
-                    }
                 })
         ;
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new CusObserver<Response<LoginBean>>() {
-//                    @Override
-//                    public void onNext(Response<LoginBean> value) {
-//                        Logger.d(LoginPresenter.class.getSimpleName(),"onNext");
-//                        Dictionary.replaceLoginBean(value.body());
-//                        if (isViewAttached()) {
-//                            Dictionary.getLoginBean().setLoginName(loginName);
-//                            if (needsSaveData) {
-//                                Utils.savePhone(getView().obtainContext(), loginName);
-//                            } else {
-//                                Utils.cleanPhone(getView().obtainContext());
-//                            }
-//                            getView().connectSuccess(null);
-//                            getView().login(value.body());
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onError(AppException ex) {
-//                        if (isViewAttached())
-//                            getView().connectError(ex);
-//                    }
-//                });
     }
 
     public void dataBinding(View view) {

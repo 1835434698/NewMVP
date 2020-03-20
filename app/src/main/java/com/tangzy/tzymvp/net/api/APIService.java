@@ -3,6 +3,7 @@ package com.tangzy.tzymvp.net.api;
 import com.tangzy.tzymvp.net.bean.ListBean;
 import com.tangzy.tzymvp.net.bean.ResultBean;
 import com.tangzy.tzymvp.net.bean.TestBean;
+import com.tangzy.tzymvp.net.retrofit.ObservableIm;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("test/login.php")
-    Observable<ResultBean> login(@FieldMap Map<String, String> paramsMap);
+    ObservableIm<ResultBean> login(@FieldMap Map<String, String> paramsMap);
 //    Observable<ResponseBody> login(@FieldMap Map<String, String> paramsMap);
 
 
@@ -41,7 +42,7 @@ public interface APIService {
      */
     @FormUrlEncoded
     @POST("test/getList.php")
-    Observable<ListBean> getList(@FieldMap Map<String, String> paramsMap);
+    ObservableIm<ListBean> getList(@FieldMap Map<String, String> paramsMap);
 
     /**
      * 数据是   [{"examid":"id0","score":"score0"},{"examid":"id1","score":"score1"},{"examid":"id2","score":"score2"},{"examid":"id3","score":"score3"},{"examid":"id4","score":"score4"}]
@@ -51,6 +52,6 @@ public interface APIService {
      */
     @FormUrlEncoded
     @POST("test/getList2.php")
-    Observable<List<TestBean>> getList2(@FieldMap Map<String, String> paramsMap);
+    ObservableIm<List<TestBean>> getList2(@FieldMap Map<String, String> paramsMap);
 
 }

@@ -1,7 +1,5 @@
 package com.tangzy.tzymvp.net.retrofit;
 
-import android.util.Log;
-
 import com.tangzy.tzymvp.Constant;
 import com.tangzy.tzymvp.net.NetUtil;
 import com.tangzy.tzymvp.util.Logger;

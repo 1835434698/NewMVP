@@ -1,7 +1,8 @@
 package com.tangzy.tzymvp.net.retrofit;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
-import com.tangzy.tzymvp.util.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -29,7 +30,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     @Override
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
-        Logger.d(TAG, "GsonResponseBodyConverter");
+        Log.d(TAG, "GsonResponseBodyConverter");
         try {
             //success表示成功返回，继续用本来的Model类解析
             return gson.fromJson(response, type);
