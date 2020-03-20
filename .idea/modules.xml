@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TzyMVP.iml" filepath="$PROJECT_DIR$/TzyMVP.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demoloader/demoloader.iml" filepath="$PROJECT_DIR$/demoloader/demoloader.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/ffmpeg/ffmpeg.iml" />
-      <module fileurl="file://$PROJECT_DIR$/filelibrary/filelibrary.iml" filepath="$PROJECT_DIR$/filelibrary/filelibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/recordermanager/recordermanager.iml" filepath="$PROJECT_DIR$/recordermanager/recordermanager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/testdemo/testdemo.iml" filepath="$PROJECT_DIR$/testdemo/testdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TzyMVP.iml" filepath="$PROJECT_DIR$/TzyMVP.iml" group="TzyMVP" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TzyMVP/app" />
+      <module fileurl="file://$PROJECT_DIR$/demoloader/demoloader.iml" filepath="$PROJECT_DIR$/demoloader/demoloader.iml" group="TzyMVP/demoloader" />
+      <module fileurl="file://$PROJECT_DIR$/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/ffmpeg/ffmpeg.iml" group="TzyMVP/ffmpeg" />
+      <module fileurl="file://$PROJECT_DIR$/filelibrary/filelibrary.iml" filepath="$PROJECT_DIR$/filelibrary/filelibrary.iml" group="TzyMVP/filelibrary" />
+      <module fileurl="file://$PROJECT_DIR$/recordermanager/recordermanager.iml" filepath="$PROJECT_DIR$/recordermanager/recordermanager.iml" group="TzyMVP/recordermanager" />
+      <module fileurl="file://$PROJECT_DIR$/testdemo/testdemo.iml" filepath="$PROJECT_DIR$/testdemo/testdemo.iml" group="TzyMVP/testdemo" />
     </modules>
   </component>
 </project>

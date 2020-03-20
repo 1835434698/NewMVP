@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -665,10 +666,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Retrofit(View view) {
 
-        Map<String, String> mapParams = new HashMap<>();
+        Map<String, String> mapParams = new ArrayMap<>();
         mapParams.put("userName","user01");
         mapParams.put("passWord","123456");
-        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams).builder()
+        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new ObserverIm<ResultBean>() {
                     @Override
@@ -686,7 +689,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
         ;
 
-        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams).builder()
+        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new ObserverIm<ListBean>() {
                     @Override
@@ -709,7 +714,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
         ;
 
-        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams).builder()
+        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new ObserverIm<List<TestBean>>() {
                     @Override
