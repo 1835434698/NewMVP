@@ -184,6 +184,11 @@
             android:layout_height="wrap_content"
             android:onClick="yuanchengIntent"
             android:text="跨进程intent" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="startServiceC"
+            android:text="保活service" />
 
         <TextView
             android:layout_width="700px"

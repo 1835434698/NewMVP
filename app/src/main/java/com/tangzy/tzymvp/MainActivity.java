@@ -57,6 +57,7 @@ import com.tangzy.tzymvp.net.retrofit.ObserverIm;
 import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
 import com.tangzy.tzymvp.servive.DemoIntentService;
 import com.tangzy.tzymvp.servive.DemoServive;
+import com.tangzy.tzymvp.servive.SingASongService;
 import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.test.DynamicProxy;
 import com.tangzy.tzymvp.test.Iuser;
@@ -860,6 +861,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .observeOn(Schedulers.io())
                 .subscribe(observer);
 
+    }
+
+    public void startServiceC(View view) {
+        startService(new Intent(this, SingASongService.class));
     }
 
 
