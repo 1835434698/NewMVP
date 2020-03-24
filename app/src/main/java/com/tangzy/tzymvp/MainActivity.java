@@ -690,8 +690,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ;
 
         RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .builder()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new ObserverIm<ListBean>() {
                     @Override
