@@ -77,6 +77,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -887,14 +888,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public void workManager(View view) {
         Logger.d(TAG, "main name = "+Thread.currentThread().getName());
-        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(UpLoadWorker.class)
+        OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest.Builder(UpLoadWorker.class);
+        OneTimeWorkRequest uploadWorkRequest = builder
+//                .setInitialDelay(Duration.ofHours(20))
+                .setInputData(null)
                 .build();
         WorkManager.getInstance(this).enqueue(uploadWorkRequest);
 //        workA---->workB---->workC
 //        WorkManager.getInstance(this)
 //                .beginWith(workA)
-//                .then(workB)  instance
-//                .then(workC)
+////                .then(workB)
+////                .then(workC)
 //                .enqueue();
     }
 

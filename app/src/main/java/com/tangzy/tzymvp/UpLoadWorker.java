@@ -20,6 +20,7 @@ public class UpLoadWorker extends Worker {
 
     public UpLoadWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        workerParams.getInputData();//输入参数。
     }
 
     @NonNull
