@@ -21,6 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -872,6 +874,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void startServiceC(View view) {
         startService(new Intent(this, SingASongService.class));
+    }
+
+    /**
+     * 一个后台任务管理器，就是封装了线程池。
+     * 可以有序执行任务。
+     * 可以丢人任务列表去执行。
+     *
+     * 通过builder设计模式设置参数。
+     * 启动线程池。
+     * @param view
+     */
+    public void workManager(View view) {
+        Logger.d(TAG, "main name = "+Thread.currentThread().getName());
+        OneTimeWorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(UpLoadWorker.class)
+                .build();
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
+//        workA---->workB---->workC
+//        WorkManager.getInstance(this)
+//                .beginWith(workA)
+//                .then(workB)  instance
+//                .then(workC)
+//                .enqueue();
     }
 
 
