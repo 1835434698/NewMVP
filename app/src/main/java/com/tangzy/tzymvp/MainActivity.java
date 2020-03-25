@@ -21,8 +21,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
+import androidx.work.impl.WorkDatabase;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -890,8 +892,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Logger.d(TAG, "main name = "+Thread.currentThread().getName());
         OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest.Builder(UpLoadWorker.class);
         OneTimeWorkRequest uploadWorkRequest = builder
-//                .setInitialDelay(Duration.ofHours(20))
-//                .setInputData(null)
+                .setInitialDelay(Duration.ofMillis(20))
+//                .setInputData(data)
                 .build();
         WorkManager.getInstance(this).enqueue(uploadWorkRequest);
 //        workA---->workB---->workC
@@ -900,7 +902,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 ////                .then(workB)
 ////                .then(workC)
 //                .enqueue();
+
+        String suffix =  "_Impl";
+        Class klass = WorkDatabase.class;
+        final String fullPackage = klass.getPackage().getName();
+        String name = klass.getCanonicalName();
+        final String postPackageName = fullPackage.isEmpty()
+                ? name
+                : (name.substring(fullPackage.length() + 1));
+        final String implName = postPackageName.replace('.', '_') + suffix;
+        //noinspection TryWithIdenticalCatches
+        String s = fullPackage.isEmpty() ? implName : fullPackage + "." + implName;
+        Logger.d("tangzy", "s = "+s);
     }
+
+    public void hookAlert(View view) {
+        lalalal("qqqqqq");
+//        String qqqqqq = lalalal("qqqqqq");
+//        Logger.d("tangzy", "result = "+ qqqqqq);
+    }
+
+    private void lalalal(String str) {
+        Logger.d("tangzy", "result = "+ str);
+//        return str+"_";
+    }
+//    private String lalalal(String qqqqqq) {
+//        return qqqqqq+"_";
+//    }
 
 
     class Producer implements Runnable {

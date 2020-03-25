@@ -194,6 +194,11 @@
             android:layout_height="wrap_content"
             android:onClick="workManager"
             android:text="WorkManager" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="hookAlert"
+            android:text="hook修改参数" />
 
         <TextView
             android:layout_width="700px"
