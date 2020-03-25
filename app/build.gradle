@@ -132,4 +132,9 @@ dependencies {
     def work_version = "2.3.1"
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
+    //引入源码（不引入不能看源码）
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+
+
 }

@@ -891,7 +891,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest.Builder(UpLoadWorker.class);
         OneTimeWorkRequest uploadWorkRequest = builder
 //                .setInitialDelay(Duration.ofHours(20))
-                .setInputData(null)
+//                .setInputData(null)
                 .build();
         WorkManager.getInstance(this).enqueue(uploadWorkRequest);
 //        workA---->workB---->workC
