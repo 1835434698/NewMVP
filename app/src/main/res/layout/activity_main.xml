@@ -199,6 +199,11 @@
             android:layout_height="wrap_content"
             android:onClick="hookAlert"
             android:text="hook修改参数" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="sendCallBack"
+            android:text="sendCallBack" />
 
         <TextView
             android:layout_width="700px"

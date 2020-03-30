@@ -134,6 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    Handler handler1 = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            Logger.d(TAG, "handler1");
+            return false;
+        }
+    });
+
     private ImageView iv_gif;
 
     @Override
@@ -925,6 +933,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void lalalal(String str) {
         Logger.d("tangzy", "result = "+ str);
 //        return str+"_";
+    }
+
+    public void sendCallBack(View view) {
+        handler1.sendEmptyMessage(0);
+
     }
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";
