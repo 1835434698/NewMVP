@@ -19,9 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.impl.WorkDatabase;
@@ -77,15 +75,16 @@ import com.tangzy.tzymvp.view.CustomDialogFragment;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -97,13 +96,21 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
@@ -554,13 +561,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String LOCK = "lock";
     public void producerConsumer(View view) {
         new Thread(new Producer()).start();
-        new Thread(new Consumer()).start();
+        new Thread(new Consumer_()).start();
         new Thread(new Producer()).start();
-        new Thread(new Consumer()).start();
+        new Thread(new Consumer_()).start();
         new Thread(new Producer()).start();
-        new Thread(new Consumer()).start();
+        new Thread(new Consumer_()).start();
         new Thread(new Producer()).start();
-        new Thread(new Consumer()).start();
+        new Thread(new Consumer_()).start();
 
     }
 
@@ -665,6 +672,372 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(TAG,"onComplete()");
                     }
                 });
+
+        //map替换类型
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(2);
+                e.onNext(3);
+            }
+        })
+//                .flatMap()
+                .map(new Function<Integer, String>() {
+            @Override
+            public String apply(Integer integer) throws Exception {
+                return "this is result " + integer;
+            }
+        })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.e(TAG, "accept : " + s +"\n" );
+            }
+        });
+
+        //zip
+        Observable.zip(getStringObservable(), getInterObservable(), new BiFunction<String, Integer, String>() {
+
+            @Override
+            public String apply(String s, Integer integer) throws Exception {
+                return s+integer;
+            }
+        })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.e(TAG, "zip : accept : " + s + "\n");
+            }
+        });
+
+        //concat 两个发射器连接成一个发射器
+        Observable.concat(Observable.just(1, 2, 3, 4), Observable.just("hello", 5, 6))
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object serializable) throws Exception {
+                        Log.e(TAG, "concat : "+ serializable + "\n" );
+                    }
+                });
+        //flatMap
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(2);
+                e.onNext(3);
+                e.onNext(4);
+                e.onNext(5);
+            }
+        }).flatMap(new Function<Integer, ObservableSource<String>>() {
+            @Override
+            public ObservableSource<String> apply(Integer integer) throws Exception {
+                List<String> list = new ArrayList<>();
+                Log.e(TAG, "flatMap : apply : " + integer + "\n");
+                for (int i = 0; i < 3; i++) {
+                    list.add("I am value " + integer);
+                }
+                int delayTime = (int) (1 + Math.random() * 100);
+
+                return Observable.fromIterable(list).delay(delayTime, TimeUnit.MICROSECONDS);
+//                return Observable.fromIterable(list);
+            }
+        })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object s) throws Exception {
+                        Log.e(TAG, "flatMap : accept : " + s + "\n");
+
+                    }
+                });
+
+        //concatMap
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                e.onNext(1);
+                e.onNext(2);
+                e.onNext(3);
+                e.onNext(4);
+                e.onNext(5);
+            }
+        }).concatMap(new Function<Integer, ObservableSource<?>>() {
+            @Override
+            public ObservableSource<?> apply(Integer integer) throws Exception {
+                List<String> list = new ArrayList<>();
+//                Log.e(TAG, "concatMap : apply : " + integer + "\n");
+                for (int i = 0; i < 3; i++) {
+                    Log.e(TAG, "concatMap : apply : i = "+i +" integer = " + integer + "\n");
+                    list.add("I am value " + integer);
+                }
+                int delayTime = (int) (1 + Math.random() * 10);
+                return Observable.fromIterable(list).delay(delayTime, TimeUnit.MILLISECONDS);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        Log.e(TAG, "concatMap : accept : " + o + "\n");
+                    }
+                });
+
+//去重
+        Observable.just(1, 2, 3, 1, 2, 34, 45, 55)
+                .distinct()
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "distinct : " + integer + "\n");
+                    }
+                });
+        Observable.just(new String("1"), new String("2"), new String("3"), new String("1"), new String("2"), new String("34"), new String("45"), new String("55"))
+                .distinct()
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String integer) throws Exception {
+                        Log.e(TAG, "distinct : " + integer + "\n");
+                    }
+                });
+        Observable.just(1, 20, 65, -5, 19)
+                .filter(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(Integer integer) throws Exception {
+                        return integer >= 10;
+                    }
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.e(TAG, "filter : " + integer + "\n");
+            }
+        });
+        //buffer
+        Observable.just(1, 2, 3, 4, 5)
+                .buffer(3,2)
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<List<Integer>>() {
+                    @Override
+                    public void accept(List<Integer> integers) throws Exception {
+                        Log.e(TAG, "buffer size : " + integers.size() + "\n");
+                        Log.e(TAG, "buffer value : " + integers.toString());
+                        for (Integer i : integers) {
+                            Log.e(TAG, i + "");
+                        }
+                        Log.e(TAG, "\n");
+                    }
+                });
+        //timer
+        Observable.timer(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.e(TAG, "timer :" + aLong + " at "  + "\n");
+//                        Log.e(TAG, "timer :" + aLong + " at " + DateUtil.getStringDate() + "\n");
+                    }
+                });
+
+        Observable.interval(3,2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        Log.e(TAG, "interval :" + aLong + " at "  + "\n");
+//                        Log.e(TAG, "timer :" + aLong + " at " + DateUtil.getStringDate() + "\n");
+                    }
+                });
+
+        Observable.just(1, 2, 3, 4)
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "doOnNext 保存 " + integer + "成功" + "\n");
+                    }
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.e(TAG, "doOnNext :" + integer + "\n");
+            }
+        });
+
+        Observable.just(1, 2, 3, 4, 5)
+                .skip(2)
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "skip : "+integer + "\n");
+                    }
+                });
+
+        Flowable.fromArray(1, 2, 3, 4, 5)
+                .take(2)//最多接收多少个参数
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "accept: take : "+integer + "\n" );
+                    }
+                });
+
+        Observable.just("1", "2",1,5,7)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Serializable>() {
+                    @Override
+                    public void accept(Serializable serializable) throws Exception {
+                        Log.e(TAG,"accept : onNext : " + serializable + "\n" );
+                    }
+                });
+
+        Single.just(new Random().nextInt())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Integer value) {
+                        Log.e(TAG, "single : onSuccess : "+value+"\n" );
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "single : onError : "+e.getMessage()+"\n");
+                    }
+                });
+
+        Observable.merge(Observable.just(1, 2), Observable.just(3, 4, 5, 99))
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        Log.e(TAG, "accept : " + integer + "\n");
+                    }
+                });
+        Observable.just(1, 2, 3)
+                .reduce(new BiFunction<Integer, Integer, Integer>() {
+                    //我们中间采用 reduce ，支持一个 function 为两数值相加
+                    @Override
+                    public Integer apply(Integer integer, Integer integer2) throws Exception {
+                        Log.e("RxJavaAct", "BiFunction: apply : " + integer + "  +  " + integer2 + " = " + (integer + integer2) + "\n");
+
+                        return integer + integer2;
+                    }
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.e("RxJavaAct", "accept: reduce : " + integer + "\n");
+            }
+        });
+
+        Observable.just(1, 2, 3)
+                .scan(new BiFunction<Integer, Integer, Integer>() {
+                    @Override
+                    public Integer apply(Integer integer, Integer integer2) throws Exception {
+                        Log.e("RxJavaAct", "BiFunction: apply : " + integer + "  +  " + integer2 + " = " + (integer + integer2) + "\n");
+
+                        return integer + integer2;
+                    }
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) throws Exception {
+                Log.e("RxJavaAct", "accept: reduce : " + integer + "\n");
+            }
+        });
+
+        Log.e("RxJavaAct", "window\n");
+        Observable.interval(1, TimeUnit.SECONDS)
+                .take(15)
+                .window(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Observable<Long>>() {
+                    @Override
+                    public void accept(Observable<Long> longObservable) throws Exception {
+                        Log.e("RxJavaAct", "Sub Divide begin...\n");
+                        longObservable.subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<Long>() {
+                                    @Override
+                                    public void accept(Long aLong) throws Exception {
+
+                                        Log.e("RxJavaAct", "Next:" + aLong + "\n");
+                                    }
+                                });
+                    }
+                });
+
+
+
+
+
+    }
+
+    private Observable<String> getStringObservable() {
+        return Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                if (!e.isDisposed()) {
+                    e.onNext("A");
+                    Log.e(TAG, "String emit : A \n");
+                    e.onNext("B");
+                    Log.e(TAG, "String emit : B \n");
+                    e.onNext("C");
+                    Log.e(TAG, "String emit : C \n");
+                }
+            }
+        });
+
+    }
+
+    private Observable<Integer> getInterObservable() {
+        return Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> e) throws Exception {
+                if (!e.isDisposed()) {
+                    e.onNext(1);
+                    Log.e(TAG, "Integer emit : 1 \n");
+                    e.onNext(2);
+                    Log.e(TAG, "Integer emit : 2 \n");
+//                    e.onNext(3);
+//                    Log.e(TAG, "Integer emit : 3 \n");
+//                    e.onNext(4);
+//                    Log.e(TAG, "Integer emit : 4 \n");
+//                    e.onNext(5);
+//                    Log.e(TAG, "Integer emit : 5 \n");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -969,7 +1342,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    class Consumer implements Runnable {
+    class Consumer_ implements Runnable {
         @Override
         public void run() {
             for (int i = 0; i < 10; i++) {
