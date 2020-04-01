@@ -1,21 +1,19 @@
 package com.tangzy.tzymvp.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.tangzy.tzymvp.R;
+import androidx.annotation.Nullable;
+
 import com.tangzy.tzymvp.util.Logger;
 
-public class MyView extends View {
+public class MyViewGroup extends ViewGroup {
     private Context context;
     /**
      * 创建一个继承View的class
@@ -25,12 +23,12 @@ public class MyView extends View {
      * android:layout_width="match_parent"
      * android:layout_height="match_parent"如果不写函数的话是无法通过XML添加View
      */
-    public MyView(Context context) {
+    public MyViewGroup(Context context) {
         super(context);
         this.context = context;
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs) {
+    public MyViewGroup(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
     }
@@ -70,8 +68,6 @@ public class MyView extends View {
             default:
                 break;
         }
-//        invalidate(1,1,1,1);
-
         return defaultWidth;
     }
 
@@ -106,27 +102,29 @@ public class MyView extends View {
 
     }
 
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
         Logger.d("tangzy", "onLayout");// 循环所有子View改变子view位置
         Logger.d("tangzy", "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
     }
-
-    @Override
-    public void layout(int left, int top, int right, int bottom) {
-        Logger.d("tangzy", "layout");// 循环所有子View改变子view位置
-        Logger.d("tangzy", "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
-//        super.layout(l, t, r, b);
-        super.layout(20, 20, 900, 1500);//改变view位置
-    }
+//
+//    @Override
+//    public void layout(int left, int top, int right, int bottom) {
+//        Logger.d("tangzy", "layout");// 循环所有子View改变子view位置
+//        Logger.d("tangzy", "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
+////        super.layout(l, t, r, b);
+//        super.layout(20, 20, 900, 1500);//改变view位置
+//    }
 
     //重写onDraw方法
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Logger.d("tangzy", "onDraw");
-
+//        invalidate();
+//        postInvalidate();
+        requestLayout();
 //        int width = View.MeasureSpec.makeMeasureSpec(0,
 //                View.MeasureSpec.UNSPECIFIED);
 //        int height = View.MeasureSpec.makeMeasureSpec(0,

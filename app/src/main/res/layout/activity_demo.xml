@@ -8,7 +8,7 @@
     <com.tangzy.tzymvp.view.MyView
         android:id="@+id/myview"
         android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_height="100dp" />
 
     <Button
         android:id="@+id/button7"
