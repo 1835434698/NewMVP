@@ -1,1 +1,2 @@
 include ':app', ':testdemo', ':ffmpeg', ':filelibrary', ':recordermanager', ':demoloader'
+include ':screenlockcamera'
