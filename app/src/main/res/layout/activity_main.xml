@@ -204,6 +204,11 @@
             android:layout_height="wrap_content"
             android:onClick="sendCallBack"
             android:text="sendCallBack" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="myAppWidgetProvider"
+            android:text="桌面小部件" />
 
         <TextView
             android:layout_width="700px"

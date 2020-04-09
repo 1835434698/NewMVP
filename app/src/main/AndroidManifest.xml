@@ -82,6 +82,18 @@
         <service android:name=".servive.Demo2Servive"></service>
         <service android:name=".servive.DemoIntentService" />
         <service android:name=".servive.SingASongService"/>
+
+        <receiver android:name=".widget.MyAppWidgetProvider">
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider_info">
+            </meta-data>
+            <intent-filter>
+                <action android:name="learn.yfg.com.learnapplication.action.CLICK"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

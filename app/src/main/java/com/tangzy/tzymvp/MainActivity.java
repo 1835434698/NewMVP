@@ -1327,6 +1327,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handler1.sendEmptyMessage(0);
 
     }
+
+    public void MyAppWidgetProvider(View view) {
+
+    }
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";
 //    }
