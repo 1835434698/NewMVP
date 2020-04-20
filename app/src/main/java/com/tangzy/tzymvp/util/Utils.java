@@ -13,12 +13,17 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import java.io.ByteArrayOutputStream;
+import com.tangzy.tzymvp.kotlin.BaseUrlGetter;
+import com.tangzy.tzymvp.kotlin.BaseUrlsRepository;
+import com.tangzy.tzymvp.kotlin.EnvDef;
+import com.tangzy.tzymvp.kotlin.FieldFilter;
+import com.tangzy.tzymvp.kotlin.TypeDef;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +33,7 @@ import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 //import javax.sound.sampled.AudioFileFormat;
 //import javax.sound.sampled.AudioFormat;
@@ -480,6 +486,150 @@ public class Utils {
         }
 
         return null;
+    }
+
+
+    public static void init(Class<?> baseUrlTypeConfigClass, Class<?> envConfigClass, BaseUrlGetter getter, int defaultEnv){
+        Logger.d("tangzy", "init");
+        List<Field> typeFieldList = listFields(baseUrlTypeConfigClass, field -> {
+            if (field.isAnnotationPresent(TypeDef.class)) {
+                if (field.getGenericType() == String.class) return true;
+                else throw new IllegalStateException("the declared type for the baseUrlType field must be String");
+            } else {
+                return false;
+            }
+        });
+        List<Field> envFieldList = listFields(envConfigClass, field -> {
+            if (field.isAnnotationPresent(EnvDef.class)) {
+                if (field.getGenericType() == int.class) return true;
+                else throw new IllegalStateException("the declared type for the env field must be int");
+            } else {
+                return false;
+            }
+        });
+        for (Field typeField : typeFieldList) {
+            String baseUrlType = getStringFieldValue(typeField, baseUrlTypeConfigClass);
+            Utils.nullOrNil(baseUrlType, "get baseUrlType string value is null or 0 size");
+            for (Field envField : envFieldList) {
+                Integer env = getIntegerFieldValue(envField, envConfigClass);
+                Utils.checkNotNull(env, "get env Integer value is null");
+                Logger.d("tangzy", "  getter.get(baseUrlType, env) = "+  getter.get(baseUrlType, env));
+                putBaseUrlConfig(baseUrlType, env, getter.get(baseUrlType, env));
+            }
+            //set default env for all baseUrlTypes
+            setBaseUrlEnv(baseUrlType, defaultEnv);
+        }
+    }
+
+    /**
+     * 添加指定baseUrlType下指定env的realBaseUrl
+     * 如果baseUrlType+env对应的realBaseUrl存在,则replace
+     * @param baseUrlType BaseUrl类型
+     * @param env 运行环境
+     * @param realBaseUrl 真正的baseUrl
+     */
+    public static void putBaseUrlConfig(String baseUrlType, int env, String realBaseUrl) {
+        BaseUrlsRepository.instance().putConfig(baseUrlType, env, realBaseUrl);
+    }
+
+    /**
+     * 配置指定baseUrlType的baseUrl的运行环境
+     * @param baseUrlType BaseUrl类型
+     * @param env 运行环境
+     */
+    public static void setBaseUrlEnv(String baseUrlType, int env) {
+        BaseUrlsRepository.instance().setEnv(baseUrlType, env);
+    }
+
+
+    @NonNull
+    static List<Field> listFields(@NonNull Class clazz, @Nullable FieldFilter filter) {
+        Utils.checkNotNull(clazz, "Class == null");
+        ArrayList<Field> l = new ArrayList<>();
+        Field[] fields = clazz.getFields();
+        if (!Utils.isArrayEmpty(fields)) {
+            for (Field field : fields) {
+                if (filter == null || filter.accept(field)) {
+                    l.add(field);
+                }
+            }
+        }
+        return l;
+    }
+
+    @Nullable
+    static String getStringFieldValue(Field f, Object o) {
+        try {
+            Object v = f.get(o);
+            if (v instanceof String) return ((String) v);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Nullable
+    static Integer getIntegerFieldValue(Field f, Object o) {
+        try {
+            Object v = f.get(o);
+            if (v instanceof Integer) return ((Integer) v);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Checks that the specified string is not null or the length of string is non-zero
+     * and throws a {@link NullPointerException} if it not is
+     */
+    static String nullOrNil(String str) {
+        return nullOrNil(str, "argument str is null or the length of str is zero");
+    }
+
+    /**
+     * Checks that the specified string is not null or the length of string is non-zero
+     * and throws a customized {@link NullPointerException} if it not is
+     */
+    static String nullOrNil(String str, String errorMsg) {
+        if (str == null || str.length() == 0) {
+            throw new NullPointerException(errorMsg);
+        } else {
+            return str;
+        }
+    }
+
+    /**
+     * Checks that the specified object reference is not {@code null}. This
+     * method is designed primarily for doing parameter validation in methods
+     */
+    static <T> T checkNotNull(@Nullable T obj) {
+        return checkNotNull(obj, "object == null");
+    }
+
+    /**
+     * Checks that the specified object reference is not {@code null} and
+     * throws a customized {@link NullPointerException} if it is
+     */
+    static <T> T checkNotNull(@Nullable T obj, String message) {
+        if (obj == null) {
+            throw new NullPointerException(message);
+        }
+        return obj;
+    }
+    /**
+     * Checks that the specified array is null or empty
+     * @return true if array is null or empty, otherwise false
+     */
+    static <Array> boolean isArrayEmpty(Array[] arrays) {
+        return arrays == null || arrays.length == 0;
+    }
+
+    /**
+     * Returns a formatted string using the format string and arguments.
+     */
+    static String format(String format, Object... args) {
+        return String.format(Locale.CHINA, format, args);
     }
 
 

@@ -1331,6 +1331,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void MyAppWidgetProvider(View view) {
 
     }
+
+    public void kotlinTest(View view) {
+        BaseUrlManager.init();
+
+    }
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";
 //    }

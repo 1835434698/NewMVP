@@ -209,6 +209,11 @@
             android:layout_height="wrap_content"
             android:onClick="myAppWidgetProvider"
             android:text="桌面小部件" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="kotlinTest"
+            android:text="kotlin" />
 
         <TextView
             android:layout_width="700px"
