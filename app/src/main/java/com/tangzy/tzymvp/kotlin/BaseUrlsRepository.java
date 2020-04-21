@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * BaseUrl配置仓库
  * Created by xianxueliang on 17-11-14.
  */
-class BaseUrlsRepository {
+public class BaseUrlsRepository {
 
     /** 包含当前所有BaseUrl所处的环境 */
     private final ConcurrentHashMap<String, Integer> envConfig;
@@ -30,7 +30,7 @@ class BaseUrlsRepository {
         baseUrlsConfig = new ConcurrentHashMap<>();
     }
 
-    static BaseUrlsRepository instance() {
+    public static BaseUrlsRepository instance() {
         return INSTANCE_HOLDER.INSTANCE;
     }
 
@@ -38,7 +38,7 @@ class BaseUrlsRepository {
      * 添加指定type下指定env的baseUrl
      * 如果type+env对应的baseUrl存在,则replace
      */
-    void putConfig(String baseUrlType, int env, String baseUrl) {
+    public void putConfig(String baseUrlType, int env, String baseUrl) {
         Utils.checkNotNull(baseUrlType, "baseUrlType == null");
         Utils.nullOrNil(baseUrl, "baseUrl is null or empty");
         SparseArray<String> c = configOf(baseUrlType);
@@ -95,7 +95,7 @@ class BaseUrlsRepository {
     /**
      * 配置指定type的baseUrl的运行环境
      */
-    void setEnv(String baseUrlType, int env) {
+    public void setEnv(String baseUrlType, int env) {
         Utils.checkNotNull(baseUrlType, "baseUrlType == null");
         envConfig.put(baseUrlType, env);
     }

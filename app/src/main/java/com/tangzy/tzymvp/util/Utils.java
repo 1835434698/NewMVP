@@ -591,7 +591,7 @@ public class Utils {
      * Checks that the specified string is not null or the length of string is non-zero
      * and throws a customized {@link NullPointerException} if it not is
      */
-    static String nullOrNil(String str, String errorMsg) {
+    public static String nullOrNil(String str, String errorMsg) {
         if (str == null || str.length() == 0) {
             throw new NullPointerException(errorMsg);
         } else {
@@ -611,7 +611,7 @@ public class Utils {
      * Checks that the specified object reference is not {@code null} and
      * throws a customized {@link NullPointerException} if it is
      */
-    static <T> T checkNotNull(@Nullable T obj, String message) {
+    public static <T> T checkNotNull(@Nullable T obj, String message) {
         if (obj == null) {
             throw new NullPointerException(message);
         }
@@ -628,7 +628,7 @@ public class Utils {
     /**
      * Returns a formatted string using the format string and arguments.
      */
-    static String format(String format, Object... args) {
+    public static String format(String format, Object... args) {
         return String.format(Locale.CHINA, format, args);
     }
 
