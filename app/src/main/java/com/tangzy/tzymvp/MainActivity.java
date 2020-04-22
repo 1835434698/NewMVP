@@ -2,6 +2,7 @@ package com.tangzy.tzymvp;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -1444,6 +1445,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lock.unlock();
         }
 
+    }
+
+    public  void isServiceRunning(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(200)) {
+            Log.e(TAG, "service.service.getClassName() = " + service.service.getPackageName()   );
+        }
     }
 
 
