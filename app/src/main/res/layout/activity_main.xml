@@ -214,6 +214,11 @@
             android:layout_height="wrap_content"
             android:onClick="kotlinTest"
             android:text="kotlin" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="serviceHandler"
+            android:text="serviceHandler" />
 
         <TextView
             android:layout_width="700px"

@@ -82,6 +82,7 @@
         <service android:name=".servive.Demo2Servive"></service>
         <service android:name=".servive.DemoIntentService" />
         <service android:name=".servive.SingASongService"/>
+        <service android:name=".servive.Demo3Service"/>
 
         <receiver android:name=".widget.MyAppWidgetProvider">
             <meta-data android:name="android.appwidget.provider"

@@ -59,6 +59,7 @@ import com.tangzy.tzymvp.net.bean.ResultBean;
 import com.tangzy.tzymvp.net.bean.TestBean;
 import com.tangzy.tzymvp.net.retrofit.ObserverIm;
 import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
+import com.tangzy.tzymvp.servive.Demo3Service;
 import com.tangzy.tzymvp.servive.DemoIntentService;
 import com.tangzy.tzymvp.servive.DemoServive;
 import com.tangzy.tzymvp.servive.SingASongService;
@@ -1336,6 +1337,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void kotlinTest(View view) {
         BaseUrlManager.init();
 
+    }
+
+    public void serviceHandler(View view) {
+        startService(new Intent(this, Demo3Service.class));
     }
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";
