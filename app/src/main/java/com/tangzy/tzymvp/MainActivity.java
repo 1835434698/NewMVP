@@ -38,6 +38,7 @@ import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
+import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
@@ -1341,6 +1342,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void serviceHandler(View view) {
         startService(new Intent(this, Demo3Service.class));
+    }
+
+    public void viewHandler(View view) {
+        startActivity(new Intent(this, MyViewGroupActivity.class));
+    }
+
+    private boolean mStop = true;
+    public void tingzhixunhuan(View view) {
+        Logger.d(TAG, "tingzhixunhuan ");
+        mStop = false;
+    }
+
+    public void xunhuan(View view) {
+        mStop = true;
+        Observable.interval(0, 1, TimeUnit.MILLISECONDS)
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .takeWhile(new Predicate<Long>() {
+                    @Override
+                    public boolean test(Long aLong) throws Exception {
+                        Logger.d(TAG, "test  aLong = "+aLong);
+                        Logger.d(TAG, "test  mStop = "+mStop);
+                        return mStop;
+                    }
+                })
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<Long>() {
+                               @Override
+                               public void accept(Long aLong) throws Exception {
+                                   Logger.d(TAG, "accept  aLong = "+aLong);
+
+                               }
+                           }
+                );
+
+
+//        Observable.defer(new Callable<ObservableSource<?>>() {
+//            @Override
+//            public ObservableSource<?> call() throws Exception {
+//                Logger.d(TAG, "call  just");
+//                return Observable.just(10);
+//            }
+//        })
+//                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+//                .subscribe(new Observer<Object>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        Logger.d(TAG, "onSubscribe");
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Object o) {
+//                        Logger.d(TAG, "onNext o = "+o.toString());
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Logger.d(TAG, "onError e = "+e.getMessage());
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        Logger.d(TAG, "onComplete");
+//
+//                    }
+//                });
+
     }
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";

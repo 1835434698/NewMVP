@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class MyViewGroup extends ViewGroup {
      * android:layout_width="match_parent"
      * android:layout_height="match_parent"如果不写函数的话是无法通过XML添加View
      */
+    private Handler mHandler = new Handler();
+
     public MyViewGroup(Context context) {
         super(context);
         this.context = context;
@@ -31,6 +34,14 @@ public class MyViewGroup extends ViewGroup {
     public MyViewGroup(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+    }
+
+    public void autoRefresh() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            }
+        }, 200);
     }
 
     @Override
