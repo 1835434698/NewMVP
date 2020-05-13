@@ -44,7 +44,7 @@ public class RecyclerViewDelegate extends BaseAppDelegate {
     private RecycleAdapter adapter;
     private ArrayList<RecycleViewBean> list = new ArrayList<>();
     private RecyclerView recycleView;
-    private SmartRefreshLayout ptrFrameLayout;
+    private PtrClassicFrameLayout ptrFrameLayout;
 
     @Override
     public int getRootLayoutId() {
@@ -98,64 +98,64 @@ int i =0;
         adapter = new RecycleAdapter(getActivity(), list);
         recycleView = get(R.id.recycleView);
         ptrFrameLayout = get(R.id.ptr_framelayout);
-        ptrFrameLayout.setEnableLoadMore(true);
-        ptrFrameLayout.setRefreshHeader(new RefreshHeaderWrapper(new ClassicsHeader(getActivity())));
-        ptrFrameLayout.setRefreshFooter(new RefreshFooterWrapper(new ClassicsFooter(getActivity())));
-        ptrFrameLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                i =0;
-                ptrFrameLayout.finishRefresh();
-            }
-        });
-        ptrFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                i++;
-                if (i>3){
-                    ptrFrameLayout.setNoMoreData(true);
-                }else {
-                    ptrFrameLayout.setNoMoreData(false);
-                }
-                ptrFrameLayout.finishLoadMore();
-            }
-        });
-        ptrFrameLayout.getRefreshFooter();
-        ptrFrameLayout.getRefreshHeader();
-
-//        ptrFrameLayout.setPullToRefresh(true);
-//        ptrFrameLayout.setResistance(1.7f);
-//        ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);
-//        ptrFrameLayout.setDurationToClose(200);
-//        ptrFrameLayout.setDurationToCloseHeader(300);
-//        // default is false
-//        ptrFrameLayout.setPullToRefresh(false);
-//        // default is true
-//        ptrFrameLayout.setKeepHeaderWhenRefresh(true);
-//
-//        ptrFrameLayout.setLastUpdateTimeRelateObject(this);
-//
-//        ptrFrameLayout.setPtrHandler(new PtrDefaultHandler2() {
+//        ptrFrameLayout.setEnableLoadMore(true);
+//        ptrFrameLayout.setRefreshHeader(new RefreshHeaderWrapper(new ClassicsHeader(getActivity())));
+//        ptrFrameLayout.setRefreshFooter(new RefreshFooterWrapper(new ClassicsFooter(getActivity())));
+//        ptrFrameLayout.setOnRefreshListener(new OnRefreshListener() {
 //            @Override
-//            public void onLoadMoreBegin(PtrFrameLayout frame) {
-////                getOrders();
-////                ptrFrameLayout
-//                ptrFrameLayout.refreshComplete();
-//            }
-//
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {
-////                lists.clear();
-////                pageNo = 1;
-////                getOrders();
-//                ptrFrameLayout.refreshComplete();
-//            }
-//
-//            @Override
-//            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-//                return PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleView, header);
+//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                i =0;
+//                ptrFrameLayout.finishRefresh();
+//                ptrFrameLayout.setNoMoreData(true);
 //            }
 //        });
+//        ptrFrameLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+//                i++;
+//                if (i>3){
+//                    ptrFrameLayout.setNoMoreData(true);
+//                }else {
+//                    ptrFrameLayout.setNoMoreData(false);
+//                }
+//                ptrFrameLayout.finishLoadMore();
+//            }
+//        });
+//        ptrFrameLayout.getRefreshFooter();
+//        ptrFrameLayout.getRefreshHeader();
+
+        ptrFrameLayout.setPullToRefresh(true);
+        ptrFrameLayout.setResistance(1.7f);
+        ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);
+        ptrFrameLayout.setDurationToClose(200);
+        ptrFrameLayout.setDurationToCloseHeader(300);
+        // default is false
+        ptrFrameLayout.setPullToRefresh(false);
+        // default is true
+        ptrFrameLayout.setKeepHeaderWhenRefresh(true);
+
+        ptrFrameLayout.setLastUpdateTimeRelateObject(this);
+
+        ptrFrameLayout.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+//                getOrders();
+                ptrFrameLayout.refreshComplete();
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+//                lists.clear();
+//                pageNo = 1;
+//                getOrders();
+                ptrFrameLayout.refreshComplete();
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, recycleView, header);
+            }
+        });
 
 
         //1线性

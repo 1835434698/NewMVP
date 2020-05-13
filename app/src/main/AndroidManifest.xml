@@ -75,6 +75,7 @@
         <activity android:name=".activity.IatDemo"></activity>
         <activity android:name=".activity.NestedScrollViewActivity"></activity>
         <activity android:name=".activity.RecyclerViewActivity"></activity>
+        <activity android:name=".activity.SmartRefreshLayoutActivity"></activity>
         <activity android:name=".activity.TestActivity"></activity>
         <activity android:name=".activity.DataBindingActivity"></activity>
         <activity android:name=".activity.GlideActivity"></activity>

@@ -146,7 +146,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="recyclerView"
-            android:text="RecyclerView" />
+            android:text="RecyclerView上拉下拉1" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="smartRefreshLayout"
+            android:text="RecyclerView智能刷新控件" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

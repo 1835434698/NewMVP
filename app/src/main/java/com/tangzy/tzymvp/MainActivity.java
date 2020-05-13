@@ -42,6 +42,7 @@ import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
+import com.tangzy.tzymvp.activity.SmartRefreshLayoutActivity;
 import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
@@ -652,6 +653,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void recyclerView(View view) {
         startActivity(new Intent(this, RecyclerViewActivity.class));
     }
+
+    public void smartRefreshLayout(View view) {
+        startActivity(new Intent(this, SmartRefreshLayoutActivity.class));
+    }
+
     CompositeDisposable compositeDisposable=new CompositeDisposable();
     public void RxJava(View view) {
         Observable.create(new ObservableOnSubscribe<String>() {
@@ -1413,6 +1419,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                });
 
     }
+
 //    private String lalalal(String qqqqqq) {
 //        return qqqqqq+"_";
 //    }
