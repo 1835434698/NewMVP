@@ -64,36 +64,7 @@ int i =0;
     @Override
     public void initWidget() {
         super.initWidget();
-        RecycleViewBean data = new RecycleViewBean();
-//        for (int i=0;i<7;i++){
-//            data.setName("姓名：No"+i);
-//            list.add(data);
-//        }
-
-        data.setName("姓名：No");
-        data.setImg(R.drawable.image1);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image2);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image2);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image3);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image4);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image5);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image6);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image7);
-        list.add(data);
+        setData();
 
         adapter = new RecycleAdapter(getActivity(), list);
         recycleView = get(R.id.recycleView);
@@ -140,15 +111,19 @@ int i =0;
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
 //                getOrders();
+                setData();
                 ptrFrameLayout.refreshComplete();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-//                lists.clear();
+                list.clear();
+                setData();
 //                pageNo = 1;
 //                getOrders();
                 ptrFrameLayout.refreshComplete();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -174,5 +149,38 @@ int i =0;
         recycleView.addItemDecoration(new GridDividerItemDecoration(getActivity()));//九宫格分割线
 
         recycleView.setAdapter(adapter);
+    }
+
+    private void setData() {
+        RecycleViewBean data = new RecycleViewBean();
+//        for (int i=0;i<7;i++){
+//            data.setName("姓名：No"+i);
+//            list.add(data);
+//        }
+
+        data.setName("姓名：No");
+        data.setImg(R.drawable.image1);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image2);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image2);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image3);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image4);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image5);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image6);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image7);
+        list.add(data);
     }
 }

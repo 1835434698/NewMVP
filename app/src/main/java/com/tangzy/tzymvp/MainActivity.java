@@ -38,6 +38,7 @@ import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
+import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
@@ -174,7 +175,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initNet();
         initData();
 
+        handler1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.startActivity(new Intent());
+            }
+        }, 500);
 
+        int i = 0;
+        for(int z = 5; i < z; ++i) {
+            Logger.d("tangzy", " i = " + i);
+        }
+        int j = 0;
+        for(int z = 5; j < z; j++) {
+            Logger.d("tangzy", " j = " + j);
+        }
     }
 
     @Override
@@ -1418,6 +1433,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    }
 //                });
 
+    }
+
+    public void listenerTest(View view) {
+        startActivity(new Intent(this, ListenerActivity.class));
     }
 
 //    private String lalalal(String qqqqqq) {
