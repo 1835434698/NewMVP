@@ -34,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
+import com.tangzy.jspdf.PdfActivity;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
@@ -1437,6 +1438,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void listenerTest(View view) {
         startActivity(new Intent(this, ListenerActivity.class));
+    }
+
+    public void jspdf(View view) {
+        startActivity(new Intent(this, PdfActivity.class));
     }
 
 //    private String lalalal(String qqqqqq) {

@@ -26,6 +26,11 @@ public class ListenerActivity extends AppCompatActivity{
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listener);
@@ -118,6 +123,7 @@ public class ListenerActivity extends AppCompatActivity{
     }
 
     private ArrayList<OnOffsetChangedListener> listeners = new ArrayList<>();
+
 
     public void startRemove(View view) {
         ArrayList<OnOffsetChangedListener> lists = (ArrayList<OnOffsetChangedListener>) listeners.clone();

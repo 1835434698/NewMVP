@@ -244,6 +244,11 @@
             android:layout_height="wrap_content"
             android:onClick="listenerTest"
             android:text="监听" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jspdf"
+            android:text="jspdf" />
 
         <TextView
             android:layout_width="700px"
