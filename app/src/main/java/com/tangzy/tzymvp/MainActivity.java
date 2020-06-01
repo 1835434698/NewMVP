@@ -1441,7 +1441,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void jspdf(View view) {
-        startActivity(new Intent(this, PdfActivity.class));
+        Intent intent = new Intent(this, PdfActivity.class);
+        String path = Environment.getExternalStorageDirectory().toString();
+        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+        intent.putExtra("url", path);
+        startActivity(intent);
     }
 
 //    private String lalalal(String qqqqqq) {

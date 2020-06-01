@@ -133,6 +133,11 @@ public class PdfActivity extends FragmentActivity {
         mWebView.setWebViewClient(null);
         mWebView.getSettings().setJavaScriptEnabled(false);
         mWebView.clearCache(true);
+        mWebView = null;
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
+        int pid = android.os.Process.myPid(); //获得自己的pid
+        android.os.Process.killProcess(pid);//通过pid自杀
     }
 
     /**
