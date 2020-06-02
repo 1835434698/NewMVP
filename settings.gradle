@@ -2,3 +2,4 @@ include ':app', ':testdemo', ':ffmpeg', ':filelibrary', ':recordermanager', ':de
 include ':screenlockcamera'
 include ':jspdf'
 include ':pdfRenderer'
+include ':pdfviewpage'
