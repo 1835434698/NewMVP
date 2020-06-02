@@ -35,6 +35,7 @@ import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
+import com.tangzy.pdfrenderer.RendererPdfActivity;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
@@ -1442,6 +1443,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void jspdf(View view) {
         Intent intent = new Intent(this, PdfActivity.class);
+        String path = Environment.getExternalStorageDirectory().toString();
+        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+        intent.putExtra("url", path);
+        startActivity(intent);
+    }
+
+    public void pdfRendererBasic(View view) {
+        Intent intent = new Intent(this, RendererPdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
         path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
         intent.putExtra("url", path);

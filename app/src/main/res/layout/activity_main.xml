@@ -249,6 +249,11 @@
             android:layout_height="wrap_content"
             android:onClick="jspdf"
             android:text="jspdf" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pdfRendererBasic"
+            android:text="android原生pdf" />
 
         <TextView
             android:layout_width="700px"
