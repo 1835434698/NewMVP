@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView iv_gif;
 
+    @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +194,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for(int z = 5; j < z; j++) {
             Logger.d("tangzy", " j = " + j);
         }
+
+
+        Observable.just(1)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d("hhhhhhhhhh", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
+//                        try {
+//                            po = converter.convert(params);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("hhhhhhhhhh", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("hhhhhhhhhh", "onComplete");
+                    }
+                });
     }
 
     @Override
