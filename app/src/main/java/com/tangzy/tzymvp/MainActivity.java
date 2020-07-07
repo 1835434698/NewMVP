@@ -1,5 +1,6 @@
 package com.tangzy.tzymvp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -8,14 +9,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -65,6 +71,7 @@ import com.tangzy.tzymvp.net.bean.ResultBean;
 import com.tangzy.tzymvp.net.bean.TestBean;
 import com.tangzy.tzymvp.net.retrofit.ObserverIm;
 import com.tangzy.tzymvp.net.retrofit.RetrofitManager;
+import com.tangzy.tzymvp.permission.EasyPermissions;
 import com.tangzy.tzymvp.servive.Demo3Service;
 import com.tangzy.tzymvp.servive.DemoIntentService;
 import com.tangzy.tzymvp.servive.DemoServive;
@@ -80,9 +87,14 @@ import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
+import com.tangzy.tzymvp.view.toast.CustomToast;
+import com.tangzy.tzymvp.view.toast.SnackbarCus;
+import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -128,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final String TAG = "MainActivity";
 
+    public View mSnackbarAnchor;
 
     @Autowired(name = "key1")
     long key1;
@@ -159,12 +172,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView iv_gif;
 
+
+    private void setPath(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            if (file.getParentFile().exists()){
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Logger.d(TAG, "error = "+e.getMessage());
+        }
+    }
+
     @SuppressLint("AutoDispose")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setPath(Constant.path+"ttt.txt");
         ARouter.getInstance().inject(this);//添加在onCreate（）
         setContentView(R.layout.activity_main);
+        mSnackbarAnchor = findViewById(R.id.base_root);
         handler.sendEmptyMessage(0);
 //        Constant.app = this;
         setListener();
@@ -675,6 +708,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i<onyWayLinkedList.size(); i++) {
             Log.d(TAG, onyWayLinkedList.get(i));
         }
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
+
+
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                Log.d("hhh", "down");
+                return true;
+            case MotionEvent.ACTION_UP:
+                Log.d("hhh", "up");
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                return true;
+            case MotionEvent.ACTION_CANCEL:
+                Log.d("hhh", "cancle");
+                return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     public void reentrantLock(View view) {
@@ -1476,7 +1536,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void jspdf(View view) {
         Intent intent = new Intent(this, PdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
-        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+//        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+        path = path+"/Allinmd/download/pdfile/123456789.pdf";
         intent.putExtra("url", path);
         startActivity(intent);
     }
@@ -1484,17 +1545,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void pdfRendererBasic(View view) {
         Intent intent = new Intent(this, RendererPdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
-        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+//        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+        path = path+"/Allinmd/download/pdfile/123456789.pdf";
         intent.putExtra("url", path);
         startActivity(intent);
     }
+
+    private static final String[] sPermissions = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 //大小可忽略
     public void pdfViewPage(View view) {
-        Intent intent = new Intent(this, PdfViewPageActivitry.class);
-        String path = Environment.getExternalStorageDirectory().toString();
-        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
-        intent.putExtra("url", path);
-        startActivity(intent);
+        if (!EasyPermissions.hasPermissions(this, sPermissions)) {
+            EasyPermissions.requestPermissions(this, getString(com.mingyuechunqiu.recordermanager.R.string.rm_warn_allow_record_video_permissions), 1, sPermissions);
+        } else {
+            Intent intent = new Intent(this, PdfViewPageActivitry.class);
+            String path = Environment.getExternalStorageDirectory().toString();
+//        path = path+"/Allinmd/3D打印技术在足踝外科的应用价值.pdf";
+//            path = path+"/Allinmd/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
+            path = path+"/Allinmd/download/pdfile/123456789.pdf";
+//            path = path+"/Allinmd/12345678.pdf";
+            File file = new File(path);
+            if (!file.exists()){
+                Logger.e("不存在");
+            }
+            intent.putExtra("url", path);
+            startActivity(intent);
+        }
+    }
+//    boolean bbb = true;
+    public void customSnackBar(View view) {
+        ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content).getRootView();
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if(!Settings.canDrawOverlays(getApplicationContext())) {
+//                //启动Activity让用户授权
+//                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+//                intent.setData(Uri.parse("package:" + getPackageName()));
+//                startActivityForResult(intent,100);
+//                return;
+//            }
+//        }
+//        if (bbb){
+            Logger.d("hhhhhhh", "show");
+            SnackbarCus snackbarCus = SnackbarCus.make(this, "工作人员会在3个工作日内进行审核，结果会通过app给您通知，也可能会有运营人员电话联系您 。", SnackbarCus.LENGTH_LONG /* duration */);
+//            SnackbarCus snackbarCus = SnackbarCus.make(this, "message", SnackbarCus.LENGTH_SHORT /* duration */);
+            SnackbarManagerCus.show(snackbarCus);
+//            bbb = false;
+
+
+//        CustomToast.makeDkToast(this,"显示效果",10000).show();
+
+//        startActivity(new Intent(this, DataBindingActivity.class));
+//        }else {
+//            Logger.d("hhhhhhh", "show");
+//            SnackbarManagerCus.dismiss();
+//            bbb = true;
+//        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
 //    private String lalalal(String qqqqqq) {

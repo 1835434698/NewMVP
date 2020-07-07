@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/base_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -259,6 +260,11 @@
             android:layout_height="wrap_content"
             android:onClick="pdfViewPage"
             android:text="pdfViewPage" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="customSnackBar"
+            android:text="自定义SnackBar" />
 
         <TextView
             android:layout_width="700px"

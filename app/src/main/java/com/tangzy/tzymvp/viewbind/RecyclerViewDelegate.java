@@ -94,7 +94,7 @@ int i =0;
 //        });
 //        ptrFrameLayout.getRefreshFooter();
 //        ptrFrameLayout.getRefreshHeader();
-
+        ptrFrameLayout.autoRefresh();
         ptrFrameLayout.setPullToRefresh(true);
         ptrFrameLayout.setResistance(1.7f);
         ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);

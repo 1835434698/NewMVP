@@ -13,7 +13,7 @@ public class Constant {
     public static String MESSSAGE = "网络错误";
     public static String MESSSAGEJSON = "数据解析错误";
     public static int ERRORCODE = -1;
-    public static String path = Environment.getExternalStorageDirectory().toString()+"/DemoApp";
+    public static String path = Environment.getExternalStorageDirectory().toString()+"/DemoApp1";
 
     public static final String API_LOGIN = "login";
 }

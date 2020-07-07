@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         .withLong("key1", 666L)
                         .withString("key3", "888")
                         .withParcelable("key4", dataBean)
-                        .navigation();
+                        .navigation(this, 0);
 
 //                if (netCheck()&&textCheck()){
 //                    final JSONObject httpParams =  new JSONObject();
@@ -135,6 +135,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Logger.d("hanyang", "onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private ResponseListener listener = new ResponseListener() {
         @Override
         public void onResp(String respons, String uri) {
