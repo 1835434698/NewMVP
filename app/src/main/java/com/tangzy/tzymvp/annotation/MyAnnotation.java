@@ -21,9 +21,9 @@ public class MyAnnotation {
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.RUNTIME)
     public @interface MyClassAnnotation {
-        String uri();
+        String uriClass();
 
-        String desc();
+        String descClass();
     }
 
     /**
@@ -35,9 +35,9 @@ public class MyAnnotation {
     @Target(ElementType.CONSTRUCTOR)
     @Retention(RetentionPolicy.RUNTIME)
     public @interface MyConstructorAnnotation {
-        String uri();
+        String uriConstructor();
 
-        String desc();
+        String descConstructor();
     }
 
     /**
@@ -49,9 +49,9 @@ public class MyAnnotation {
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
     public @interface MyMethodAnnotation {
-        String uri();
+        String uriMethod();
 
-        String desc();
+        String descMethod();
     }
 
     /**
@@ -63,9 +63,9 @@ public class MyAnnotation {
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.RUNTIME)
     public @interface MyFieldAnnotation {
-        String uri();
+        String uriField();
 
-        String desc();
+        String descField();
     }
 
     /**

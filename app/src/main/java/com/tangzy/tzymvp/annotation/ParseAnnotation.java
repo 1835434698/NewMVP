@@ -7,6 +7,7 @@ import com.tangzy.tzymvp.annotation.MyAnnotation.MyClassAndMethodAnnotation.Enum
 import com.tangzy.tzymvp.annotation.MyAnnotation.MyClassAnnotation;
 import com.tangzy.tzymvp.annotation.MyAnnotation.MyMethodAnnotation;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -28,9 +29,9 @@ public class ParseAnnotation {
             for (Method method : clazz.getDeclaredMethods()) {
                 MyMethodAnnotation methodAnnotation = method.getAnnotation(MyMethodAnnotation.class);
                 if (methodAnnotation != null) {
-                         Log.d("注解", "methodAnnotation.uri() = "+methodAnnotation.uri());
+                         Log.d("注解", "methodAnnotation.uri() = "+methodAnnotation.uriMethod());
                     // 通过反射调用带有此注解的方法
-                    method.invoke(obj, methodAnnotation.uri());
+                    method.invoke(obj, methodAnnotation.uriMethod());
                 }
                 MyClassAndMethodAnnotation myClassAndMethodAnnotation = method
                         .getAnnotation(MyClassAndMethodAnnotation.class);
@@ -49,6 +50,19 @@ public class ParseAnnotation {
             e.printStackTrace();
         }
     }
+    public static <T> void parseField(Class<T> clazz) {
+        try {
+            // 获得字段注解
+            Field field = null;// 暴力获取private修饰的成员变量
+            field = clazz.getDeclaredField("id");
+            MyAnnotation.MyFieldAnnotation myFieldAnnotation = field.getAnnotation(MyAnnotation.MyFieldAnnotation.class);
+            Log.d("注解", myFieldAnnotation.descField() + "+" + myFieldAnnotation.uriField());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static <T> void parseType(Class<T> clazz) {
         try {
@@ -57,14 +71,16 @@ public class ParseAnnotation {
             if (myClassAndMethodAnnotation != null) {
                 if (EnumType.util.equals(myClassAndMethodAnnotation.classType())) {
                     Log.d("注解", "this is a util class");
+                } else if (EnumType.entity.equals(myClassAndMethodAnnotation.classType())){
+                    Log.d("注解", "this is a entity class");
                 } else {
                     Log.d("注解", "this is a other class");
                 }
             }
             MyClassAnnotation myClassAnnotation = clazz.getAnnotation(MyClassAnnotation.class);
             if (myClassAnnotation != null) {
-                Log.d("注解", " class uri: " + myClassAnnotation.uri());
-                Log.d("注解", " class desc: " + myClassAnnotation.desc());
+                Log.d("注解", " class uri: " + myClassAnnotation.uriClass());
+                Log.d("注解", " class desc: " + myClassAnnotation.descClass());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,6 +90,7 @@ public class ParseAnnotation {
 
     public static void main(String[] args) {
         parseMethod(TestAnnotation.class);
+        parseField(TestAnnotation.class);
         parseType(TestAnnotation.class);
     }
 }

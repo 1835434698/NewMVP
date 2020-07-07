@@ -60,6 +60,7 @@ import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.activity.YuanChengActivity;
 import com.tangzy.tzymvp.annotation.ParseAnnotation;
 import com.tangzy.tzymvp.annotation.Test;
+import com.tangzy.tzymvp.annotation.TestClass;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.Info;
 import com.tangzy.tzymvp.bean.TzyBean;
@@ -418,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /**
          * 直接调用
          */
-        Test.main(null);
+        TestClass.main(null);
         /**
          * 遍历获取
          * 通过获取注解方法获取
