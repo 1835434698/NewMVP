@@ -18,6 +18,7 @@ package es.voghdev.pdfviewpager.library.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.pdf.PdfRenderer;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,6 +49,7 @@ public class PDFPagerAdapter extends BasePDFPagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View v = inflater.inflate(R.layout.view_pdf_page, container, false);
         SubsamplingScaleImageView ssiv = v.findViewById(R.id.subsamplingImageView);
+        Log.d("PDFPagerAdapter", "Count = "+getCount());
 
         if (renderer == null || getCount() < position) {
             return v;
