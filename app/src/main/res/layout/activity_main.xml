@@ -265,6 +265,11 @@
             android:layout_height="wrap_content"
             android:onClick="customSnackBar"
             android:text="自定义SnackBar" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loaderSDClass"
+            android:text="动态还在sd卡class" />
 
         <TextView
             android:layout_width="700px"

@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.servive.DemoIntentService;
+import com.tangzy.tzymvp.view.toast.SnackbarCus;
+import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
 
 public class YuanChengActivity extends AppCompatActivity {
 
@@ -24,6 +26,9 @@ public class YuanChengActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yuancheng);
+        SnackbarCus snackbarCus = SnackbarCus.make(this, "工作人员会在3个工作日内进行审核，结果会通过app给您通知，也可能会有运营人员电话联系您 。", SnackbarCus.LENGTH_LONG /* duration */);
+//            SnackbarCus snackbarCus = SnackbarCus.make(this, "message", SnackbarCus.LENGTH_SHORT /* duration */);
+        SnackbarManagerCus.show(snackbarCus);
 
     }
 

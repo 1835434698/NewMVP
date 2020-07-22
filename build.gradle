@@ -14,11 +14,15 @@ buildscript {
         classpath 'com.alibaba:arouter-register:1.0.2'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // apt
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 //        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
 //        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.2.0"
 
-        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+//        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

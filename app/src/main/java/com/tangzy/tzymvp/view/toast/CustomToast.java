@@ -92,15 +92,15 @@ public class CustomToast {
         try {
             //android4.0以上就要以下处理
             if (Build.VERSION.SDK_INT > 14) {
-                Field mNextViewField = mTN.getClass().getDeclaredField("mNextView");
-                mNextViewField.setAccessible(true);
-                LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View v = mToast.getView();
-                mNextViewField.set(mTN, v);
-                Method method = mTN.getClass().getDeclaredMethod("show", null);
-                method.invoke(mTN, null);
+//                Field mNextViewField = mTN.getClass().getDeclaredField("mNextView");
+//                mNextViewField.setAccessible(true);
+//                LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                View v = mToast.getView();
+//                mNextViewField.set(mTN, v);
+//                Method method = mTN.getClass().getDeclaredMethod("show", null);
+//                method.invoke(mTN, null);
             }
-            mShow.invoke(mTN, null);
+//            mShow.invoke(mTN, null);
         } catch (Exception e) {
             e.printStackTrace();
             Logger.e("hhhhhhh", "error = "+e.getMessage());
@@ -110,14 +110,14 @@ public class CustomToast {
     }
 
     private static void hide() {
-        try {
-            mHide.invoke(mTN, null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mHide.invoke(mTN, null);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (IllegalArgumentException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
     }
 }

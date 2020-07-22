@@ -17,41 +17,42 @@
 
 <view xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     class="com.tangzy.tzymvp.view.toast.SnackbarContentLayoutCus"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="top|center"
-    android:background="@drawable/bg_toast">
+    android:layout_gravity="top|center">
+<!--    android:background="@drawable/shape_background_ffffff_9dp_corner_bottom"-->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:paddingTop="28dp"
-        android:paddingBottom="24dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="30dp">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/snackbar_title"
-            android:layout_width="wrap_content"
+        android:background="@drawable/comm_snackbar_bg_shadow"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:drawablePadding="8dp"
-            app:drawableLeftCompat="@drawable/comm_success_logo"
-            tool:text="测试"/>
-        <TextView
-            android:id="@+id/snackbar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="13sp"
-            tool:text="工作人员会在3个工作日内进行审核，结果会通过app给您通知，也可能会有运营人员电话联系您 。"/>
+            android:orientation="vertical"
+            android:paddingTop="28dp"
+            android:paddingBottom="24dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="30dp">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/snackbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawablePadding="8dp"
+                app:drawableLeftCompat="@drawable/comm_success_logo"
+                tool:text="测试"/>
+            <TextView
+                android:id="@+id/snackbar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="13sp"
+                tool:text="工作人员会在3个工作日内进行审核，结果会通过app给您通知，也可能会有运营人员电话联系您 。"/>
+
+        </LinearLayout>
 
 </view>

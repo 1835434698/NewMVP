@@ -32,7 +32,7 @@ public class SnackbarManagerCus {
     static final int MSG_TIMEOUT = 0;
 
     private static final int SHORT_DURATION_MS = 1500;//todo 时间设置
-    private static final int LONG_DURATION_MS = 2750;
+    private static final int LONG_DURATION_MS = 5000;
 
     private static SnackbarManagerCus sSnackbarManager;
 

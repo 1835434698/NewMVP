@@ -41,6 +41,8 @@ import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoRequestOption;
 import com.mingyuechunqiu.recordermanager.data.bean.RecordVideoResultInfo;
 import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
+import com.tangzy.myannotation.CustomAnnotation;
+import com.tangzy.myannotation.MyAnnotationApi;
 import com.tangzy.pdfrenderer.RendererPdfActivity;
 import com.tangzy.pdfviewpage.PdfViewPageActivitry;
 import com.tangzy.tzymvp.activity.AiduActivity;
@@ -136,6 +138,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
+@CustomAnnotation
 @Route(path = "/test/MainActivity")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -258,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("hhhhhhhhhh", "onComplete");
                     }
                 });
+        MyAnnotationApi.sayHelloAnnotation(this);
     }
 
     @Override
@@ -1610,9 +1614,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
-//    private String lalalal(String qqqqqq) {
-//        return qqqqqq+"_";
-//    }
+    public void loaderSDClass(View view) {
+
+    }
+
 
 
     class Producer implements Runnable {
