@@ -22,6 +22,7 @@ import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
         init();
     }
 
-    @SuppressWarnings("NewApi")
+//    @SuppressWarnings("NewApi")
     protected void init() {
         try {
             renderer = new PdfRenderer(getSeekableFileDescriptor(pdfPath));
@@ -92,6 +93,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
             PdfRendererParams params = extractPdfParamsFromFirstPage(renderer, renderQuality);
             bitmapContainer = new SimpleBitmapPool(params);
         } catch (IOException e) {
+            Log.e("", "error = "+e.getMessage());
             errorHandler.onPdfError(e);
         }
     }

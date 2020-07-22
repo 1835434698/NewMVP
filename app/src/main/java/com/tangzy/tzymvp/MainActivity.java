@@ -1542,7 +1542,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, PdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
-        path = path+"/Allinmd/download/pdfile/123456789.pdf";
+        path = path+"/Allinmd/download/项目管理知识体系指南 中文 第六版.pdf";
         intent.putExtra("url", path);
         startActivity(intent);
     }
@@ -1551,7 +1551,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, RendererPdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
-        path = path+"/Allinmd/download/pdfile/123456789.pdf";
+//        path = path+"/Allinmd/download/pdfile/123456789.pdf";
+        path = path+"/Allinmd/download/项目管理知识体系指南 中文 第六版.pdf";
         intent.putExtra("url", path);
         startActivity(intent);
     }
@@ -1568,7 +1569,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/3D打印技术在足踝外科的应用价值.pdf";
 //            path = path+"/Allinmd/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
-            path = path+"/Allinmd/download/pdfile/123456789.pdf";
+            path = path+"/Allinmd/download/项目管理知识体系指南 中文 第六版.pdf";
 //            path = path+"/Allinmd/12345678.pdf";
             File file = new File(path);
             if (!file.exists()){
