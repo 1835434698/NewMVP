@@ -1209,6 +1209,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new ObserverIm<ResultBean>() {
                     @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        Log.e(TAG,"onSubscribe");
+                    }
+
+                    @Override
                     public void onNext(ResultBean loginBeanResponse) {
 //                        try {
                             Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
@@ -1219,6 +1225,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG,"onError:"+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        Log.e(TAG,"onComplete");
                     }
                 })
         ;
@@ -1279,45 +1291,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String sortStr = "{\"firstResult\":0,\"currentDate\":\"2020-07-23 14:21:17\",\"token\":\"c79835d5e193f4d65a8cf7cc8d708942\",\"pageSize\":20,\"pageIndex\":1,\"sessionId\":1595483546999,\"maxResult\":20,\"zuultoken\":\"c37c3c0d6d2164e4366f0518a3f0311f\",\"opAdvice\":\"无,m1 metal_android5.1,Meizu\",\"logoUseFlag\":\"4\",\"apiToken\":\"xQAeQHLzwpIgBLQVKVDJTMOCmtElTIgK\",\"sessionCustomerId\":\"1592208325933\",\"multiLoginDeviceId\":\"C82E922C3B8B4FF72237CFCC550D51BE71A00F21\",\"deviceToken\":\"190e35f7e03a43dd7f6\",\"appVersion\":\"40104\",\"visitSiteId\":6,\"customerId\":\"1592208325933\",\"tVersion\":\"m1 metal\",\"osVersion\":\"android5.1\",\"opIp\":\"100.64.69.5\",\"opUsr\":\"1592208325933\",\"readFansTime\":\"2020-07-23 13:16:28\"}";
         Map<String,Object> params = new Gson().fromJson(sortStr, mapType);
 
-        RetrofitManager.INSTANCE.create(APIService.class, "http://dev-api.allinmd.cn:18080/services/\"").getFollowFansMapList(sortStr)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-                .subscribe(new ObserverIm<ResponseBody>() {
-                    @Override
-                    public void onNext(ResponseBody loginBeanResponse) {
-
-                        try {
-                            //获取bodyString
-                            BufferedSource source = loginBeanResponse.source();
-                            source.request(Long.MAX_VALUE);
-                            Buffer buffer = source.buffer();
-                            Charset charset = Charset.forName("UTF-8");
-                            MediaType contentType = loginBeanResponse.contentType();
-                            if (contentType != null) {
-                                charset = contentType.charset(charset);
-                            }
-                            String bodyString = buffer.clone().readString(charset);
+//        RetrofitManager.INSTANCE.create(APIService.class, "http://dev-api.allinmd.cn:18080/services/\"").getFollowFansMapList(sortStr)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+//                .subscribe(new ObserverIm<ResponseBody>() {
+//                    @Override
+//                    public void onNext(ResponseBody loginBeanResponse) {
+//
 //                        try {
-//                        for (TestBean listBean: loginBeanResponse.data){
-//                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
-//                        }
-                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                            //获取bodyString
+//                            BufferedSource source = loginBeanResponse.source();
+//                            source.request(Long.MAX_VALUE);
+//                            Buffer buffer = source.buffer();
+//                            Charset charset = Charset.forName("UTF-8");
+//                            MediaType contentType = loginBeanResponse.contentType();
+//                            if (contentType != null) {
+//                                charset = contentType.charset(charset);
+//                            }
+//                            String bodyString = buffer.clone().readString(charset);
+////                        try {
+////                        for (TestBean listBean: loginBeanResponse.data){
+////                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
+////                        }
+//                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+////                        } catch (IOException e) {
+////                            e.printStackTrace();
+////                        }
 //                        } catch (IOException e) {
 //                            e.printStackTrace();
 //                        }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG,"onError:"+e.getMessage());
-                    }
-
-                })
-        ;
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e(TAG,"onError:"+e.getMessage());
+//                    }
+//
+//                })
+//        ;
     }
 
     public void dataBinding(View view) {
