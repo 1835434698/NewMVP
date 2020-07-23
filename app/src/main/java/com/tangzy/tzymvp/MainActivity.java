@@ -1200,91 +1200,86 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void Retrofit(View view) {
 
-//        Map<String, String> mapParams = new ArrayMap<>();
-//        mapParams.put("userName","user01");
-//        mapParams.put("passWord","123456");
-//        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-//                .subscribe(new ObserverIm<ResultBean>() {
-//                    @Override
-//                    public void onNext(ResultBean loginBeanResponse) {
-////                        try {
+        Map<String, String> mapParams = new ArrayMap<>();
+        mapParams.put("userName","user01");
+        mapParams.put("passWord","123456");
+        RetrofitManager.INSTANCE.create(APIService.class).login(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new ObserverIm<ResultBean>() {
+                    @Override
+                    public void onNext(ResultBean loginBeanResponse) {
+//                        try {
+                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+                })
+        ;
+
+        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new ObserverIm<ListBean>() {
+                    @Override
+                    public void onNext(ListBean loginBeanResponse) {
+//                    public void onNext(List<ListBean> loginBeanResponse) {
+//                        try {
+                        for (TestBean listBean: loginBeanResponse.data){
+                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
+                        }
 //                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                        }
-//                    }
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG,"onError:"+e.getMessage());
-//                    }
-//                })
-//        ;
-//
-//        RetrofitManager.INSTANCE.create(APIService.class).getList(mapParams)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-//                .subscribe(new ObserverIm<ListBean>() {
-//                    @Override
-//                    public void onNext(ListBean loginBeanResponse) {
-////                    public void onNext(List<ListBean> loginBeanResponse) {
-////                        try {
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+                })
+        ;
+
+        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new ObserverIm<List<TestBean>>() {
+                    @Override
+                    public void onNext(List<TestBean> loginBeanResponse) {
+//                        try {
 //                        for (TestBean listBean: loginBeanResponse.data){
 //                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
 //                        }
-////                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG,"onError:"+e.getMessage());
-//                    }
-//                })
-//        ;
-//
-//        RetrofitManager.INSTANCE.create(APIService.class).getList2(mapParams)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-//                .subscribe(new ObserverIm<List<TestBean>>() {
-//                    @Override
-//                    public void onNext(List<TestBean> loginBeanResponse) {
-////                        try {
-////                        for (TestBean listBean: loginBeanResponse.data){
-////                            Log.e(TAG,"onNext: listBean = "+listBean.toString());
-////                        }
-//                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
-////                        } catch (IOException e) {
-////                            e.printStackTrace();
-////                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e(TAG,"onError:"+e.getMessage());
-//                    }
-//
-//                })
-//        ;
+                            Log.e(TAG,"onNext: loginBeanResponse = "+loginBeanResponse.toString());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
 
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("readFansTime", SavePreferences.getString("readFansTime"));
-//        params.put("customerId", otherCustomerId);
-//        params.put("sessionCustomerId", sessionCustomerId);
-//        params.put("followType", followType);
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG,"onError:"+e.getMessage());
+                    }
+
+                })
+        ;
+
 
         Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
 //        String sortStr = filterValue.get("sortMap").toString();
         String sortStr = "{\"firstResult\":0,\"currentDate\":\"2020-07-23 14:21:17\",\"token\":\"c79835d5e193f4d65a8cf7cc8d708942\",\"pageSize\":20,\"pageIndex\":1,\"sessionId\":1595483546999,\"maxResult\":20,\"zuultoken\":\"c37c3c0d6d2164e4366f0518a3f0311f\",\"opAdvice\":\"无,m1 metal_android5.1,Meizu\",\"logoUseFlag\":\"4\",\"apiToken\":\"xQAeQHLzwpIgBLQVKVDJTMOCmtElTIgK\",\"sessionCustomerId\":\"1592208325933\",\"multiLoginDeviceId\":\"C82E922C3B8B4FF72237CFCC550D51BE71A00F21\",\"deviceToken\":\"190e35f7e03a43dd7f6\",\"appVersion\":\"40104\",\"visitSiteId\":6,\"customerId\":\"1592208325933\",\"tVersion\":\"m1 metal\",\"osVersion\":\"android5.1\",\"opIp\":\"100.64.69.5\",\"opUsr\":\"1592208325933\",\"readFansTime\":\"2020-07-23 13:16:28\"}";
         Map<String,Object> params = new Gson().fromJson(sortStr, mapType);
 
-        RetrofitManager.INSTANCE.create(APIService.class).getFollowFansMapList(sortStr)
+        RetrofitManager.INSTANCE.create(APIService.class, "http://dev-api.allinmd.cn:18080/services/\"").getFollowFansMapList(sortStr)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))

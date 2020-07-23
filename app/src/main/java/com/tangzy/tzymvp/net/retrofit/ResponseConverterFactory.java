@@ -56,21 +56,6 @@ public class ResponseConverterFactory  extends Converter.Factory {
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
     public static ResponseConverterFactory create() {
-//        Gson gson = new GsonBuilder()
-////                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-//                .registerTypeAdapter(Double.class, new JsonSerializer<Double>() {
-//                    @Override
-//                    public JsonElement serialize(Double src, Type typeOfSrc, JsonSerializationContext context) {
-//                        Logger.i("Retrofit", "serialize -> src=" + src);
-//                        if (convertToString(src) == convertToString(src.longValue())){
-//                            return new JsonPrimitive(src.longValue());
-//                        }else {
-//                            return new JsonPrimitive(src);
-//                        }
-//                    }
-//                })
-//                .create();//使用 gson coverter，统一日期请求格式
-//        return create(gson);
         return create(new Gson());
     }
 
