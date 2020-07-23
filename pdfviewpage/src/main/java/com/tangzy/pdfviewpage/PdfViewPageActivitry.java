@@ -5,6 +5,12 @@ import android.os.Environment;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.tangzy.pdfviewpage.adapter.RecycleAdapter;
+
 import es.voghdev.pdfviewpager.library.PDFViewPager;
 import es.voghdev.pdfviewpager.library.R;
 import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
@@ -12,7 +18,8 @@ import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 
 public class PdfViewPageActivitry  extends AppCompatActivity {
     PDFViewPager pdfViewPager;
-    BasePDFPagerAdapter adapter;
+    PDFPagerAdapter adapter;
+    RecyclerView bottom;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,24 @@ public class PdfViewPageActivitry  extends AppCompatActivity {
         Log.d("PdfViewPageActivitry", "url = "+url);
         adapter = new PDFPagerAdapter(this, url);
         pdfViewPager.setAdapter(adapter);
+
+        initRecycleView();
+    }
+
+    private RecycleAdapter bottomAdapter;
+    private void initRecycleView() {
+        bottom = findViewById(R.id.bottom);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        bottom.setLayoutManager(layoutManager);
+
+//2 分割线
+//        recycleView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));//分割线
+
+        bottomAdapter = new RecycleAdapter(this, adapter);
+        bottom.setAdapter(bottomAdapter);
     }
 
     @Override

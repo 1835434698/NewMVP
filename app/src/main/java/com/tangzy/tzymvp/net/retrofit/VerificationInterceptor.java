@@ -1,10 +1,26 @@
 package com.tangzy.tzymvp.net.retrofit;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
 import com.tangzy.tzymvp.util.Logger;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -23,6 +39,33 @@ import okio.BufferedSource;
  */
 public class VerificationInterceptor implements Interceptor {
     private final String TAG = "Retrofit";
+
+    /**
+     * Object转成String
+     *
+     * @param value object对象
+     * @return  返回值
+     */
+    public static String convertToString(Object value) {
+        return convertToString(value, "");
+    }
+    /**
+     * Object转成String
+     *
+     * @param value
+     * @return
+     */
+    public static String convertToString(Object value, String defaultStr) {
+        if (value == null || "".equals(value.toString().trim()) || "null".equals(value.toString().trim())) {
+            return defaultStr;
+        }
+        try {
+            return value.toString();
+        } catch (Exception e) {
+            return defaultStr;
+        }
+    }
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Logger.d(TAG, "VerificationInterceptor");
@@ -47,7 +90,36 @@ public class VerificationInterceptor implements Interceptor {
                     //我这里是base64解码  具体情况自己定义
                     //base64解码
 //                    String responseData = new String(EncodeUtils.base64Decode(bodyString));
+
+//
+//                    Gson gson = new GsonBuilder()
+////                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+//                            .registerTypeAdapter(
+//                                    new TypeToken<Map<String, Object>>(){}.getType(),
+//                                    new JsonDeserializer<Map<String, Object>>() {
+//                                        @Override
+//                                        public Map<String, Object> deserialize(
+//                                                JsonElement json, Type typeOfT,
+//                                                JsonDeserializationContext context) throws JsonParseException {
+//                                            Logger.i("Retrofit", "deserialize -> src");
+//
+//                                            Map<String, Object> treeMap = new TreeMap<>();
+//                                            JsonObject jsonObject = json.getAsJsonObject();
+//                                            Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+//                                            for (Map.Entry<String, JsonElement> entry : entrySet) {
+//                                                treeMap.put(entry.getKey(), entry.getValue());
+//                                            }
+//                                            return treeMap;
+//                                        }
+//                                    })
+//                            .create();//使用 gson coverter，统一日期请求格式
+//
+//                    HashMap hashMap = gson.fromJson(bodyString, HashMap.class);
+//
+//                    String  responseData = gson.toJson(hashMap);
+
                     String responseData = bodyString;
+
                     //生成新的ResponseBody
                     ResponseBody newResponseBody = ResponseBody.create(contentType, responseData.trim());
                     //response

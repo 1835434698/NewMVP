@@ -35,7 +35,7 @@ public class SignInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Logger.d(TAG, "SignInterceptor");
         Request request = chain.request();
-        Logger.d(TAG, "request = "+request.body().toString());
+//        Logger.d(TAG, "request = "+request.body().toString());
         if (!NetUtil.checkNetType(Constant.app)) {
             int offlineCacheTime = 60;//离线的时候的缓存的过期时间
             request = request.newBuilder()

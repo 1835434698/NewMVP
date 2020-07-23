@@ -75,6 +75,11 @@ public class PDFPagerAdapter extends BasePDFPagerAdapter {
         return v;
     }
 
+    public Bitmap getItem(int position){
+//        PdfRenderer.Page page = getPDFPage(renderer, position);
+        return bitmapContainer.get(position);
+    }
+
     @Override
     public void close() {
         super.close();

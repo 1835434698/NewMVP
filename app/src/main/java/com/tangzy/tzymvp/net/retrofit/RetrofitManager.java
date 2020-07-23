@@ -17,7 +17,8 @@ public enum RetrofitManager {
      * 单例
      */
     INSTANCE;
-    public final String URL = "http://192.168.69.86/case_prpc/";
+//    public final String URL = "http://192.168.69.86/case_prpc/";
+    public final String URL = "http://dev-api.allinmd.cn:18080/services/";
 
     public final int DEFAULT_MILLISECONDS = 12 * 1000;//默认超时时间
     private String URL_BASE = URL;

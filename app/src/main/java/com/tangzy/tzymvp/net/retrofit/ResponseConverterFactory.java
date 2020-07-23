@@ -1,8 +1,14 @@
 package com.tangzy.tzymvp.net.retrofit;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
+import com.tangzy.tzymvp.util.Logger;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -19,11 +25,52 @@ import retrofit2.Retrofit;
  * @date 2019/12/26
  */
 public class ResponseConverterFactory  extends Converter.Factory {
+
+    /**
+     * Object转成String
+     *
+     * @param value object对象
+     * @return  返回值
+     */
+    public static String convertToString(Object value) {
+        return convertToString(value, "");
+    }
+    /**
+     * Object转成String
+     *
+     * @param value
+     * @return
+     */
+    public static String convertToString(Object value, String defaultStr) {
+        if (value == null || "".equals(value.toString().trim()) || "null".equals(value.toString().trim())) {
+            return defaultStr;
+        }
+        try {
+            return value.toString();
+        } catch (Exception e) {
+            return defaultStr;
+        }
+    }
     /**
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
     public static ResponseConverterFactory create() {
+//        Gson gson = new GsonBuilder()
+////                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+//                .registerTypeAdapter(Double.class, new JsonSerializer<Double>() {
+//                    @Override
+//                    public JsonElement serialize(Double src, Type typeOfSrc, JsonSerializationContext context) {
+//                        Logger.i("Retrofit", "serialize -> src=" + src);
+//                        if (convertToString(src) == convertToString(src.longValue())){
+//                            return new JsonPrimitive(src.longValue());
+//                        }else {
+//                            return new JsonPrimitive(src);
+//                        }
+//                    }
+//                })
+//                .create();//使用 gson coverter，统一日期请求格式
+//        return create(gson);
         return create(new Gson());
     }
 

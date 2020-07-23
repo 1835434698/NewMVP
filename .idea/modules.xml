@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyProcessor/MyProcessor.iml" filepath="$PROJECT_DIR$/MyProcessor/MyProcessor.iml" group="TheMVP/MyProcessor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TheMVP.iml" filepath="$PROJECT_DIR$/.idea/TheMVP.iml" group="TheMVP" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TheMVP/app" />
+      <module fileurl="file://$PROJECT_DIR$/demoloader/demoloader.iml" filepath="$PROJECT_DIR$/demoloader/demoloader.iml" group="TheMVP/demoloader" />
+      <module fileurl="file://$PROJECT_DIR$/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/ffmpeg/ffmpeg.iml" group="TheMVP/ffmpeg" />
+      <module fileurl="file://$PROJECT_DIR$/filelibrary/filelibrary.iml" filepath="$PROJECT_DIR$/filelibrary/filelibrary.iml" group="TheMVP/filelibrary" />
+      <module fileurl="file://$PROJECT_DIR$/jspdf/jspdf.iml" filepath="$PROJECT_DIR$/jspdf/jspdf.iml" group="TheMVP/jspdf" />
+      <module fileurl="file://$PROJECT_DIR$/myannotation/myannotation.iml" filepath="$PROJECT_DIR$/myannotation/myannotation.iml" group="TheMVP/myannotation" />
+      <module fileurl="file://$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" filepath="$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" group="TheMVP/pdfRenderer" />
+      <module fileurl="file://$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" filepath="$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" group="TheMVP/pdfviewpage" />
+      <module fileurl="file://$PROJECT_DIR$/recordermanager/recordermanager.iml" filepath="$PROJECT_DIR$/recordermanager/recordermanager.iml" group="TheMVP/recordermanager" />
+      <module fileurl="file://$PROJECT_DIR$/screenlockcamera/screenlockcamera.iml" filepath="$PROJECT_DIR$/screenlockcamera/screenlockcamera.iml" group="TheMVP/screenlockcamera" />
+      <module fileurl="file://$PROJECT_DIR$/testdemo/testdemo.iml" filepath="$PROJECT_DIR$/testdemo/testdemo.iml" group="TheMVP/testdemo" />
+    </modules>
+  </component>
+</project>
