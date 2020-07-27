@@ -122,17 +122,42 @@ public class ListenerActivity extends AppCompatActivity{
 
     }
 
-    private ArrayList<OnOffsetChangedListener> listeners = new ArrayList<>();
+    private volatile ArrayList<OnOffsetChangedListener> listeners = new ArrayList<>();
 
 
     public void startRemove(View view) {
-        ArrayList<OnOffsetChangedListener> lists = (ArrayList<OnOffsetChangedListener>) listeners.clone();
-        int length = lists.size();
-        for (int i =0; i<length; i++){
-            lists.get(i).onOffsetChanged();
-        }
-        Logger.d("tangzy", "listeners = "+listeners.size());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i =0; i<listeners.size(); i++){
+                    Logger.d("tangzy", "i2 = "+i);
+                    listeners.get(i).onOffsetChanged();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int length = listeners.size();
+                for (int i =length-1; i>=0; i--){
+                    Logger.d("tangzy", "i = "+i+", "+listeners.get(i).getClass().getName());
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }).start();
+
+        Logger.d("tangzy", "listeners = "+listeners.size());
     }
 
     public void addOnOffsetChangedListener(OnOffsetChangedListener listener) {
@@ -141,6 +166,7 @@ public class ListenerActivity extends AppCompatActivity{
 
     public void removeOnOffsetChangedListener(OnOffsetChangedListener listener) {
         if (this.listeners != null && listener != null) {
+            Logger.d("tangzy", "removeOnOffsetChangedListener "+listener.getClass());
             this.listeners.remove(listener);
         }
 
