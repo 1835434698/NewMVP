@@ -11,7 +11,7 @@ import es.voghdev.pdfviewpager.library.adapter.BasePDFPagerAdapter;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
 
 public class PdfViewPageActivitry  extends AppCompatActivity {
-    PDFViewPager pdfViewPager;
+    VerticalViewPager pdfViewPager;
     BasePDFPagerAdapter adapter;
 
     @Override
@@ -19,7 +19,7 @@ public class PdfViewPageActivitry  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewpage);
 
-        pdfViewPager = (PDFViewPager) findViewById(R.id.pdfViewPager);
+        pdfViewPager = findViewById(R.id.pdfViewPager);
         String url = this.getIntent().getStringExtra("url");
         Log.d("PdfViewPageActivitry", "url = "+url);
         adapter = new PDFPagerAdapter(this, url);

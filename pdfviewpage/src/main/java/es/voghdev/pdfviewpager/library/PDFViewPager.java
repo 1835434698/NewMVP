@@ -18,6 +18,7 @@ package es.voghdev.pdfviewpager.library;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.viewpager.widget.ViewPager;
@@ -70,14 +71,33 @@ public class PDFViewPager extends ViewPager {
                 .create());
     }
 
+    private int pointY=0;
     /**
      * PDFViewPager uses PhotoView, so this bugfix should be added
      * Issue explained in https://github.com/chrisbanes/PhotoView
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean b = super.onInterceptTouchEvent(ev);
+        Log.d("PDFPagerAdapter", "base - onInterceptTouchEvent b = "+b);
+//        Log.d("PDFPagerAdapter", "y = "+ev.getY());
+//        if (!b){
+//            switch (ev.getAction()){
+//                case MotionEvent.ACTION_DOWN:
+//                    pointY = (int) ev.getY();
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    float v = pointY - ev.getY();
+//                    if (v > 10 || v < -10){
+//                        return true;
+//                    }
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    break;
+//            }
+//        }
         try {
-            return super.onInterceptTouchEvent(ev);
+            return b;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return false;

@@ -141,6 +141,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     @Override
     @SuppressWarnings("NewApi")
     public Object instantiateItem(ViewGroup container, int position) {
+        Log.d("PDFPagerAdapter", "instantiateItem position= "+position);
         View v = inflater.inflate(R.layout.view_pdf_page, container, false);
         ImageView iv = (ImageView) v.findViewById(R.id.imageView);
 
@@ -162,11 +163,13 @@ public class BasePDFPagerAdapter extends PagerAdapter {
 
     @SuppressWarnings("NewApi")
     protected PdfRenderer.Page getPDFPage(PdfRenderer renderer, int position) {
+        Log.d("PDFPagerAdapter", "getPDFPage position= "+position);
         return renderer.openPage(position);
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        Log.d("PDFPagerAdapter", "destroyItem position= "+position);
         // bitmap.recycle() causes crashes if called here.
         // All bitmaps are recycled in close().
     }
@@ -180,6 +183,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     }
 
     protected void releaseAllBitmaps() {
+        Log.d("PDFPagerAdapter", "releaseAllBitmaps");
         if (bitmapContainer != null) {
             bitmapContainer.clear();
         }

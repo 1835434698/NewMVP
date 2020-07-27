@@ -45,7 +45,6 @@ public class PDFPagerAdapter extends BasePDFPagerAdapter {
     }
 
     @Override
-    @SuppressWarnings("NewApi")
     public Object instantiateItem(ViewGroup container, int position) {
         View v = inflater.inflate(R.layout.view_pdf_page, container, false);
         SubsamplingScaleImageView ssiv = v.findViewById(R.id.subsamplingImageView);
