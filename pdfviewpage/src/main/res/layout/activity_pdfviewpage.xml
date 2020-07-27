@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <es.voghdev.pdfviewpager.library.PDFViewPager
-            android:layout_above="@id/bottom"
             android:id="@+id/pdfViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    　<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"/>
-    </RelativeLayout>
+    </LinearLayout>
