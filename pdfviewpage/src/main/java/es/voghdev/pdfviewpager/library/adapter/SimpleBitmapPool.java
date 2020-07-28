@@ -18,6 +18,7 @@ package es.voghdev.pdfviewpager.library.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 
 public class SimpleBitmapPool implements BitmapContainer {
 
@@ -40,16 +41,26 @@ public class SimpleBitmapPool implements BitmapContainer {
     }
 
     private int getPoolSize(int offScreenSize) {
-        return (offScreenSize) * 2 + 1;
+        return (offScreenSize) * 4 + 1;
     }
 
     public Bitmap getBitmap(int position) {
         int index = getIndexFromPosition(position);
         if (bitmaps[index] == null) {
+            Log.d("tangzy1", "bitmaps[index] == null");
             createBitmapAtIndex(index);
+        }else {
+            Log.d("tangzy1", "bitmaps[index] != null");
         }
+        try {
+            if (bitmaps[index].isRecycled()){
 
-        bitmaps[index].eraseColor(Color.TRANSPARENT);
+            }else {
+                bitmaps[index].eraseColor(Color.TRANSPARENT);
+            }
+        }catch (Exception e){
+            Log.e("tangzy1", "error = "+e.getMessage());
+        }
 
         return bitmaps[index];
     }

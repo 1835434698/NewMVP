@@ -6,6 +6,8 @@
         android:requestLegacyExternalStorage="true"
         android:label="@string/app_name">
         <activity android:name="com.tangzy.pdfviewpage.PdfViewPageActivitry"/>
+
+        <activity android:name="com.tangzy.pdfviewpage.RecycleViewActivity"/>
         <service
             android:name=".service.CopyAssetService"
             android:exported="false">

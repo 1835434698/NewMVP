@@ -1,5 +1,6 @@
 package com.tangzy.pdfviewpage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -24,6 +25,12 @@ public class PdfViewPageActivitry  extends AppCompatActivity {
         Log.d("PdfViewPageActivitry", "url = "+url);
         adapter = new PDFPagerAdapter(this, url);
         pdfViewPager.setAdapter(adapter);
+
+
+
+        Intent intent = new Intent(this, RecycleViewActivity.class);
+        intent.putExtra("url", url);
+        startActivity(intent);
     }
 
     @Override

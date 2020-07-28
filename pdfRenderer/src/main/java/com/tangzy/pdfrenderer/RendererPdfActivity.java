@@ -17,6 +17,7 @@
 package com.tangzy.pdfrenderer;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class RendererPdfActivity extends AppCompatActivity {
                             FRAGMENT_PDF_RENDERER_BASIC)
                     .commit();
         }
+
     }
 
     @Override

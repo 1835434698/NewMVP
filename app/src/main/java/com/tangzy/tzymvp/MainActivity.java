@@ -45,6 +45,7 @@ import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
 import com.tangzy.myannotation.CustomAnnotation;
 import com.tangzy.myannotation.MyAnnotationApi;
+import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.pdfrenderer.RendererPdfActivity;
 import com.tangzy.pdfviewpage.PdfViewPageActivitry;
 import com.tangzy.tzymvp.activity.AiduActivity;
@@ -1616,7 +1617,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void pdfRendererBasic(View view) {
-        Intent intent = new Intent(this, RendererPdfActivity.class);
+        Intent intent = new Intent(this, RecycleViewActivity1.class);
         String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
 //        path = path+"/Allinmd/download/pdfile/123456789.pdf";

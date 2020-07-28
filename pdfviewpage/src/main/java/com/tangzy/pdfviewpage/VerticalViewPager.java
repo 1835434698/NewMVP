@@ -27,8 +27,6 @@ public class VerticalViewPager extends PDFViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercept = super.onInterceptTouchEvent(swapEvent(ev));
-        Log.d("PDFPagerAdapter", "onInterceptTouchEvent bintercept = "+intercept);
-        Log.d("PDFPagerAdapter", "onInterceptTouchEvent");
         swapEvent(ev);
         return intercept;
     }

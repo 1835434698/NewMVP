@@ -151,12 +151,17 @@ public class PdfRendererFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         try {
             closeRenderer();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        super.onStop();
     }
 
     @Override

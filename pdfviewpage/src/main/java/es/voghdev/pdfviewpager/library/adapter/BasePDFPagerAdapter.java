@@ -86,7 +86,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
     }
 
 //    @SuppressWarnings("NewApi")
-    protected void init() {
+    protected void /**/init() {
         try {
             renderer = new PdfRenderer(getSeekableFileDescriptor(pdfPath));
             inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -100,6 +100,7 @@ public class BasePDFPagerAdapter extends PagerAdapter {
 
     @SuppressWarnings("NewApi")
     protected PdfRendererParams extractPdfParamsFromFirstPage(PdfRenderer renderer, float renderQuality) {
+        Log.d("PDFPagerAdapter", "extractPdfParamsFromFirstPage renderQuality = "+renderQuality);
         PdfRenderer.Page samplePage = getPDFPage(renderer, FIRST_PAGE);
         PdfRendererParams params = new PdfRendererParams();
 

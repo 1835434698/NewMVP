@@ -65,10 +65,11 @@ public class PDFViewPager extends ViewPager {
     }
 
     protected void initAdapter(Context context, String pdfPath) {
-        setAdapter(new PDFPagerAdapter.Builder(context)
-                .setPdfPath(pdfPath)
-                .setOffScreenSize(getOffscreenPageLimit())
-                .create());
+        Log.d("PDFPagerAdapter", "initAdapter");
+//        setAdapter(new PDFPagerAdapter.Builder(context)
+//                .setPdfPath(pdfPath)
+//                .setOffScreenSize(getOffscreenPageLimit())
+//                .create());
     }
 
     private int pointY=0;

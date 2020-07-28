@@ -2,5 +2,6 @@
     package="com.tangzy.pdfrenderer" >
     <application>
         <activity android:name=".RendererPdfActivity"/>
+        <activity android:name=".RecycleViewActivity1"/>
     </application>
 </manifest>

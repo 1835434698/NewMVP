@@ -14,14 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.manager.SupportRequestManagerFragment;
-import com.bumptech.glide.util.Preconditions;
-import com.bumptech.glide.util.Util;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.RecycleViewBean;
 
@@ -73,7 +67,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecycleAdapter.Holder holder = new RecycleAdapter.Holder(LayoutInflater.from(mContext).inflate(R.layout.item_recycle, parent, false));
+        RecycleAdapter.Holder holder = new RecycleAdapter.Holder(LayoutInflater.from(mContext).inflate(R.layout.item_recycle_pdf, parent, false));
         return holder;
     }
 

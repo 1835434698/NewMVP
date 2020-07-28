@@ -147,7 +147,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'in.srain.cube:ptr-load-more:1.0.6'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
 
 //    annotationProcessor project(':MyProcessor')
     annotationProcessor project(':MyProcessor')
