@@ -45,9 +45,8 @@ import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
 import com.tangzy.myannotation.CustomAnnotation;
 import com.tangzy.myannotation.MyAnnotationApi;
+import com.tangzy.pdfrecyclerview.RecycleViewActivity;
 import com.tangzy.pdfrenderer.RecycleViewActivity1;
-import com.tangzy.pdfrenderer.RendererPdfActivity;
-import com.tangzy.pdfviewpage.PdfViewPageActivitry;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
@@ -1634,7 +1633,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!EasyPermissions.hasPermissions(this, sPermissions)) {
             EasyPermissions.requestPermissions(this, getString(com.mingyuechunqiu.recordermanager.R.string.rm_warn_allow_record_video_permissions), 1, sPermissions);
         } else {
-            Intent intent = new Intent(this, PdfViewPageActivitry.class);
+            Intent intent = new Intent(this, RecycleViewActivity.class);
             String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/3D打印技术在足踝外科的应用价值.pdf";
 //            path = path+"/Allinmd/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";

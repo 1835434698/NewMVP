@@ -1,8 +1,10 @@
 package com.tangzy.pdfrenderer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +33,27 @@ public class RecycleViewActivity1 extends AppCompatActivity {
         recycleView.setLayoutManager(layoutManager);
 
         recycleView.setAdapter(adapter);
+        recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                Log.d("tagnzy", "onScrollStateChanged newState = "+newState);
+                if (RecyclerView.SCROLL_STATE_IDLE == newState){
+                    int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                    Log.d("tagnzy", "onScrollStateChanged lastVisibleItemPosition = "+lastVisibleItemPosition);
+                    recycleView.smoothScrollToPosition(lastVisibleItemPosition);
+//                    ((LinearLayoutManager) recyclerView.getLayoutManager()).
+                }
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.d("tagnzy", "onScrolled dy = "+dy);
+            }
+        });
     }
 
 }
