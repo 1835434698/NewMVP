@@ -60,6 +60,7 @@ import com.tangzy.tzymvp.activity.SmartRefreshLayoutActivity;
 import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
+import com.tangzy.tzymvp.activity.ViewPageActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.activity.YuanChengActivity;
 import com.tangzy.tzymvp.annotation.ParseAnnotation;
@@ -1761,6 +1762,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void toViewPageActivity(View view) {
+        startActivity(new Intent(this, ViewPageActivity.class));
+    }
 
 
     class Producer implements Runnable {

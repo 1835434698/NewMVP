@@ -270,6 +270,11 @@
             android:layout_height="wrap_content"
             android:onClick="loaderSDClass"
             android:text="动态还在sd卡class" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toViewPageActivity"
+            android:text="ViewPageActivity" />
 
         <TextView
             android:layout_width="700px"
