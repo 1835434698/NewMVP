@@ -89,6 +89,7 @@ import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
+import com.tangzy.tzymvp.util.ThreadPoolUtil;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
 import com.tangzy.tzymvp.view.toast.CustomToast;
@@ -275,6 +276,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName1 = "+Thread.currentThread().getName());
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName2 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName3 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName4 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName5 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName6 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("tangzyyy", "ThreadName7 = "+Thread.currentThread().getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

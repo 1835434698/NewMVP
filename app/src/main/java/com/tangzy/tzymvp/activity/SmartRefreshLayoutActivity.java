@@ -43,36 +43,7 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
 
     private void init() {
 
-        RecycleViewBean data = new RecycleViewBean();
-//        for (int i=0;i<7;i++){
-//            data.setName("姓名：No"+i);
-//            list.add(data);
-//        }
-
-        data.setName("姓名：No");
-        data.setImg(R.drawable.image1);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image2);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image2);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image3);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image4);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image5);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image6);
-        list.add(data);
-        data = new RecycleViewBean();
-        data.setImg(R.drawable.image7);
-        list.add(data);
+        setData();
 
         adapter = new RecycleAdapter(this, list);
         recycleView = findViewById(R.id.recycleView);
@@ -83,6 +54,10 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
         ptrFrameLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                list.clear();
+//                setData();
+
                 i =0;
                 ptrFrameLayout.setNoMoreData(false);
                 ptrFrameLayout.finishRefresh();
@@ -121,6 +96,39 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
 
         recycleView.setAdapter(adapter);
 
+    }
+
+    private void setData() {
+        RecycleViewBean data = new RecycleViewBean();
+//        for (int i=0;i<7;i++){
+//            data.setName("姓名：No"+i);
+//            list.add(data);
+//        }
+
+        data.setName("姓名：No");
+        data.setImg(R.drawable.image1);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image2);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image2);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image3);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image4);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image5);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image6);
+        list.add(data);
+        data = new RecycleViewBean();
+        data.setImg(R.drawable.image7);
+        list.add(data);
     }
 
 }

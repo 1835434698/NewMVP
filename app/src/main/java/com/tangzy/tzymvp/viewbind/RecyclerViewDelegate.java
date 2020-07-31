@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecycylerViewLinearlayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -94,18 +95,18 @@ int i =0;
 //        });
 //        ptrFrameLayout.getRefreshFooter();
 //        ptrFrameLayout.getRefreshHeader();
-        ptrFrameLayout.autoRefresh();
-        ptrFrameLayout.setPullToRefresh(true);
-        ptrFrameLayout.setResistance(1.7f);
-        ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);
-        ptrFrameLayout.setDurationToClose(200);
-        ptrFrameLayout.setDurationToCloseHeader(300);
-        // default is false
-        ptrFrameLayout.setPullToRefresh(false);
-        // default is true
-        ptrFrameLayout.setKeepHeaderWhenRefresh(true);
-
-        ptrFrameLayout.setLastUpdateTimeRelateObject(this);
+//        ptrFrameLayout.autoRefresh();
+//        ptrFrameLayout.setPullToRefresh(true);
+//        ptrFrameLayout.setResistance(1.7f);
+//        ptrFrameLayout.setRatioOfHeaderHeightToRefresh(1.2f);
+//        ptrFrameLayout.setDurationToClose(200);
+//        ptrFrameLayout.setDurationToCloseHeader(300);
+//        // default is false
+//        ptrFrameLayout.setPullToRefresh(false);
+//        // default is true
+//        ptrFrameLayout.setKeepHeaderWhenRefresh(true);
+//
+//        ptrFrameLayout.setLastUpdateTimeRelateObject(this);
 
         ptrFrameLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
@@ -119,11 +120,12 @@ int i =0;
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 list.clear();
-                setData();
+//                adapter.clearAdapter();
+//                setData();
 //                pageNo = 1;
 //                getOrders();
                 ptrFrameLayout.refreshComplete();
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -140,7 +142,7 @@ int i =0;
 //        //GridLayoutManager
 //        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         //生命为瀑布流的布局方式，3列，布局方向为垂直
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        RecycylerViewLinearlayoutManager layoutManager = new RecycylerViewLinearlayoutManager(getActivity());
 
         recycleView.setLayoutManager(layoutManager);
 

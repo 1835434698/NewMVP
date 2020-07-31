@@ -8,12 +8,14 @@ buildscript {
         jcenter()
 //        jcenter(){url "http://jcenter.bintray.com/"}
 //        maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
         classpath 'com.alibaba:arouter-register:1.0.2'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.nekocode:JarFilterPlugin:1.1"
 
         // apt
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'

@@ -15,13 +15,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ViewHolderDelegate;
 
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.RecycleViewBean;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 
 /**
@@ -34,6 +38,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
 
     private ArrayList<RecycleViewBean> list;
     private Context mContext;
+    private SoftReference<Holder> viewHolder;
 
     public RecycleAdapter (Context context, ArrayList<RecycleViewBean> list){
         this.list = list;
@@ -67,12 +72,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecycleAdapter.Holder holder = new RecycleAdapter.Holder(LayoutInflater.from(mContext).inflate(R.layout.item_recycle_pdf, parent, false));
+        RecycleAdapter.Holder holder = new RecycleAdapter.Holder(LayoutInflater.from(mContext).inflate(R.layout.item_recycle, parent, false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
+        if (viewHolder == null){
+            viewHolder = new SoftReference<>(holder);
+        }
         // TODO: 2019/12/23
         Log.d("tagnzy", "tv_name");
 //        holder.tv_name.setText(list.get(position).getName());
@@ -86,7 +94,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
                 Fragment fragment = findSupportFragment(view, (FragmentActivity) activity);
             }
         }
-
+    }
+    public void clearAdapter(){
+        ViewHolderDelegate.setPosition(viewHolder.get(), NO_POSITION);
     }
 
 //    @NonNull
@@ -200,6 +210,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
             super(itemView);
             tv_name = itemView.findViewById(R.id.tv_name);
             image = itemView.findViewById(R.id.image);
+//            ViewHolderDelegate.setPosition(holder, position);
+
+
 //            iv_select = itemView.findViewById(R.id.iv_select);
 //            iv_bank_icon = itemView.findViewById(R.id.iv_bank_icon);
         }
