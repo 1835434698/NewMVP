@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -85,9 +86,11 @@ import com.tangzy.tzymvp.test.ChredUser;
 import com.tangzy.tzymvp.test.DynamicProxy;
 import com.tangzy.tzymvp.test.Iuser;
 import com.tangzy.tzymvp.test.UserImpl;
+import com.tangzy.tzymvp.util.Base64Encode;
 import com.tangzy.tzymvp.util.FileType;
 import com.tangzy.tzymvp.util.FileUtils;
 import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.util.MD5;
 import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.ThreadPoolUtil;
@@ -99,15 +102,23 @@ import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.text.translate.UnicodeUnescaper;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -115,6 +126,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -155,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String TAG = "MainActivity";
 
     public View mSnackbarAnchor;
+    private int m =0;
 
     @Autowired(name = "key1")
     long key1;
@@ -244,6 +257,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Observable.just(1)
+                .subscribeOn(Schedulers.single())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d("hhhhhhhhhh", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
+//                        try {
+//                            po = converter.convert(params);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("hhhhhhhhhh", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("hhhhhhhhhh", "onComplete");
+                    }
+                });
+
+        Observable.just(1)
+                .subscribeOn(Schedulers.single())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d("hhhhhhhhhh", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
+//                        try {
+//                            po = converter.convert(params);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("hhhhhhhhhh", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("hhhhhhhhhh", "onComplete");
+                    }
+                });
+
+        Observable.just(1)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<Integer>() {
                     @Override
@@ -269,6 +340,98 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete() {
                         Log.d("hhhhhhhhhh", "onComplete");
+                        for(int i =0; i<10000;i++){
+//                            try {
+//                                Thread.sleep(100);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+                            final int j = m++;
+                            Observable.just(1)
+                                    .subscribeOn(Schedulers.single())
+                                    .subscribe(new Observer<Integer>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                            Log.d("hhhhhhhhhh", "onSubscribe");
+                                        }
+
+                                        @Override
+                                        public void onNext(Integer integer) {
+                                            Log.d("hhhhhhhhhh1", "onNext name 1= "+Thread.currentThread().getName()+";i = "+j);
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            Log.d("hhhhhhhhhh", "onError");
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            Log.d("hhhhhhhhhh", "onComplete");
+                                        }
+                                    });
+
+                        }
+                    }
+                });
+        Observable.just(1)
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d("hhhhhhhhhh", "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
+//                        try {
+//                            po = converter.convert(params);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("hhhhhhhhhh", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("hhhhhhhhhh", "onComplete");
+                        for(int i =0; i<10000;i++){
+//                            try {
+//                                Thread.sleep(100);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+                            final int j = m++;
+                            Observable.just(1)
+                                    .subscribeOn(Schedulers.single())
+                                    .subscribe(new Observer<Integer>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                            Log.d("hhhhhhhhhh", "onSubscribe");
+                                        }
+
+                                        @Override
+                                        public void onNext(Integer integer) {
+                                            Log.d("hhhhhhhhhh1", "onNext name 1= "+Thread.currentThread().getName()+";_i = "+j);
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            Log.d("hhhhhhhhhh", "onError");
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+                                            Log.d("hhhhhhhhhh", "onComplete");
+                                        }
+                                    });
+
+                        }
                     }
                 });
         MyAnnotationApi.sayHelloAnnotation(this);
@@ -855,8 +1018,142 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(this, SmartRefreshLayoutActivity.class));
     }
 
+    String keyScr= "allin1123abc";
     CompositeDisposable compositeDisposable=new CompositeDisposable();
     public void RxJava(View view) {
+        String bodyString = "{\"responseStatus\":true,\"responsePk\":1505888492588,\"responseData\":{\"apiToken\":\"ZkKnIBpCjufVBaasoxaELXnogSJwVjYM\",\"isBindApple\":false,\"customerUnite\":{\"sortType\":0,\"id\":50084,\"customerId\":1505888492588,\"nickname\":\"还回家\",\"mobile\":\"12312312328\",\"uniteTimeMobile\":\"2017-09-20 14:26:05\",\"email\":\"lll@sina.com\",\"uniteTimeEmail\":\"2018-11-22 18:29:18\",\"uniteNameQq\":\"\",\"uniteFlagQq\":0,\"uniteTimeQq\":\"\",\"uniteIdSina\":0,\"uniteNameSina\":\"\",\"uniteFlagSina\":0,\"uniteTimeSina\":\"\",\"uniteNameBaidu\":\"\",\"uniteFlagBaidu\":0,\"uniteTimeBaidu\":\"\",\"uniteNameWeixin\":\"\",\"uniteFlagWeixin\":0,\"uniteTimeWeixin\":\"\",\"uniteIdCaos\":0,\"uniteNameCaos\":\"\",\"uniteFlagCaos\":0,\"uniteTimeCaos\":\"\",\"passwd\":\"e9ef17c93fb0d1464fb6c06d9189058e\",\"customerRole\":11,\"isCheckEmail\":0,\"isCheckMobile\":1,\"isValid\":1,\"uniteNameZhgk\":\"\",\"initPasswd\":\"\",\"sendSiteId\":19,\"createTime\":\"2017-09-20 14:27:50.0\",\"cancelStatus\":\"0\",\"areasExpertise\":\"\"},\"logoUrl\":\"http://img05.allinmd.cn/public1/2019/01/10/XrLVNFyjKdQOTJmQKhEQwndLpwWHmkLX_c_p_100_100.jpg\"},\"baseData\":\"eyJyZXNwb25zZURhdGEiOiJ7YXBpVG9rZW49WmtLbklCcENqdWZWQmFhc294YUVMWG5vZ1NKd1ZqWU0sIGlzQmluZEFwcGxlPWZhbHNlLCBjdXN0b21lclVuaXRlPWNuLmFsbGlubWQubWVkaWNhbC5jdXN0b21lci5jbGllbnQubW9kZWwuZHRvLkN1c3RvbWVyVW5pdGVANWU2NDYyMTMsIGxvZ29Vcmw9aHR0cDovL2ltZzA1LmFsbGlubWQuY24vcHVibGljMS8yMDE5LzAxLzEwL1hyTFZORnlqS2RRT1RKbVFLaEVRd25kTHB3V0hta0xYX2NfcF8xMDBfMTAwLmpwZ30iLCJyZXNwb25zZVN0YXR1cyI6dHJ1ZSwicmVzcG9uc2VQayI6MTUwNTg4ODQ5MjU4OH0=\",\"apiSign\":\"121fd08728ed80b98b895a6c5d10c9fd\"}";
+        String base64 = "eyJyZXNwb25zZURhdGEiOiJ7YXBpVG9rZW49WmtLbklCcENqdWZWQmFhc294YUVMWG5vZ1NKd1ZqWU0sIGlzQmluZEFwcGxlPWZhbHNlLCBjdXN0b21lclVuaXRlPWNuLmFsbGlubWQubWVkaWNhbC5jdXN0b21lci5jbGllbnQubW9kZWwuZHRvLkN1c3RvbWVyVW5pdGVANTgyOTZkNjAsIGxvZ29Vcmw9aHR0cDovL2ltZzA1LmFsbGlubWQuY24vcHVibGljMS8yMDE5LzAxLzEwL1hyTFZORnlqS2RRT1RKbVFLaEVRd25kTHB3V0hta0xYX2NfcF8xMDBfMTAwLmpwZ30iLCJyZXNwb25zZVN0YXR1cyI6dHJ1ZSwicmVzcG9uc2VQayI6MTUwNTg4ODQ5MjU4OH0=";
+
+        String md5 = MD5.stringToMD5(base64);
+        Logger.d("jjjjjjjjj", "md51 = "+ md5);
+
+
+
+
+        try {
+            org.json.JSONObject jsonObject = new JSONObject(bodyString);
+            if (jsonObject != null){
+
+                boolean responseStatus =jsonObject.optBoolean("responseStatus");
+                String responseCode = jsonObject.optString("responseCode");
+                String responseMessage = jsonObject.optString("responseMessage");
+                String responseData = jsonObject.optString("responseData");
+                String responsePk = jsonObject.optString("responsePk", "0");
+                String baseData = jsonObject.optString("baseData");
+                String apiSign = jsonObject.optString("apiSign");
+
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("responseData", responseData);
+                jsonObject1.put("responseStatus", responseStatus);
+                jsonObject1.put("responsePk", responsePk);
+
+
+                Logger.d("jjjjjjjjj", " jsonObject1.toString() = "+jsonObject1.toString());
+                String encrypt = Base64Encode.encrypt(jsonObject1.toString());
+                Logger.d("jjjjjjjjj", " encrypt = "+encrypt);
+                String decrypt = Base64Encode.decrypt(encrypt);
+                Logger.d("jjjjjjjjj", " decrypt = "+decrypt);
+                String baseData1 = Base64Encode.decrypt(baseData);
+                Logger.d("jjjjjjjjj", " baseData = "+baseData);
+                Logger.d("jjjjjjjjj", " baseData1 = "+baseData1);
+
+
+                Logger.d("jjjjjjjjj", " apiSign = "+apiSign);
+                String s = MD5.stringToMD5(baseData);
+
+                Logger.d("jjjjjjjjj", " md5s = "+s);
+                Logger.d("jjjjjjjjj", " apiSign = "+apiSign);
+
+                String escaped = StringEscapeUtils.escapeJava(responseData);
+                String greekChars = new UnicodeUnescaper().translate(escaped);
+                Logger.d("jjjjjjjjj", " greekChars = "+greekChars);
+
+                Map map = new ArrayMap();
+
+                StringBuffer dataBuffer = new StringBuffer();
+                if (!TextUtils.isEmpty(responseCode)){
+//                                    dataBuffer.append( "responseCode=").append(responseCode);
+                    map.put("responseCode", responseCode);
+                }
+                if (!TextUtils.isEmpty(greekChars)){
+//                                    if (dataBuffer.length() > 0){
+//                                        dataBuffer.append( "&");
+//                                    }
+//                                    dataBuffer.append( "responseData=").append(greekChars);
+                    map.put("responseData", greekChars);
+                }
+                if (!TextUtils.isEmpty(responseMessage)){
+//                                    if (dataBuffer.length() > 0){
+//                                        dataBuffer.append( "&");
+//                                    }
+//                                    dataBuffer.append( "responseMessage=").append(responseMessage);
+                    map.put("responseMessage", responseMessage);
+                }
+//                                if (dataBuffer.length() > 0){
+//                                    dataBuffer.append( "&");
+//                                }
+//                                dataBuffer.append( "responsePk=").append(responsePk);
+                map.put("responsePk", responsePk);
+//
+//                                if (dataBuffer.length() > 0){
+//                                    dataBuffer.append( "&");
+//                                }
+//                                dataBuffer.append( "responseStatus=").append(responseStatus).append(keyScr);
+                map.put("responseStatus", responseStatus);
+
+//                Logger.d("jjjjjjjjj", "data  = "+dataBuffer.toString());
+//                String s = genApiSign(map, keyScr);
+//                String md5 = MD5.stringToMD5(dataBuffer.toString());
+//                Logger.d("jjjjjjjjj", "md5  = "+md5);
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Logger.e("jjjjjjjjj", "e = "+e.getMessage());
+        }
+
+
+
+
+
+        
+
+
+
+//        {"name":"张三","id":123}
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", "张三");
+        map.put("id", 123);
+
+        String s = JSON.toJSONString(map);
+        Logger.d("jjjjjjjjj111", "s  = "+map.toString());
+        Logger.d("jjjjjjjjj111", "s  = "+s);
+//        Logger.d("jjjjjjjjj", "s1 = "+ JSONObject.toJSONString(map));
+//        Logger.d("jjjjjjjjj", "s2 = "+ JSONObject.toJSON(map));
+//        Logger.d("jjjjjjjjj", "s3 = "+ new JSONObject(map).toJSONString());
+//        Logger.d("jjjjjjjjj", "s4 = "+ new JSONObject(map).toString());
+//        s = "responseCode=0&responseData={\"name\":\"张三\",\"id\":123}&responseMessage=message&responsePk=0&responseStatus=trueallin1123abc";
+
+//        String aaa="{\"name\":\"张三\",\"id\":123}";
+        String escaped = StringEscapeUtils.escapeJava(map.toString());
+        Logger.d("jjjjjjjjj", "escaped = "+ escaped);
+        String greekChars = new UnicodeUnescaper().translate(escaped);
+        Logger.d("jjjjjjjjj", "greekChars = "+ greekChars);
+
+        String escapeds = StringEscapeUtils.escapeJava(s);
+        Logger.d("jjjjjjjjj", "escapeds = "+ escapeds);
+        String greekCharss = new UnicodeUnescaper().translate(escapeds);
+        Logger.d("jjjjjjjjj", "greekCharss = "+ greekCharss);
+
+
+        String data = "responseCode=0&responseData="+greekChars+"&responseMessage=message&responsePk=0&responseStatus=trueallin1123abc";
+        Logger.d("jjjjjjjjj", "data  = "+data);
+         md5 = MD5.stringToMD5(data);
+        Logger.d("jjjjjjjjj", "md5 = "+ md5);
+
+
         Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
@@ -1222,6 +1519,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
 
     private Observable<String> getStringObservable() {
         return Observable.create(new ObservableOnSubscribe<String>() {
