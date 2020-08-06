@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.tangzy.pdfrecyclerview.view.ScaleImageView
-        android:id="@+id/image"
+        android:id="@+id/image_pdf"
         android:layout_margin="5dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"

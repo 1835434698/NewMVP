@@ -48,6 +48,7 @@ public class RecycleViewActivity extends AppCompatActivity {
     private void setTextCount(int lastVisibleItemPosition) {
         Log.d("tagnzy", "lastVisibleItemPosition========================= "+(lastVisibleItemPosition+1)+"/"+adapter.getItemCount());
         tvNum.setText((lastVisibleItemPosition+1)+"/"+adapter.getItemCount());
+        adapter.setBigImage(lastVisibleItemPosition);
     }
 
 }

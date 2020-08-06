@@ -10,6 +10,7 @@ public abstract class OnScrollListenerRecycleView extends RecyclerView.OnScrollL
 
     private int lastDy;
     private int thePosition=0;
+    
     @Override
     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
@@ -19,6 +20,8 @@ public abstract class OnScrollListenerRecycleView extends RecyclerView.OnScrollL
             setPosition(((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition());
         }else if (lastDy < 0){
             setPosition(((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition());
+        }else {
+
         }
     }
 

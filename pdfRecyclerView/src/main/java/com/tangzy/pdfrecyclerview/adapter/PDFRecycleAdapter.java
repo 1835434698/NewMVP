@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tangzy.pdfrecyclerview.PdfDataBean;
 import com.tangzy.pdfrecyclerview.view.ImageSource;
 import com.tangzy.pdfrecyclerview.view.ScaleImageView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.tangzy.pdfrecyclerview.R;
 
@@ -29,10 +32,10 @@ import com.tangzy.pdfrecyclerview.R;
  */
 public class PDFRecycleAdapter extends RecyclerView.Adapter<PDFRecycleAdapter.Holder> {
 
-    protected static final float DEFAULT_QUALITY = 2.0f;
-
     private Context mContext;
     protected String path;
+    private List<PdfDataBean>  lists = new ArrayList<>();
+    private int lastId = 0;
 
 
     /**
@@ -65,6 +68,12 @@ public class PDFRecycleAdapter extends RecyclerView.Adapter<PDFRecycleAdapter.Ho
     protected void init() {
         try {
             openRenderer(mContext);
+            PdfDataBean bean;
+            for (int i = getItemCount(); i>=0; i--){
+                bean = new PdfDataBean();
+                bean.pageId =i;
+                lists.add(bean);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,14 +100,30 @@ public class PDFRecycleAdapter extends RecyclerView.Adapter<PDFRecycleAdapter.Ho
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Log.d("tagnzy", "onBindViewHolder position = "+position);
         Log.d("tagnzy", "getItemCount = "+getItemCount());
-        Bitmap bitmap = getBitmap(position);
+        Bitmap bitmap = null;
+        if (lists.get(position).isShow){
+            bitmap = getBigBitmap(position);
+        }else {
+            bitmap = getSmallBitmap(position);
+        }
         if (bitmap != null){
             holder.image.setImage(ImageSource.bitmap(bitmap));
         }
     }
 
+    private Bitmap getSmallBitmap(int index) {
+        return getBitmap(index, 1f);
+    }
 
-    private Bitmap getBitmap(int index) {
+
+    private Bitmap getBigBitmap(int index) {
+        Log.d("tagnzy", "getBigBitmap index = "+index);
+
+        return getBitmap(index, 2f);
+    }
+
+    private Bitmap getBitmap(int index, float DEFAULT_QUALITY) {
+        Log.d("tagnzy", "DEFAULT_QUALITY = "+DEFAULT_QUALITY);
 
         if (mPdfRenderer.getPageCount() <= index) {
             return null;
@@ -127,12 +152,19 @@ public class PDFRecycleAdapter extends RecyclerView.Adapter<PDFRecycleAdapter.Ho
         return mPdfRenderer != null ? mPdfRenderer.getPageCount() : 0;
     }
 
+    public void setBigImage(int position) {
+        lists.get(lastId).isShow = false;
+        lists.get(position).isShow = true;
+        lastId = position;
+        notifyDataSetChanged();
+    }
+
     class Holder extends RecyclerView.ViewHolder {
         private ScaleImageView image;
 
         public Holder(View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.image);
+            image = itemView.findViewById(R.id.image_pdf);
         }
     }
 }
