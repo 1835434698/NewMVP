@@ -46,6 +46,7 @@ import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
 import com.tangzy.myannotation.CustomAnnotation;
 import com.tangzy.myannotation.MyAnnotationApi;
+import com.tangzy.navigation.NavigationLibActivity;
 import com.tangzy.pdfrecyclerview.RecycleViewActivity;
 import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.tzymvp.activity.AiduActivity;
@@ -99,6 +100,7 @@ import com.tangzy.tzymvp.view.CustomDialogFragment;
 import com.tangzy.tzymvp.view.toast.CustomToast;
 import com.tangzy.tzymvp.view.toast.SnackbarCus;
 import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
+import com.tangzy.video.VideoLibActivity;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -266,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onNext(Integer integer) {
-                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
+                        Log.d("hhhhhhhhhh2", "onNext name = "+Thread.currentThread().getName());
 //                        try {
 //                            po = converter.convert(params);
 //                        } catch (Exception e) {
@@ -281,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onComplete() {
-                        Log.d("hhhhhhhhhh", "onComplete");
+                        Log.d("hhhhhhhhhh2", "onComplete name = "+Thread.currentThread().getName());
                     }
                 });
 
@@ -2062,6 +2064,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void toViewPageActivity(View view) {
         startActivity(new Intent(this, ViewPageActivity.class));
+    }
+
+    public void toMedialLib(View view) {
+        startActivity(new Intent(this, VideoLibActivity.class));
+    }
+
+    public void toNavigation(View view) {
+        startActivity(new Intent(this, NavigationLibActivity.class));
     }
 
 

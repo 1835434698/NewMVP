@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/firstFragmentLib">
+
+
+    <fragment
+        android:id="@+id/firstFragmentLib"
+        android:name="com.tangzy.navigation.fragmet.FirstFragmentLib"
+        android:label="FirstFragmentLib" >
+        <action
+            android:id="@+id/action_firstFragmentLib_to_twoFragmentLib"
+            app:destination="@id/twoFragmentLib" />
+    </fragment>
+    <fragment
+        android:id="@+id/twoFragmentLib"
+        android:name="com.tangzy.navigation.fragmet.TwoFragmentLib"
+        android:label="TwoFragmentLib" >
+        <action
+            android:id="@+id/action_twoFragmentLib_to_threeFragmentLib"
+            app:destination="@id/threeFragmentLib" />
+    </fragment>
+    <fragment
+        android:id="@+id/threeFragmentLib"
+        android:name="com.tangzy.navigation.fragmet.ThreeFragmentLib"
+        android:label="ThreeFragmentLib" >
+        <action
+            android:id="@+id/action_threeFragmentLib_to_twoFragmentLib"
+            app:destination="@id/twoFragmentLib" />
+    </fragment>
+</navigation>

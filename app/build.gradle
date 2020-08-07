@@ -163,6 +163,8 @@ dependencies {
 //    annotationProcessor project(':MyProcessor')
     annotationProcessor project(':MyProcessor')
     api project(':myannotation')
+    api project(':videolibrary')
+    api project(':NavigationDemo')
 
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
 
