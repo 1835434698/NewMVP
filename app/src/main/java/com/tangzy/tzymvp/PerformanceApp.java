@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +28,12 @@ public class PerformanceApp extends Application {
         super.onCreate();
         Constant.app = this;
         initBugly();
+
+        if (!inMainProcess(this)){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                WebView.setDataDirectorySuffix(getProcessName(this));
+            }
+        }
         inithhhh();
         Logger.d(TAG, "onCreate");
         if (shouldInit()){
@@ -118,4 +127,55 @@ public class PerformanceApp extends Application {
         }
         return false;
     }
+
+
+
+    /**
+     * 判断是否在主进程
+     *
+     * @param context 上下文
+     * @return 是否在主进程
+     */
+    public static boolean inMainProcess(Context context) {
+        String packageName = context.getPackageName();
+        String processName = getProcessName(context);
+        return packageName.equals(processName);
+    }
+
+    /**
+     * 获取当前进程名
+     *
+     * @param context 上下文
+     * @return 进程名
+     */
+    public static String getProcessName(Context context) {
+
+        String processName = null;
+        // ActivityManager
+        ActivityManager am = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE));
+
+        while (true) {
+            if (am != null && am.getRunningAppProcesses() != null) {
+                for (ActivityManager.RunningAppProcessInfo info : am.getRunningAppProcesses()) {
+                    if (info.pid == android.os.Process.myPid()) {
+                        processName = info.processName;
+                        break;
+                    }
+                }
+            }
+
+            // go home
+            if (!TextUtils.isEmpty(processName)) {
+                return processName;
+            }
+
+            // take a rest and again
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
 }

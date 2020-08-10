@@ -77,6 +77,8 @@
         <activity android:name=".activity.Demo2Activity"></activity>
         <activity android:name=".activity.ShowWaveActivity"></activity>
         <activity android:name=".activity.WebActivity"></activity>
+        <activity android:name=".activity.Web1Activity"
+            android:process=":nnnnn"></activity>
         <activity android:name=".activity.AiduActivity"></activity>
         <activity android:name=".activity.IatDemo"></activity>
         <activity android:name=".activity.NestedScrollViewActivity"></activity>

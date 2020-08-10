@@ -17,12 +17,6 @@ import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
 public class YuanChengActivity extends AppCompatActivity {
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yuancheng);
@@ -30,6 +24,9 @@ public class YuanChengActivity extends AppCompatActivity {
 //            SnackbarCus snackbarCus = SnackbarCus.make(this, "message", SnackbarCus.LENGTH_SHORT /* duration */);
         SnackbarManagerCus.show(snackbarCus);
 
+        Intent intent1 = new Intent(this, Web1Activity.class);
+        intent1.putExtra("path", "android_asset/index.html");
+        startActivity(intent1);
     }
 
     public void backResult(View view) {

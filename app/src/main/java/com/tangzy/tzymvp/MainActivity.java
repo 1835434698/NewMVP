@@ -9,14 +9,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -97,7 +94,6 @@ import com.tangzy.tzymvp.util.RsaUtils;
 import com.tangzy.tzymvp.util.ThreadPoolUtil;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
-import com.tangzy.tzymvp.view.toast.CustomToast;
 import com.tangzy.tzymvp.view.toast.SnackbarCus;
 import com.tangzy.tzymvp.view.toast.SnackbarManagerCus;
 import com.tangzy.video.VideoLibActivity;
@@ -115,12 +111,8 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -128,7 +120,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -155,10 +146,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSource;
 
 import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_RECORD_VIDEO_RESULT_INFO;
 
@@ -316,66 +303,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-        Observable.just(1)
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d("hhhhhhhhhh", "onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        Log.d("hhhhhhhhhh", "onNext name = "+Thread.currentThread().getName());
-//                        try {
-//                            po = converter.convert(params);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("hhhhhhhhhh", "onError");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d("hhhhhhhhhh", "onComplete");
-                        for(int i =0; i<10000;i++){
-//                            try {
-//                                Thread.sleep(100);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-                            final int j = m++;
-                            Observable.just(1)
-                                    .subscribeOn(Schedulers.single())
-                                    .subscribe(new Observer<Integer>() {
-                                        @Override
-                                        public void onSubscribe(Disposable d) {
-                                            Log.d("hhhhhhhhhh", "onSubscribe");
-                                        }
-
-                                        @Override
-                                        public void onNext(Integer integer) {
-                                            Log.d("hhhhhhhhhh1", "onNext name 1= "+Thread.currentThread().getName()+";i = "+j);
-                                        }
-
-                                        @Override
-                                        public void onError(Throwable e) {
-                                            Log.d("hhhhhhhhhh", "onError");
-                                        }
-
-                                        @Override
-                                        public void onComplete() {
-                                            Log.d("hhhhhhhhhh", "onComplete");
-                                        }
-                                    });
-
-                        }
-                    }
-                });
         Observable.just(1)
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<Integer>() {
@@ -1020,9 +947,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(this, SmartRefreshLayoutActivity.class));
     }
 
+    private interface ProgressListener{
+        void onProgress(int progress);
+    }
+
+    private void getCurrentProgress(ProgressListener listener){
+        Observable.just(1)
+                .subscribeOn(Schedulers.io())
+                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new AbstractObserver<Integer>() {
+                    @Override
+                    public void onNext(Integer integer) {
+                        Logger.d("hhhhhhhhhhh", "onNext Thread name = "+Thread.currentThread().getName());
+                        int position =  1110;//当前进度  单位是毫秒
+                        Logger.d("hhhhhhhhhhh", "onNext position = "+position);
+                        if (listener!=null){
+                            Logger.d("hhhhhhhhhhh", "onNext Thread name = "+Thread.currentThread().getName());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                            Logger.d("hhhhhhhhhhh", "runOnUiThread in Thread name = "+Thread.currentThread().getName());
+                                            listener.onProgress(position);
+                                }
+                            });
+                        }
+                    }
+                });
+    }
+
+
     String keyScr= "allin1123abc";
     CompositeDisposable compositeDisposable=new CompositeDisposable();
     public void RxJava(View view) {
+        for (int i =0; i<10;i++){
+            getCurrentProgress(new ProgressListener() {
+                @Override
+                public void onProgress(int progress) {
+                    Logger.d("hhhhhhhhhhh", "onProgress ; onProgress = "+progress+" in Thread name = "+Thread.currentThread().getName());
+
+                }
+            });
+        }
+
         String bodyString = "{\"responseStatus\":true,\"responsePk\":1505888492588,\"responseData\":{\"apiToken\":\"ZkKnIBpCjufVBaasoxaELXnogSJwVjYM\",\"isBindApple\":false,\"customerUnite\":{\"sortType\":0,\"id\":50084,\"customerId\":1505888492588,\"nickname\":\"还回家\",\"mobile\":\"12312312328\",\"uniteTimeMobile\":\"2017-09-20 14:26:05\",\"email\":\"lll@sina.com\",\"uniteTimeEmail\":\"2018-11-22 18:29:18\",\"uniteNameQq\":\"\",\"uniteFlagQq\":0,\"uniteTimeQq\":\"\",\"uniteIdSina\":0,\"uniteNameSina\":\"\",\"uniteFlagSina\":0,\"uniteTimeSina\":\"\",\"uniteNameBaidu\":\"\",\"uniteFlagBaidu\":0,\"uniteTimeBaidu\":\"\",\"uniteNameWeixin\":\"\",\"uniteFlagWeixin\":0,\"uniteTimeWeixin\":\"\",\"uniteIdCaos\":0,\"uniteNameCaos\":\"\",\"uniteFlagCaos\":0,\"uniteTimeCaos\":\"\",\"passwd\":\"e9ef17c93fb0d1464fb6c06d9189058e\",\"customerRole\":11,\"isCheckEmail\":0,\"isCheckMobile\":1,\"isValid\":1,\"uniteNameZhgk\":\"\",\"initPasswd\":\"\",\"sendSiteId\":19,\"createTime\":\"2017-09-20 14:27:50.0\",\"cancelStatus\":\"0\",\"areasExpertise\":\"\"},\"logoUrl\":\"http://img05.allinmd.cn/public1/2019/01/10/XrLVNFyjKdQOTJmQKhEQwndLpwWHmkLX_c_p_100_100.jpg\"},\"baseData\":\"eyJyZXNwb25zZURhdGEiOiJ7YXBpVG9rZW49WmtLbklCcENqdWZWQmFhc294YUVMWG5vZ1NKd1ZqWU0sIGlzQmluZEFwcGxlPWZhbHNlLCBjdXN0b21lclVuaXRlPWNuLmFsbGlubWQubWVkaWNhbC5jdXN0b21lci5jbGllbnQubW9kZWwuZHRvLkN1c3RvbWVyVW5pdGVANWU2NDYyMTMsIGxvZ29Vcmw9aHR0cDovL2ltZzA1LmFsbGlubWQuY24vcHVibGljMS8yMDE5LzAxLzEwL1hyTFZORnlqS2RRT1RKbVFLaEVRd25kTHB3V0hta0xYX2NfcF8xMDBfMTAwLmpwZ30iLCJyZXNwb25zZVN0YXR1cyI6dHJ1ZSwicmVzcG9uc2VQayI6MTUwNTg4ODQ5MjU4OH0=\",\"apiSign\":\"121fd08728ed80b98b895a6c5d10c9fd\"}";
         String base64 = "eyJyZXNwb25zZURhdGEiOiJ7YXBpVG9rZW49WmtLbklCcENqdWZWQmFhc294YUVMWG5vZ1NKd1ZqWU0sIGlzQmluZEFwcGxlPWZhbHNlLCBjdXN0b21lclVuaXRlPWNuLmFsbGlubWQubWVkaWNhbC5jdXN0b21lci5jbGllbnQubW9kZWwuZHRvLkN1c3RvbWVyVW5pdGVANTgyOTZkNjAsIGxvZ29Vcmw9aHR0cDovL2ltZzA1LmFsbGlubWQuY24vcHVibGljMS8yMDE5LzAxLzEwL1hyTFZORnlqS2RRT1RKbVFLaEVRd25kTHB3V0hta0xYX2NfcF8xMDBfMTAwLmpwZ30iLCJyZXNwb25zZVN0YXR1cyI6dHJ1ZSwicmVzcG9uc2VQayI6MTUwNTg4ODQ5MjU4OH0=";
 
@@ -1360,15 +1326,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(TAG, "\n");
                     }
                 });
+        Log.e(TAG, "timer start at "  + "\n");
         //timer
-        Observable.timer(2, TimeUnit.SECONDS)
+        Observable.timer(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new Consumer<Long>() {
                     @Override
-                    public void accept(Long aLong) throws Exception {
-                        Log.e(TAG, "timer :" + aLong + " at "  + "\n");
+                    public void accept(Long aLong) {
+                        Log.e(TAG, "timer :" + aLong + " at , ThreadName = "+Thread.currentThread().getName());
 //                        Log.e(TAG, "timer :" + aLong + " at " + DateUtil.getStringDate() + "\n");
                     }
                 });
