@@ -90,6 +90,7 @@
         <activity android:name=".activity.MyViewGroupActivity"></activity>
         <activity android:name=".activity.ListenerActivity"></activity>
         <activity android:name=".activity.ViewPageActivity"></activity>
+        <activity android:name=".activity.LottieActivity"></activity>
         <activity android:name=".activity.YuanChengActivity"
             android:process=":hhhhh">
         </activity>

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -51,6 +52,7 @@ import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.ListenerActivity;
+import com.tangzy.tzymvp.activity.LottieActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
@@ -91,6 +93,7 @@ import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.MD5;
 import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
+import com.tangzy.tzymvp.util.RxAndroidUtil;
 import com.tangzy.tzymvp.util.ThreadPoolUtil;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
@@ -947,6 +950,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(this, SmartRefreshLayoutActivity.class));
     }
 
+    public void toLottieAnimation(View view) {
+        startActivity(new Intent(this, LottieActivity.class));
+    }
+
+    public void onRxAndroidUtil(View view) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Handler runa " +Thread.currentThread().getName());
+
+            }
+        });
+        RxAndroidUtil.INSTANCE.post(new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "runa " +Thread.currentThread().getName());
+
+            }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                RxAndroidUtil.INSTANCE.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Logger.d("hhhhhhhh", "Thread runa " +Thread.currentThread().getName());
+
+                    }
+                });
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Logger.d("hhhhhhhh", "Thread Handler runa " +Thread.currentThread().getName());
+
+                    }
+                });
+                Looper.loop();
+            }
+        }).start();
+    }
+
     private interface ProgressListener{
         void onProgress(int progress);
     }
@@ -1340,14 +1385,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
 
-        Observable.interval(3,2, TimeUnit.SECONDS)
+        Log.e(TAG, " interval :");
+        Observable.interval(3,0, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Log.e(TAG, "interval :" + aLong + " at "  + "\n");
+                        Log.e(TAG, " interval :" + aLong + " at "  + "\n");
 //                        Log.e(TAG, "timer :" + aLong + " at " + DateUtil.getStringDate() + "\n");
                     }
                 });
@@ -1460,28 +1506,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        Log.e("RxJavaAct", "window\n");
-        Observable.interval(1, TimeUnit.SECONDS)
-                .take(15)
-                .window(3, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-                .subscribe(new Consumer<Observable<Long>>() {
-                    @Override
-                    public void accept(Observable<Long> longObservable) throws Exception {
-                        Log.e("RxJavaAct", "Sub Divide begin...\n");
-                        longObservable.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<Long>() {
-                                    @Override
-                                    public void accept(Long aLong) throws Exception {
-
-                                        Log.e("RxJavaAct", "Next:" + aLong + "\n");
-                                    }
-                                });
-                    }
-                });
+//        Log.e("RxJavaAct", "window\n");
+//        Observable.interval(1, TimeUnit.SECONDS)
+//                .take(15)
+//                .window(3, TimeUnit.SECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+//                .subscribe(new Consumer<Observable<Long>>() {
+//                    @Override
+//                    public void accept(Observable<Long> longObservable) throws Exception {
+//                        Log.e("RxJavaAct", "Sub Divide begin...\n");
+//                        longObservable.subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Consumer<Long>() {
+//                                    @Override
+//                                    public void accept(Long aLong) throws Exception {
+//
+//                                        Log.e("RxJavaAct", "Next:" + aLong + "\n");
+//                                    }
+//                                });
+//                    }
+//                });
 
 
 
@@ -1885,62 +1931,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void xunhuan(View view) {
-        mStop = true;
-        Observable.interval(0, 1, TimeUnit.MILLISECONDS)
+        Logger.d(TAG, "xunhuan ");
+//        mStop = true;
+        Observable.timer(200, TimeUnit.MILLISECONDS)
                 .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                .takeWhile(new Predicate<Long>() {
-                    @Override
-                    public boolean test(Long aLong) throws Exception {
-                        Logger.d(TAG, "test  aLong = "+aLong);
-                        Logger.d(TAG, "test  mStop = "+mStop);
-                        return mStop;
-                    }
-                })
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(new Consumer<Long>() {
                                @Override
                                public void accept(Long aLong) throws Exception {
-                                   Logger.d(TAG, "accept  aLong = "+aLong);
+                                   Logger.d(TAG, "xunhuan accept  aLong = "+aLong);
 
                                }
                            }
                 );
 
-
-//        Observable.defer(new Callable<ObservableSource<?>>() {
-//            @Override
-//            public ObservableSource<?> call() throws Exception {
-//                Logger.d(TAG, "call  just");
-//                return Observable.just(10);
-//            }
-//        })
-//                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-//                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
-//                .subscribe(new Observer<Object>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        Logger.d(TAG, "onSubscribe");
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Object o) {
-//                        Logger.d(TAG, "onNext o = "+o.toString());
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Logger.d(TAG, "onError e = "+e.getMessage());
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Logger.d(TAG, "onComplete");
-//
-//                    }
-//                });
 
     }
 
@@ -1979,7 +1983,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/3D打印技术在足踝外科的应用价值.pdf";
 //            path = path+"/Allinmd/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
-            path = path+"/Allinmd/download/项目管理知识体系指南 中文 第六版.pdf";
+//            path = path+"/Allinmd/download/项目管理知识体系指南 中文 第六版.pdf";
+            path = path+"/Allinmd/download/3D打印技术在足踝外科的应用价值.pdf";
 //            path = path+"/Allinmd/12345678.pdf";
             File file = new File(path);
             if (!file.exists()){

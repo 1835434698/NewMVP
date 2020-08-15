@@ -285,6 +285,16 @@
             android:layout_height="wrap_content"
             android:onClick="toNavigation"
             android:text="Navigation" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="toLottieAnimation"
+            android:text="LottieAnimation" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onRxAndroidUtil"
+            android:text="RxAndroidUtil" />
 
         <TextView
             android:layout_width="700px"
