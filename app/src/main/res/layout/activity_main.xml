@@ -295,6 +295,16 @@
             android:layout_height="wrap_content"
             android:onClick="onRxAndroidUtil"
             android:text="RxAndroidUtil" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onService8"
+            android:text="Service8" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onDownLoad3"
+            android:text="三方下载lib" />
 
         <TextView
             android:layout_width="700px"

@@ -50,12 +50,14 @@ import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
+import com.tangzy.tzymvp.activity.DownLoadActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.LottieActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
+import com.tangzy.tzymvp.activity.ServiceOActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
 import com.tangzy.tzymvp.activity.SmartRefreshLayoutActivity;
 import com.tangzy.tzymvp.activity.TestActivity;
@@ -955,13 +957,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onRxAndroidUtil(View view) {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                Logger.d("hhhhhhhh", "Handler runa " +Thread.currentThread().getName());
-
-            }
-        });
+        Logger.d("hhhhhhhh", "Handler 1runa " +Thread.currentThread().getName());
         RxAndroidUtil.INSTANCE.post(new Runnable() {
             @Override
             public void run() {
@@ -969,6 +965,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+        Logger.d("hhhhhhhh", "Handler 2runa " +Thread.currentThread().getName());
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Handler runa " +Thread.currentThread().getName());
+
+            }
+        });
+        Logger.d("hhhhhhhh", "Handler 3runa " +Thread.currentThread().getName());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -990,6 +995,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Looper.loop();
             }
         }).start();
+    }
+
+    public void onService8(View view) {
+        startActivity(new Intent(this, ServiceOActivity.class));
+    }
+
+    public void onDownLoad3(View view) {
+        startActivity(new Intent(this, DownLoadActivity.class));
     }
 
     private interface ProgressListener{

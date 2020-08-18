@@ -91,6 +91,8 @@
         <activity android:name=".activity.ListenerActivity"></activity>
         <activity android:name=".activity.ViewPageActivity"></activity>
         <activity android:name=".activity.LottieActivity"></activity>
+        <activity android:name=".activity.ServiceOActivity"></activity>
+        <activity android:name=".activity.DownLoadActivity"></activity>
         <activity android:name=".activity.YuanChengActivity"
             android:process=":hhhhh">
         </activity>
@@ -99,6 +101,7 @@
         <service android:name=".servive.DemoIntentService" />
         <service android:name=".servive.SingASongService"/>
         <service android:name=".servive.Demo3Service"/>
+        <service android:name=".servive.ForegroundService"/>
 
         <receiver android:name=".widget.MyAppWidgetProvider">
             <meta-data android:name="android.appwidget.provider"

@@ -169,6 +169,7 @@ dependencies {
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
 
     implementation 'com.airbnb.android:lottie:3.4.1'
+    implementation 'com.liulishuo.filedownloader:library:1.7.6'
 
 
 }
