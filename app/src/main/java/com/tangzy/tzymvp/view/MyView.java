@@ -144,7 +144,8 @@ public class MyView extends View {
         float cy = 50;
         Paint paint = new Paint();       //实例化一个Paint对象
         paint.setColor(Color.BLUE);      //设置圆的颜色
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(3);
+        paint.setStyle(Paint.Style.STROKE);
 
 //        canvas.drawLine(10,30,100,200, paint);
 //        float[] pts = {10,350, 100, 50, 500,500,600,600};
@@ -173,9 +174,40 @@ public class MyView extends View {
 
 
         Path path = new Path();
-        path.addArc(10,10,500,500,500,300);
-//        canvas.drawPath(path, paint);
-        canvas.drawArc(10,10,500,500,500,300, true, paint);
+//        path.addArc(10,10,500,500,500,300);
+////        canvas.drawPath(path, paint);
+//        canvas.drawArc(10,10,500,500,500,300, true, paint);
+
+        float  sx = 139.55554f;
+        float sy = 283.55554f;
+        float dx = 651.0857f;
+        float  dy = 623.9746f;
+//            // TODO: 2020/8/21
+
+        updateRectPath(path, sx, sy, dx, dy);// addRect
+        canvas.drawPath(path, paint);
+
+        //绘制矩形
+//        canvas.drawRect(10, 150, 70, 190, paint);
+        canvas.restore();
+
+    }
+
+    private void updateRectPath(Path path, float sx, float sy, float dx, float dy) {
+        // 保证　左上角　与　右下角　的对应关系
+        if (sx < dx) {
+            if (sy < dy) {
+                path.addRect(sx, sy, dx, dy, Path.Direction.CCW);
+            } else {
+                path.addRect(sx, dy, dx, sy, Path.Direction.CCW);
+            }
+        } else {
+            if (sy < dy) {
+                path.addRect(dx, sy, sx, dy, Path.Direction.CCW);
+            } else {
+                path.addRect(dx, dy, sx, sy, Path.Direction.CCW);
+            }
+        }
     }
 
     private void saveMatrix(Canvas canvas) {

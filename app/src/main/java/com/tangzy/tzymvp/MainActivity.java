@@ -95,7 +95,7 @@ import com.tangzy.tzymvp.util.Logger;
 import com.tangzy.tzymvp.util.MD5;
 import com.tangzy.tzymvp.util.OnyWayLinkedList;
 import com.tangzy.tzymvp.util.RsaUtils;
-import com.tangzy.tzymvp.util.RxAndroidUtil;
+import com.tangzy.tzymvp.util.RxHandler;
 import com.tangzy.tzymvp.util.ThreadPoolUtil;
 import com.tangzy.tzymvp.util.Utils;
 import com.tangzy.tzymvp.view.CustomDialogFragment;
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Observable.just(1)
-                .subscribeOn(Schedulers.single())
+                .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<Integer>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -647,38 +647,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Executors.newScheduledThreadPool(4);//有数量固定的核心线程，且有数量无限多的非核心线程
 //        Executors.newSingleThreadExecutor();//内部只有一个核心线程
 
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
-        for (int i = 0; i < 10; i++) {
-            threadPoolExecutor.execute(new Runnable() {
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+//        for (int i = 0; i < 10; i++) {
+//            threadPoolExecutor.execute(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Log.d("tangzy", "execute");
+//
+//                }
+//            });
+//
+//        }
+//        Future<Object> submit = threadPoolExecutor.submit(new Callable<Object>() {
+//            @Override
+//            public Object call() throws Exception {
+//                Log.d("tangzy", "call");
+//                Thread.sleep(5000);
+//
+//                return SUCCESS;
+//            }
+//        });
+//        try {
+//            String s = (String) submit.get();
+//            if (SUCCESS.equals(s)) {
+//                String name = Thread.currentThread().getName();
+//                Log.d("tangzy", "经过返回值比较，submit方法执行任务成功    thread name: " + name);
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+        int i = 0;
+        while (i< 2500){
+            Log.e(TAG," i = "+i);
+
+            Observable.create(new ObservableOnSubscribe<String>() {
                 @Override
-                public void run() {
-                    Log.d("tangzy", "execute");
-
+                public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                    emitter.onNext("连载1");
+                    Thread.sleep(1000);
+                    emitter.onNext("连载2");
+                    emitter.onNext("连载3");
+                    emitter.onNext("2");
+//                emitter.onComplete();
                 }
-            });
+            })
+                    .subscribeOn(Schedulers.from(ThreadPoolUtil.getExecutor()))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                    .subscribe(new Observer<String>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            Log.e(TAG,"onSubscribe");
+                        }
 
+                        @Override
+                        public void onNext(String value) {
+                            if ("2".equals(value)){
+                                onComplete();
+                                return;
+                            }
+                            Log.e(TAG,"onNext:"+value);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(TAG,"onError="+e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            Log.e(TAG,"onComplete()");
+                        }
+                    });
+            i++;
         }
-        Future<Object> submit = threadPoolExecutor.submit(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                Log.d("tangzy", "call");
-                Thread.sleep(5000);
-
-                return SUCCESS;
-            }
-        });
-        try {
-            String s = (String) submit.get();
-            if (SUCCESS.equals(s)) {
-                String name = Thread.currentThread().getName();
-                Log.d("tangzy", "经过返回值比较，submit方法执行任务成功    thread name: " + name);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
@@ -958,7 +1002,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onRxAndroidUtil(View view) {
         Logger.d("hhhhhhhh", "Handler 1runa " +Thread.currentThread().getName());
-        RxAndroidUtil.INSTANCE.post(new Runnable() {
+        RxHandler.INSTANCE.post(new Runnable() {
             @Override
             public void run() {
                 Logger.d("hhhhhhhh", "runa " +Thread.currentThread().getName());
@@ -978,7 +1022,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 Looper.prepare();
-                RxAndroidUtil.INSTANCE.post(new Runnable() {
+                RxHandler.INSTANCE.post(new Runnable() {
                     @Override
                     public void run() {
                         Logger.d("hhhhhhhh", "Thread runa " +Thread.currentThread().getName());
@@ -1002,6 +1046,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onDownLoad3(View view) {
+        startActivity(new Intent(this, DownLoadActivity.class));
+    }
+
+    public void onGoogleGuava(View view) {
         startActivity(new Intent(this, DownLoadActivity.class));
     }
 
