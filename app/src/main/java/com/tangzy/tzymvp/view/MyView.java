@@ -10,13 +10,20 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.util.Logger;
 
+import java.util.Stack;
+
 public class MyView extends View {
+    private static final String TAG = "MyView";
     private Context context;
+
+    private Stack<Path> stack = new Stack<>();
+
     /**
      * 创建一个继承View的class
      *View一共有四个构造器 这里先说两个
@@ -38,14 +45,14 @@ public class MyView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Logger.d("tangzy", "onMeasure");
-//        Logger.d("tangzy", "widthMeasureSpec = "+widthMeasureSpec);
-//        Logger.d("tangzy", "heightMeasureSpec = "+heightMeasureSpec);
+        Logger.d(TAG, "onMeasure");
+//        Logger.d(TAG, "widthMeasureSpec = "+widthMeasureSpec);
+//        Logger.d(TAG, "heightMeasureSpec = "+heightMeasureSpec);
 //
 //        final int minimumWidth = getSuggestedMinimumWidth();
 //        final int minimumHeight = getSuggestedMinimumHeight();
-//        Logger.d("tangzy", "---minimumWidth = " + minimumWidth + "");
-//        Logger.d("tangzy", "---minimumHeight = " + minimumHeight + "");
+//        Logger.d(TAG, "---minimumWidth = " + minimumWidth + "");
+//        Logger.d(TAG, "---minimumHeight = " + minimumHeight + "");
 //        int width = measureWidth(minimumWidth, widthMeasureSpec);
 //        int height = measureHeight(minimumHeight, heightMeasureSpec);
 //        setMeasuredDimension(width, height);
@@ -54,18 +61,18 @@ public class MyView extends View {
     private int measureWidth(int defaultWidth, int measureSpec) {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
-        Logger.d("tangzy", "---speSize = " + specSize + "");
+        Logger.d(TAG, "---speSize = " + specSize + "");
         switch (specMode) {
             case MeasureSpec.AT_MOST:
 //                defaultWidth = (int) mPaint.measureText(mText) + getPaddingLeft() + getPaddingRight();
-                Logger.d("tangzy", "---speMode = AT_MOST");
+                Logger.d(TAG, "---speMode = AT_MOST");
                 break;
             case MeasureSpec.EXACTLY:
-                Logger.d("tangzy", "---speMode = EXACTLY");
+                Logger.d(TAG, "---speMode = EXACTLY");
                 defaultWidth = specSize;
                 break;
             case MeasureSpec.UNSPECIFIED:
-                Logger.d("tangzy", "---speMode = UNSPECIFIED");
+                Logger.d(TAG, "---speMode = UNSPECIFIED");
                 defaultWidth = Math.max(defaultWidth, specSize);
             default:
                 break;
@@ -78,20 +85,20 @@ public class MyView extends View {
     private int measureHeight(int defaultHeight, int measureSpec) {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
-        Logger.d("tangzy", "---speSize = " + specSize + "");
+        Logger.d(TAG, "---speSize = " + specSize + "");
 
         switch (specMode) {
             case MeasureSpec.AT_MOST:
 //                defaultHeight = (int) (-mPaint.ascent() + mPaint.descent()) + getPaddingTop() + getPaddingBottom();
-                Logger.d("tangzy", "---speMode = AT_MOST");
+                Logger.d(TAG, "---speMode = AT_MOST");
                 break;
             case MeasureSpec.EXACTLY:
                 defaultHeight = specSize;
-                Logger.d("tangzy", "---speSize = EXACTLY");
+                Logger.d(TAG, "---speSize = EXACTLY");
                 break;
             case MeasureSpec.UNSPECIFIED:
                 defaultHeight = Math.max(defaultHeight, specSize);
-                Logger.d("tangzy", "---speSize = UNSPECIFIED");
+                Logger.d(TAG, "---speSize = UNSPECIFIED");
 //        1.基准点是baseline
 //        2.ascent：是baseline之上至字符最高处的距离
 //        3.descent：是baseline之下至字符最低处的距离
@@ -109,23 +116,51 @@ public class MyView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        Logger.d("tangzy", "onLayout");// 循环所有子View改变子view位置
-        Logger.d("tangzy", "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
+        Logger.d(TAG, "onLayout");// 循环所有子View改变子view位置
+        Logger.d(TAG, "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
     }
 
     @Override
     public void layout(int left, int top, int right, int bottom) {
-        Logger.d("tangzy", "layout");// 循环所有子View改变子view位置
-        Logger.d("tangzy", "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
+        Logger.d(TAG, "layout");// 循环所有子View改变子view位置
+        Logger.d(TAG, "left = "+left +",top = "+ top+",right = "+right+",bottom = "+bottom);// 循环所有子View
 //        super.layout(l, t, r, b);
         super.layout(20, 20, 900, 1500);//改变view位置
+    }
+
+    private float sx,sy, tx,ty = -1;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Logger.d(TAG, "dispatchTouchEvent");
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                sx = event.getX();
+                sy = event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                tx = event.getX();
+                ty = event.getY();
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                tx = event.getX();
+                ty = event.getY();
+                Path path = new Path();
+                updateRectPath(path,sx,sy,tx,ty);
+                stack.add(path);
+                invalidate();
+                break;
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     //重写onDraw方法
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Logger.d("tangzy", "onDraw");
+        Logger.d(TAG, "onDraw");
 
 //        int width = View.MeasureSpec.makeMeasureSpec(0,
 //                View.MeasureSpec.UNSPECIFIED);
@@ -178,18 +213,26 @@ public class MyView extends View {
 ////        canvas.drawPath(path, paint);
 //        canvas.drawArc(10,10,500,500,500,300, true, paint);
 
-        float  sx = 139.55554f;
-        float sy = 283.55554f;
-        float dx = 651.0857f;
-        float  dy = 623.9746f;
+//        float  sx = 139.55554f;
+//        float sy = 283.55554f;
+//        float dx = 651.0857f;
+//        float  dy = 623.9746f;
 //            // TODO: 2020/8/21
 
-        updateRectPath(path, sx, sy, dx, dy);// addRect
-        canvas.drawPath(path, paint);
+//        updateRectPath(path, sx, sy, dx, dy);// addRect
+//        canvas.drawPath(path, paint);
 
         //绘制矩形
 //        canvas.drawRect(10, 150, 70, 190, paint);
-        canvas.restore();
+
+        if (tx > -1){
+
+            updateRectPath(path, sx, sy, tx, ty);// addRect
+            canvas.drawPath(path, paint);
+        }
+        for (Path item :stack){
+            canvas.drawPath(item, paint);
+        }
 
     }
 
