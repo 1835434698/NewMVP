@@ -18,14 +18,19 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.impl.WorkDatabase;
@@ -46,10 +51,14 @@ import com.tangzy.myannotation.CustomAnnotation;
 import com.tangzy.myannotation.MyAnnotationApi;
 import com.tangzy.navigation.NavigationLibActivity;
 import com.tangzy.pdfrecyclerview.RecycleViewActivity;
+import com.tangzy.pdfrecyclerview.adapter.LinearLayoutManagerRecycleview;
+import com.tangzy.pdfrecyclerview.adapter.PDFRecycleAdapter;
+import com.tangzy.pdfrecyclerview.view.ScaleImageView;
 import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
+import com.tangzy.tzymvp.activity.DoodleActivity;
 import com.tangzy.tzymvp.activity.DownLoadActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.ListenerActivity;
@@ -66,10 +75,12 @@ import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.ViewPageActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.activity.YuanChengActivity;
+import com.tangzy.tzymvp.adapter.MainRecycleAdapter;
 import com.tangzy.tzymvp.annotation.ParseAnnotation;
 import com.tangzy.tzymvp.annotation.TestClass;
 import com.tangzy.tzymvp.bean.DataBean;
 import com.tangzy.tzymvp.bean.Info;
+import com.tangzy.tzymvp.bean.MainBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
 import com.tangzy.tzymvp.hook.HookSetOnClickListenerHelper;
@@ -156,7 +167,7 @@ import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_
 
 @CustomAnnotation
 @Route(path = "/test/MainActivity")
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.OnItemClickListener {
 
     private final String TAG = "MainActivity";
 
@@ -193,6 +204,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView iv_gif;
 
+    private RecyclerView recycleView;
+    private MainRecycleAdapter adapter;
+    private ArrayList<MainBean> lists = new ArrayList<>();
+
 
     private void setPath(String path) {
         File file = new File(path);
@@ -220,8 +235,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mSnackbarAnchor = findViewById(R.id.base_root);
         handler.sendEmptyMessage(0);
-//        Constant.app = this;
-        setListener();
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
 
         try {
@@ -495,42 +508,260 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }).start();
         }
         mApp = getApplication();
-//        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-//            @Override
-//            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-//
-//            }
-//
-//            @Override
-//            public void onActivityStarted(@NonNull Activity activity) {
-//
-//            }
-//
-//            @Override
-//            public void onActivityResumed(@NonNull Activity activity) {
-//
-//            }
-//
-//            @Override
-//            public void onActivityPaused(@NonNull Activity activity) {
-//
-//            }
-//
-//            @Override
-//            public void onActivityStopped(@NonNull Activity activity) {
-//
-//            }
-//
-//            @Override
-//            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-//
-//            }
-//
-//            @Override
-//            public void onActivityDestroyed(@NonNull Activity activity) {
-//
-//            }
-//        });
+        int id = 0;
+        MainBean mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "示例1:最简单的实现";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "toWebView";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "示例3:在fragment中的实现";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "分离音频";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "示例5:Toolbar与Menu";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "service";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "涂鸦";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "视频录制";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "提取图片";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "SufaceView";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "注解测试";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Loader";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Notification";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "RSA";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "线程池";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "SnackBar";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Toast";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "DialogFragment";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "NestedScrollView";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "leetCode";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Proxy";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "生产消费者";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "重入锁";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Hook";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "泛型";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "链表";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "RecyclerView上拉下拉1";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "RxJava";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "newActivity";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Retrofit";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "DataBinding";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Run And Start";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "算法";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "跨进程intent";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "保活service";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "WorkManager";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "hook修改参数";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "sendCallBack";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "桌面小部件";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "kotlin";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "serviceHandler";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "自定义view内部handler";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "循环";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "停止";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "监听";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "jspdf";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "android原生pdf";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "pdfViewPage";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "自定义SnackBar";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "动态还在sd卡class";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "ViewPageActivity";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "MedialLib";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Navigation";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "LottieAnimation";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "RxAndroidUtil";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "Service8";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "三方下载lib";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "google guava";
+        lists.add(mainBean);
+
+
+        adapter.notifyDataSetChanged();
     }
 
     private void initNet() {
@@ -555,15 +786,201 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         iv_gif = findViewById(R.id.iv_gif);
+        recycleView = findViewById(R.id.recycleView);
+
+        adapter = new MainRecycleAdapter(this, lists);
+        //1线性
+        LinearLayoutManagerRecycleview layoutManager = new LinearLayoutManagerRecycleview(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);//
+
+        recycleView.setLayoutManager(layoutManager);
+
+        recycleView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
     }
 
-    private void setListener() {
-        findViewById(R.id.button1).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
-        findViewById(R.id.button3).setOnClickListener(this);
-        findViewById(R.id.button4).setOnClickListener(this);
-        findViewById(R.id.button5).setOnClickListener(this);
-        findViewById(R.id.button6).setOnClickListener(this);
+    @Override
+    public void onItemClick(int position) {
+        switch (position){
+            case 0:
+                button1();
+                break;
+            case 1:
+                button2();
+                break;
+            case 2:
+                startActivity(new Intent(this, TwoActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, AiduActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, IatDemo.class));
+                break;
+            case 5:
+                button6();
+                break;
+            case 6:
+                onDoodle();
+                break;
+            case 7:
+                videoRecord();
+                break;
+            case 8:
+                getPicture();
+                break;
+            case 9:
+                toSufaceView();
+                break;
+            case 10:
+                toAnnotation();
+                break;
+            case 11:
+                loader();
+                break;
+            case 12:
+                notification();
+                break;
+            case 13:
+                RSA();
+                break;
+            case 14:
+                threadPool();
+                break;
+            case 15:
+                snackBar(recycleView);
+                break;
+            case 16:
+                Toast();
+                break;
+            case 17:
+                DialogFragment();
+                break;
+            case 18:
+                nestedScrollView();
+                break;
+            case 19:
+                leetCode();
+                break;
+            case 20:
+                proxy();
+                break;
+            case 21:
+                producerConsumer();
+                break;
+            case 22:
+                reentrantLock();
+                break;
+            case 23:
+                hook(recycleView);
+                break;
+            case 24:
+                genericity();
+                break;
+            case 25:
+                wayLinkedList();
+                break;
+            case 26:
+                recyclerView();
+                break;
+            case 27:
+                smartRefreshLayout();
+                break;
+            case 28:
+                RxJava();
+                break;
+            case 29:
+                newActivity();
+                break;
+            case 30:
+                Retrofit();
+                break;
+            case 31:
+                dataBinding();
+                break;
+            case 32:
+                RunAndStart();
+                break;
+            case 33:
+                suanfa();
+                break;
+            case 34:
+                yuanchengIntent();
+                break;
+            case 35:
+                startServiceC();
+                break;
+            case 36:
+                workManager();
+                break;
+            case 37:
+                hookAlert();
+                break;
+            case 38:
+                sendCallBack();
+                break;
+            case 39:
+                MyAppWidgetProvider();
+                break;
+            case 40:
+                kotlinTest();
+                break;
+            case 41:
+                serviceHandler();
+                break;
+            case 42:
+                viewHandler();
+                break;
+            case 43:
+                xunhuan();
+                break;
+            case 44:
+                tingzhixunhuan();
+                break;
+            case 45:
+                listenerTest();
+                break;
+            case 46:
+                jspdf();
+                break;
+            case 47:
+                pdfRendererBasic();
+                break;
+            case 48:
+                pdfViewPage();
+                break;
+            case 49:
+                customSnackBar();
+                break;
+            case 50:
+                loaderSDClass();
+                break;
+            case 51:
+                toViewPageActivity();
+                break;
+            case 52:
+                toMedialLib();
+                break;
+            case 53:
+                toNavigation();
+                break;
+            case 54:
+                toLottieAnimation();
+                break;
+            case 55:
+                onRxAndroidUtil();
+                break;
+            case 56:
+                onService8();
+                break;
+            case 57:
+                onDownLoad3();
+                break;
+            case 58:
+                onGoogleGuava();
+                break;
+        }
+
     }
 
     @Override
@@ -576,7 +993,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    public void videoRecord(View view) {
+    public void videoRecord() {
         FileUtils.makesureFileExist(filePath);
         RecordVideoRequestOption option = new RecordVideoRequestOption();
         option.setMaxDuration(20);
@@ -585,11 +1002,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RecorderManagerFactory.getRecordVideoRequest().startRecordVideo(this, 0, option);
     }
 
-    public void getPicture(View view) {
+    public void getPicture() {
         Utils.muxerImg(filePath, SDCARD_PATH);
     }
 
-    public void toSufaceView(View view) {
+    public void toSufaceView() {
         startActivity(new Intent(this, ShowWaveActivity.class));
     }
 
@@ -599,7 +1016,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      *
      * @param view
      */
-    public void toAnnotation(View view) {
+    public void toAnnotation() {
         /**
          * 直接调用
          */
@@ -620,16 +1037,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void loader(View view) {
+    public void loader() {
         ARouter.getInstance().build("/demoLoader/mainActivity")
                 .navigation();
     }
 
-    public void notification(View view) {
+    public void notification() {
         test.notifyKJ(this);
     }
 
-    public void RSA(View view) {
+    public void RSA() {
         RsaUtils.main();
 
 //        String publicKey = "fhasflajkdsfalksff";
@@ -641,7 +1058,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String SUCCESS = "success";
 
-    public void threadPool(View view) {
+    public void threadPool() {
 //        ExecutorService service = Executors.newFixedThreadPool(4);//全部核心线程
 //        Executors.newCachedThreadPool()//全部非核心线程
 //        Executors.newScheduledThreadPool(4);//有数量固定的核心线程，且有数量无限多的非核心线程
@@ -745,19 +1162,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toast.show();
     }
 
-    public void Toast(View view) {
+    public void Toast() {
         showToast("1213234");
     }
 
-    public void DialogFragment(View view) {
+    public void DialogFragment() {
         CustomDialogFragment.showDialog(this);
     }
 
-    public void nestedScrollView(View view) {
+    public void nestedScrollView() {
         startActivity(new Intent(this, NestedScrollViewActivity.class));
     }
 
-    public void proxy(View view) {
+    public void proxy() {
         Iuser user = new UserImpl();
         InvocationHandler h = new DynamicProxy(user);
         Iuser proxy = (Iuser) Proxy.newProxyInstance(Iuser.class.getClassLoader(), new Class[]{Iuser.class}, h);
@@ -766,77 +1183,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         proxy.eat2("123", "456");
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button1:
-                int pid = android.os.Process.myPid();
-                Log.d("tangzypid", "mainActivity -> pid = " + pid);
-                Log.d("tangzypid", "mainActivity -> Thread = " + Thread.currentThread().getName());
-                TzyBean tzyBean = new TzyBean("关某在此");
-                UserBean userBean = new UserBean();
-                userBean.setAge(15);
-                userBean.setName("I am zhangsan");
+
+    private void button6() {
+        Intent intent;
+        intent = new Intent(this, DemoServive.class);
+        intent.putExtra("kfc", 10);
+//            intent.putExtra("kfc", kfc);
+//                startService(intent);
+        bindService(intent, con, Context.BIND_AUTO_CREATE);
+        startActivity(new Intent(this, DemoActivity.class));
+
+        ChredUser chredUser = new ChredUser();
+    }
+
+    private void button2() {
+        Intent intent1 = new Intent(this, WebActivity.class);
+        intent1.putExtra("path", "android_asset/index.html");
+        startActivity(intent1);
+    }
+
+    private void button1() {
+        int pid = android.os.Process.myPid();
+        Log.d("tangzypid", "mainActivity -> pid = " + pid);
+        Log.d("tangzypid", "mainActivity -> Thread = " + Thread.currentThread().getName());
+        TzyBean tzyBean = new TzyBean("关某在此");
+        UserBean userBean = new UserBean();
+        userBean.setAge(15);
+        userBean.setName("I am zhangsan");
 //                userBean.setAge1(156);
-                List<DataBean> list = new ArrayList<>();
-                DataBean dataBean = new DataBean();
-                dataBean.setName("wang ma zi");
-                list.add(dataBean);
+        List<DataBean> list = new ArrayList<>();
+        DataBean dataBean = new DataBean();
+        dataBean.setName("wang ma zi");
+        list.add(dataBean);
 //                list.add(1258);
 //                list.add(1259);
 //                list.add(1260);
 //                list.add(1263);
 //                list.add(1268);
 //                list.add(1269);
-                userBean.setName1(true);
-                userBean.setName2(false);
-                Byte fff = new Byte("123");
-                userBean.setAge_10(fff);
+        userBean.setName1(true);
+        userBean.setName2(false);
+        Byte fff = new Byte("123");
+        userBean.setAge_10(fff);
 
 
-                userBean.setList(list);
-                Intent intent = new Intent(this, TzyActivity.class);
-                intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
-                intent.putExtra(UserBean.class.getCanonicalName(), userBean);
-                startActivity(intent);
-                break;
-            case R.id.button2:
-                Intent intent1 = new Intent(this, WebActivity.class);
-                intent1.putExtra("path", "android_asset/index.html");
-                startActivity(intent1);
-
-//                if (AnnotationUse.class.isAnnotationPresent(MyAnnotation.class)){
-//                    MyAnnotation annotation = AnnotationUse.class.getAnnotation(MyAnnotation.class);
-//                    Logger.d("tangzy", "annotation = "+annotation.color());
-//                }else {
-//                    Logger.d("tangzy", "annotation = no");
-//                }
-
-                break;
-            case R.id.button3:
-                startActivity(new Intent(this, TwoActivity.class));
-                break;
-            case R.id.button4:
-                startActivity(new Intent(this, AiduActivity.class));
-                break;
-            case R.id.button5:
-                startActivity(new Intent(this, IatDemo.class));
-                break;
-            case R.id.button6:
-                intent = new Intent(this, DemoServive.class);
-                intent.putExtra("kfc", 10);
-//            intent.putExtra("kfc", kfc);
-//                startService(intent);
-                bindService(intent, con, Context.BIND_AUTO_CREATE);
-                startActivity(new Intent(this, DemoActivity.class));
-
-                ChredUser chredUser = new ChredUser();
-
-                break;
-            default:
-                break;
-        }
+        userBean.setList(list);
+        Intent intent = new Intent(this, TzyActivity.class);
+        intent.putExtra(TzyBean.class.getCanonicalName(), tzyBean);
+        intent.putExtra(UserBean.class.getCanonicalName(), userBean);
+        startActivity(intent);
     }
+
     ServiceConnection con= new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -849,7 +1246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    public void leetCode(View view) {
+    public void leetCode() {
 //        int nums[] = {2,7,11,15};
 //        int target = 18;
 //        int i1 = nums.length;
@@ -889,7 +1286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static Integer count = 0;
     private static final Integer FULL = 10;
     private static String LOCK = "lock";
-    public void producerConsumer(View view) {
+    public void producerConsumer() {
         new Thread(new Producer()).start();
         new Thread(new Consumer_()).start();
         new Thread(new Producer()).start();
@@ -906,7 +1303,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void genericity(View view) {
+    public void genericity() {
         ArrayList arrayList = new ArrayList();
 
         arrayList.add("hahaha");
@@ -925,7 +1322,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return modelList;
     }
 
-    public void wayLinkedList(View view) {
+    public void wayLinkedList() {
         OnyWayLinkedList<String> onyWayLinkedList = new OnyWayLinkedList<>();
         for (int i=0;i<10;i++){
             onyWayLinkedList.add("i = "+i);
@@ -966,7 +1363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onTouchEvent(event);
     }
 
-    public void reentrantLock(View view) {
+    public void reentrantLock() {
         //线程一
         new Thread(new Runnable() {
             @Override
@@ -988,19 +1385,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void recyclerView(View view) {
+    public void recyclerView() {
         startActivity(new Intent(this, RecyclerViewActivity.class));
     }
 
-    public void smartRefreshLayout(View view) {
+    public void smartRefreshLayout() {
         startActivity(new Intent(this, SmartRefreshLayoutActivity.class));
     }
 
-    public void toLottieAnimation(View view) {
+    public void toLottieAnimation() {
         startActivity(new Intent(this, LottieActivity.class));
     }
 
-    public void onRxAndroidUtil(View view) {
+    public void onRxAndroidUtil() {
         Logger.d("hhhhhhhh", "Handler 1runa " +Thread.currentThread().getName());
         RxHandler.INSTANCE.post(new Runnable() {
             @Override
@@ -1041,17 +1438,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).start();
     }
 
-    public void onService8(View view) {
+    public void onService8() {
         startActivity(new Intent(this, ServiceOActivity.class));
     }
 
-    public void onDownLoad3(View view) {
+    public void onDownLoad3() {
         startActivity(new Intent(this, DownLoadActivity.class));
     }
 
-    public void onGoogleGuava(View view) {
+    public void onGoogleGuava() {
         startActivity(new Intent(this, DownLoadActivity.class));
     }
+
+    public void onDoodle() {
+        startActivity(new Intent(this, DoodleActivity.class));
+    }
+
 
     private interface ProgressListener{
         void onProgress(int progress);
@@ -1084,7 +1486,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String keyScr= "allin1123abc";
     CompositeDisposable compositeDisposable=new CompositeDisposable();
-    public void RxJava(View view) {
+    public void RxJava() {
         for (int i =0; i<10;i++){
             getCurrentProgress(new ProgressListener() {
                 @Override
@@ -1641,11 +2043,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         compositeDisposable.clear();
     }
 
-    public void newActivity(View view) {
+    public void newActivity() {
         startActivity(new Intent(this, TestActivity.class));
     }
 
-    public void Retrofit(View view) {
+    public void Retrofit() {
 
         Map<String, String> mapParams = new ArrayMap<>();
         mapParams.put("userName","user01");
@@ -1781,11 +2183,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        ;
     }
 
-    public void dataBinding(View view) {
+    public void dataBinding() {
         startActivity(new Intent(this, DataBindingActivity.class));
     }
 
-    public void RunAndStart(View view) {
+    public void RunAndStart() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1799,7 +2201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Logger.d(TAG, "----------------");
     }
 
-    public void suanfa(View view) {
+    public void suanfa() {
         int[] array = {10,9,50,12,82,64,02,42,35,45,03,54,65,56,22,33,78};
         maopao(array);
         int zheban = zheban(array, 82, 0, array.length);
@@ -1868,7 +2270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @SuppressLint("AutoDispose")
-    public void yuanchengIntent(View view) {
+    public void yuanchengIntent() {
 
 //        DemoIntentService intentService = new DemoIntentService("dsfsf");
 //        intentService.start
@@ -1911,7 +2313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void startServiceC(View view) {
+    public void startServiceC() {
         startService(new Intent(this, SingASongService.class));
     }
 
@@ -1924,7 +2326,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 启动线程池。
      * @param view
      */
-    public void workManager(View view) {
+    public void workManager() {
         Logger.d(TAG, "main name = "+Thread.currentThread().getName());
         OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest.Builder(UpLoadWorker.class);
         OneTimeWorkRequest uploadWorkRequest = builder
@@ -1952,7 +2354,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Logger.d("tangzy", "s = "+s);
     }
 
-    public void hookAlert(View view) {
+    public void hookAlert() {
         lalalal("qqqqqq");
 //        String qqqqqq = lalalal("qqqqqq");
 //        Logger.d("tangzy", "result = "+ qqqqqq);
@@ -1963,35 +2365,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        return str+"_";
     }
 
-    public void sendCallBack(View view) {
+    public void sendCallBack() {
         handler1.sendEmptyMessage(0);
 
     }
 
-    public void MyAppWidgetProvider(View view) {
+    public void MyAppWidgetProvider() {
 
     }
 
-    public void kotlinTest(View view) {
+    public void kotlinTest() {
         BaseUrlManager.init();
 
     }
 
-    public void serviceHandler(View view) {
+    public void serviceHandler() {
         startService(new Intent(this, Demo3Service.class));
     }
 
-    public void viewHandler(View view) {
+    public void viewHandler() {
         startActivity(new Intent(this, MyViewGroupActivity.class));
     }
 
     private boolean mStop = true;
-    public void tingzhixunhuan(View view) {
+    public void tingzhixunhuan() {
         Logger.d(TAG, "tingzhixunhuan ");
         mStop = false;
     }
 
-    public void xunhuan(View view) {
+    public void xunhuan() {
         Logger.d(TAG, "xunhuan ");
 //        mStop = true;
         Observable.timer(200, TimeUnit.MILLISECONDS)
@@ -2009,11 +2411,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void listenerTest(View view) {
+    public void listenerTest() {
         startActivity(new Intent(this, ListenerActivity.class));
     }
 
-    public void jspdf(View view) {
+    public void jspdf() {
         Intent intent = new Intent(this, PdfActivity.class);
         String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
@@ -2022,7 +2424,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    public void pdfRendererBasic(View view) {
+    public void pdfRendererBasic() {
         Intent intent = new Intent(this, RecycleViewActivity1.class);
         String path = Environment.getExternalStorageDirectory().toString();
 //        path = path+"/Allinmd/1589177170204/download/pdfile/216e908f890d2f4bb85900ec8ceafa8f.pdf";
@@ -2036,7 +2438,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 //大小可忽略
-    public void pdfViewPage(View view) {
+    public void pdfViewPage() {
         if (!EasyPermissions.hasPermissions(this, sPermissions)) {
             EasyPermissions.requestPermissions(this, getString(com.mingyuechunqiu.recordermanager.R.string.rm_warn_allow_record_video_permissions), 1, sPermissions);
         } else {
@@ -2056,7 +2458,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 //    boolean bbb = true;
-    public void customSnackBar(View view) {
+    public void customSnackBar() {
         ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content).getRootView();
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -2091,19 +2493,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        }
     }
 
-    public void loaderSDClass(View view) {
+    public void loaderSDClass() {
 
     }
 
-    public void toViewPageActivity(View view) {
+    public void toViewPageActivity() {
         startActivity(new Intent(this, ViewPageActivity.class));
     }
 
-    public void toMedialLib(View view) {
+    public void toMedialLib() {
         startActivity(new Intent(this, VideoLibActivity.class));
     }
 
-    public void toNavigation(View view) {
+    public void toNavigation() {
         startActivity(new Intent(this, NavigationLibActivity.class));
     }
 

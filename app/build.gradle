@@ -166,6 +166,7 @@ dependencies {
     api project(':myannotation')
     api project(':videolibrary')
     api project(':NavigationDemo')
+    api project(':DoodleLib')
 
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
 
