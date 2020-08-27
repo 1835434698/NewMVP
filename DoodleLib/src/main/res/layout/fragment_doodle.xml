@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.tangzy.doodlelib.view.DoodleView
+        android:id="@+id/doodleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_doodle" />
+
+    <ImageButton
+        android:id="@+id/imb_redo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="18dp"
+        android:background="@null"
+        
+        android:src="@drawable/image_btn_next" />
+
+    <ImageButton
+        android:id="@+id/imb_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/imb_redo"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@id/imb_redo"
+        android:background="@null"
+        
+        android:src="@drawable/image_btn_undo" />
+
+    <LinearLayout
+        android:id="@+id/llDoodleBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#1A1A1A"
+        android:orientation="vertical">
+
+        <!--    形状-->
+        <RadioGroup
+            android:id="@+id/rg_shape"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/image_bg_bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/rb_rectangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/image_btn_rectangle"
+                android:gravity="center"
+                 />
+
+            <Space
+                android:layout_width="39dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_circular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/image_btn_circle"
+                android:gravity="center"
+                 />
+
+            <Space
+                android:layout_width="39dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/image_btn_arrow"
+                android:gravity="center"
+                 />
+
+            <Space
+                android:layout_width="39dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_curve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/image_btn_curve"
+                android:gravity="center"
+                 />
+
+            <Space
+                android:layout_width="39dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_straight_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableLeft="@drawable/image_btn_straight_line"
+                android:gravity="center"
+                 />
+
+        </RadioGroup>
+        <!--    颜色-->
+
+        <com.tangzy.doodlelib.view.IMGColorGroup
+            android:id="@+id/rg_colcr"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_gravity="center"
+            android:checkedButton="@+id/cr_red"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_white" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_black" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:id="@+id/cr_red"
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                android:button="@null"
+                app:image_color="@color/image_color_red" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_yellow" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_53d768" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_blue" />
+
+            <com.tangzy.doodlelib.view.IMGColorRadio
+                android:layout_width="@dimen/image_color"
+                android:layout_height="@dimen/image_color"
+                android:layout_margin="@dimen/image_color_margin"
+                app:image_color="@color/image_color_5114F9" />
+
+        </com.tangzy.doodlelib.view.IMGColorGroup>
+
+        <RadioGroup
+            android:id="@+id/rg_size"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/image_bg_bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/rb_x_small"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="9dp"
+                android:src="@drawable/image_bg_whrit" />
+
+            <Space
+                android:layout_width="@dimen/image_mode_space"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/rb_small"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="7dp"
+                android:src="@drawable/image_bg_whrit" />
+
+            <Space
+                android:layout_width="@dimen/image_mode_space"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/rb_large"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5.5dp"
+                android:src="@drawable/image_bg_blue" />
+
+            <Space
+                android:layout_width="@dimen/image_mode_space"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/rb_x_large"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="4dp"
+                android:src="@drawable/image_bg_whrit" />
+
+            <Space
+                android:layout_width="@dimen/image_mode_space"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/rb_xx_large"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="3dp"
+                android:src="@drawable/image_bg_whrit" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#292929" />
+
+        <!--    涂鸦-->
+        <RadioGroup
+            android:id="@+id/rg_graffiti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/image_bg_bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <RadioButton
+                android:id="@+id/rb_graffiti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/image_btn_doodle"
+                android:gravity="center"
+                android:text="标记"
+                android:textColor="#FFF" />
+
+            <Space
+                android:layout_width="56dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/image_btn_colors"
+                android:gravity="center"
+                android:text="颜色"
+                android:textColor="#FFF" />
+
+            <Space
+                android:layout_width="56dp"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableTop="@drawable/image_btn_thickness"
+                android:gravity="center"
+                android:text="粗细"
+                android:textColor="#FFF" />
+
+        </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/im_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="24dp"
+                android:layout_marginBottom="17dp"
+                
+                android:src="@drawable/image_btn_cancel" />
+
+            <TextView
+                android:id="@+id/tv_clip_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/im_close"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                
+                android:text="@string/image_doodle"
+                android:textColor="@color/image_color_text"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/im_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/im_close"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="24dp"
+                android:layout_marginBottom="17dp"
+                
+                android:src="@drawable/image_btn_ok" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

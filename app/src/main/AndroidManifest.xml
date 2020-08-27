@@ -93,7 +93,8 @@
         <activity android:name=".activity.LottieActivity"></activity>
         <activity android:name=".activity.ServiceOActivity"></activity>
         <activity android:name=".activity.DownLoadActivity"></activity>
-        <activity android:name=".activity.DoodleActivity"></activity>
+        <activity android:name=".activity.DoodleActivity"
+            android:hardwareAccelerated="false"></activity>
         <activity android:name=".activity.YuanChengActivity"
             android:process=":hhhhh">
         </activity>
