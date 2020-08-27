@@ -21,7 +21,8 @@ import com.tangzy.tzymvp.viewbind.FragmentActivityDelegate;
 
 public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
 
-
+private  Fragment tab0  = new FirstFragment();
+private  Fragment tab1 = new SecondFragment();
     @Override
     protected Class<FragmentActivityDelegate> getDelegateClass() {
         return FragmentActivityDelegate.class;
@@ -79,30 +80,32 @@ public class FragmentActivity extends BaseActivity<FragmentActivityDelegate> {
         }
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment tab0 = fragmentManager.findFragmentByTag("tab0");
-        Fragment tab1 = fragmentManager.findFragmentByTag("tab1");
+//        Fragment tab0 = fragmentManager.findFragmentByTag("tab0");
+//        Fragment tab1 = fragmentManager.findFragmentByTag("tab1");
         switch (tab) {
             case 0:
-                if (tab1 != null) {
-                    fragmentTransaction.hide(tab1);
-                }
-                if (tab0 == null) {
-                    tab0 = new FirstFragment();
-                    fragmentTransaction.add(R.id.fragment_content, tab0, "tab0");
-                } else {
-                    fragmentTransaction.show(tab0);
-                }
+//                if (tab1 != null) {
+//                    fragmentTransaction.hide(tab1);
+//                }
+//                if (tab0 == null) {
+//                    tab0 = new FirstFragment();
+//                    fragmentTransaction.add(R.id.fragment_content, tab0, "tab0");
+//                } else {
+//                    fragmentTransaction.show(tab0);
+//                }
+                fragmentTransaction.replace(R.id.fragment_content, tab0);
                 break;
             case 1:
-                if (tab0 != null) {
-                    fragmentTransaction.hide(tab0);
-                }
-                if (tab1 == null) {
-                    tab1 = new SecondFragment();
-                    fragmentTransaction.add(R.id.fragment_content, tab1, "tab1");
-                } else {
-                    fragmentTransaction.show(tab1);
-                }
+//                if (tab0 != null) {
+//                    fragmentTransaction.hide(tab0);
+//                }
+//                if (tab1 == null) {
+//                    tab1 = new SecondFragment();
+//                    fragmentTransaction.add(R.id.fragment_content, tab1, "tab1");
+//                } else {
+//                    fragmentTransaction.show(tab1);
+//                }
+                fragmentTransaction.replace(R.id.fragment_content, tab1);
                 break;
             default:
                 break;

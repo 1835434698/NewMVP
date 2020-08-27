@@ -65,8 +65,8 @@ public class TzyActivity extends BaseActivity<TzyDelegate>{
 //        list.add("1111113");
         //模拟数据改变(比如也可以写在网络请求成功的时候改变数据)
         viewDelegate.get(R.id.button1).setOnClickListener(v-> startHHHH());
-        List features = Arrays.asList("Lambdas", "Default Method", "Stream API", "Date and Time API");
-        features.forEach(k -> System.out.println(k));
+//        List features = Arrays.asList("Lambdas", "Default Method", "Stream API", "Date and Time API");
+//        features.forEach(k -> System.out.println(k));
 
 
 

@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.tangzy.themvp.databind.BaseDataBinder;
 import com.tangzy.tzymvp.R;
+import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.databind.FragmentActivityBinder;
 import com.tangzy.tzymvp.fragment.base.BaseFragment;
 import com.tangzy.tzymvp.listener.NoDoubleClickListener;
@@ -45,6 +46,38 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
             Logger.d(TAG, "handleMessage : "+Thread.currentThread().getId());
         }
     };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Logger.d(TAG, " onCreate");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Logger.d(TAG, " onResume");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Logger.d(TAG, " onHiddenChanged hidden = "+hidden);
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Logger.d(TAG, " setUserVisibleHint isVisibleToUser = "+isVisibleToUser);
+    }
+
+    @Override
+    public boolean getUserVisibleHint() {
+        boolean userVisibleHint = super.getUserVisibleHint();
+        Logger.d(TAG, " getUserVisibleHint userVisibleHint = "+userVisibleHint);
+        return userVisibleHint;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -272,6 +305,7 @@ public class FirstFragment extends BaseFragment<FirstFragDelegate> {
             switch (v.getId()){
                 case R.id.button:
                     Logger.d("TAG", " OnClick");
+                    startActivity(new Intent(getActivity(), TestActivity.class));
 //                    showKeyboard(mEtInvitation);
 //                    getAppList();
 
