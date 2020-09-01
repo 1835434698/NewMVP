@@ -1203,6 +1203,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     }
 
     private void button1() {
+
         int pid = android.os.Process.myPid();
         Log.d("tangzypid", "mainActivity -> pid = " + pid);
         Log.d("tangzypid", "mainActivity -> Thread = " + Thread.currentThread().getName());
