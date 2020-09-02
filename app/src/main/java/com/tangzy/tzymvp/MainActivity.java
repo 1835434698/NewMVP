@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,6 +62,7 @@ import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.DoodleActivity;
 import com.tangzy.tzymvp.activity.DownLoadActivity;
+import com.tangzy.tzymvp.activity.GoogleGuvaActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.LottieActivity;
@@ -634,6 +637,10 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean = new MainBean();
         mainBean.id = id++;
         mainBean.name = "RecyclerView上拉下拉1";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "smartRefresh";
         lists.add(mainBean);
         mainBean = new MainBean();
         mainBean.id = id++;
@@ -1448,7 +1455,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     }
 
     public void onGoogleGuava() {
-        startActivity(new Intent(this, DownLoadActivity.class));
+        startActivity(new Intent(this, GoogleGuvaActivity.class));
     }
 
     public void onDoodle() {
@@ -2325,8 +2332,8 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
      *
      * 通过builder设计模式设置参数。
      * 启动线程池。
-     * @param view
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void workManager() {
         Logger.d(TAG, "main name = "+Thread.currentThread().getName());
         OneTimeWorkRequest.Builder builder = new OneTimeWorkRequest.Builder(UpLoadWorker.class);

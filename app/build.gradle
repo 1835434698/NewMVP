@@ -167,17 +167,16 @@ dependencies {
     api project(':videolibrary')
     api project(':NavigationDemo')
     api project(':DoodleLib')
+    api project(':MyGuavaLib')
 
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
 
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.liulishuo.filedownloader:library:1.7.6'
-//
+
 //    implementation 'com.google.guava:guava:28.1-android'
-//
 //    configurations {
-////这里要排除到这个包，这个包会与 com.google.guava 冲突，导致编译不过
-//        all*.exclude group: 'com.google.guava'
+//        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
 //    }
 }
 repositories {

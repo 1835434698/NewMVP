@@ -9,33 +9,33 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.alibaba.android.arouter.utils.MapUtils;
 import com.alibaba.android.arouter.utils.TextUtils;
 import com.alibaba.fastjson.JSON;
-//import com.google.common.base.Function;
-//import com.google.common.collect.Collections2;
-import com.google.gson.JsonObject;
-import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.util.FileDownloadLog;
-import com.tangzy.tzymvp.Constant;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.Info;
-import com.tangzy.tzymvp.bean.TzyBean;
-import com.tangzy.tzymvp.util.Logger;
+import com.tangzy.tzymvp.bean.InfoTab;
 
-//import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class GoogleGuvaActivity extends AppCompatActivity {
-    private static final String TAG = "DownLoadActivity";
+    private static final String TAG = "GoogleGuvaActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,42 +46,185 @@ public class GoogleGuvaActivity extends AppCompatActivity {
     }
 
     public void onInit(View view) {
-        Object respone = "[{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"},{\"name\":\"张三\",\"age\":\"19\"}]";
+        Object respone = "[{\"name\":\"张三1\",\"age\":\"19\"},{\"name\":\"张三2\",\"age\":\"19\"},{\"name\":\"张三3\",\"age\":\"19\"},{\"name\":\"张三4\",\"age\":\"19\"}]";
 
         Map<String, Object> m = new ArrayMap<>();
         m.put("respone", respone);
 
         List<Info> infos = parseArray((String) respone, Info.class);
-        Log.d(TAG, "size = "+infos.size());
+        InfoTab infoTab = new InfoTab();
+        infoTab.setSex("男");
+        infoTab.setName("张三5");
+        infoTab.setAge(22);
+        infos.add(infoTab);
+        infos.add(infoTab);
+        Log.d(TAG, "size = " + infos.size());
 
         Object r = getObject(m, "respone", null);
 
-//        if (respone instanceof List){
-//            List list = (List) r;
-//            Collection<Info> transform = Collections2.transform(list, new Function<Object, Info>() {
-//
-//                @NullableDecl
-//                @Override
-//                public Info apply(@NullableDecl Object input) {
-//                    if (input instanceof Map) {
-//                        Map adMap = (Map) input;
-//                        String name = getMapString(adMap, "name");
-//                        String age = getMapString(adMap, "age");
-//                        Info info = new Info();
-//                        info.setName(name);
-//                        info.setAge(Integer.parseInt(age));
-//                        return info;
-//                    }
-//                    return null;
-//                }
-//            });
-//            Log.d(TAG, "transform = "+transform);
-//
-//        }
+        List<String> lists = new ArrayList<>();
+        lists.add("zhangsan");
+        lists.add("lisi");
+        lists.add("wangwu");
+        lists.add("null");
+//        lists.add(null);
+//        lists.add(null);
 
+        if (infos instanceof List) {
+//            List list = (List) r;
+            Log.d(TAG, "start1111");
+            Collection<String> transform = Collections2.transform(infos, new Function<Object, String>() {
+
+                
+                @Override
+                public String apply( Object input) {
+                    if (input instanceof Info) {
+                        Info adMap = (Info) input;
+//                        String name = getMapString(adMap, "name");
+                        String name = adMap.getName();
+//                        String age = getMapString(adMap, "age");
+                        String age = adMap.getAge() + "";
+                        Info info = new Info();
+                        info.setName(name);
+                        info.setAge(Integer.parseInt(age));
+                        return name;
+                    }
+                    return null;
+                }
+            });
+            for (String string:transform){
+                Log.d(TAG, "transform = " + string);
+            }
+
+            Collection<String> transform1 = Collections2.transform(infos, new Function<Object, String>() {
+                
+                @Override
+                public String apply( Object input) {
+                    if (input instanceof Info) {
+                        Info adMap = (Info) input;
+//                        String name = getMapString(adMap, "name");
+                        String name = adMap.getName();
+//                        String age = getMapString(adMap, "age");
+                        String age = adMap.getAge() + "";
+                        Info info = new Info();
+                        info.setName(name);
+                        info.setAge(Integer.parseInt(age));
+                        return name;
+                    }
+                    return null;
+                }
+            });
+            for (String string:transform1) {
+                Log.d(TAG, "transform1 = " + string);
+            }
+
+//            infos.add(null);
+//            infos.add(null);
+            Collection<Info> filter = Collections2.filter(infos, Predicates.notNull());
+            Collection<String> filter2 = Collections2.filter(lists, Predicates.equalTo(lists.get(1)));
+            Collection<String> filter3 = Collections2.filter(lists, Predicates.equalTo("lists.get(3)"));
+            Collection<String> filter8 = Collections2.filter(lists, Predicates.equalTo("wangwu"));
+//            Collection<String> filter4 = Collections2.filter(lists, Predicates.equalTo(lists.get(4)));
+            Collection<Info> filter10 = Collections2.filter(infos, Predicates.equalTo(infos.get(1)));
+//            Collection<Info> filter11 = Collections2.filter(infos, Predicates.equalTo(infos.get(4)));
+            Log.d(TAG, "filter = " + filter);
+
+            Collection<Info> filter1 = Collections2.filter(infos, Predicates.notNull());
+            Collection<String> filter5 = Collections2.filter(lists, Predicates.equalTo(lists.get(1)));
+            Collection<String> filter6 = Collections2.filter(lists, Predicates.equalTo("lists.get(3)"));
+            Collection<String> filter9 = Collections2.filter(lists, Predicates.equalTo("wangwu"));
+//            Collection<String> filter7 = Collections2.filter(lists, Predicates.equalTo(lists.get(4)));
+            Collection<Info> filter12 = Collections2.filter(infos, Predicates.equalTo(infos.get(1)));
+//            Collection<Info> filter13 = Collections2.filter(infos, Predicates.equalTo(infos.get(4)));
+            Log.d(TAG, "filter1 = " + filter1);
+
+
+            Collection<String> wangwu = Collections2.filter(lists, input -> input.equals("wangwu"));
+            Collection<String> filter14 = Collections2.filter(lists, input -> input.equals("list.get(3)"));
+            Collection<String> aNull = Collections2.filter(lists, input -> input.equals("null"));
+            Collection<Info> aNull2 = Collections2.filter(infos, input -> input.getName().equals(infos.get(1).getName()));
+            if (aNull != null) {
+                Log.d(TAG, "aNull = " + aNull);
+            }
+
+            Collection<String> wangwu1 = Collections2.filter(lists, input -> input.equals("wangwu"));
+            Collection<String> filter141 = Collections2.filter(lists, input -> input.equals("list.get(3)"));
+            Collection<String> aNull1 = Collections2.filter(lists, input -> input.equals("null"));
+            Collection<Info> aNull12 = Collections2.filter(infos, input -> input.getName().equals(infos.get(1).getName()));
+            if (aNull != null) {
+                Log.d(TAG, "aNull1 = " + aNull1);
+            }
+
+            Collection<Info> filter4 = Collections2.filter(infos, Predicates.instanceOf(InfoTab.class));
+
+            Collection<Info> filter41 = Collections2.filter(infos, Predicates.instanceOf(InfoTab.class));
+
+            Log.d(TAG, "filter4 = " + filter4);
+            ArrayList<String> transform_L = Lists.newArrayList(transform);
+            ArrayList<String> transform1_L = Lists.newArrayList(transform1);
+            ArrayList<String> transform2_L = Lists.newArrayList(transform);
+            ArrayList<String> transform21_L = Lists.newArrayList(transform1);
+            Log.d(TAG, "transform21_L = " + transform21_L);
+            ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+            infoTab = new InfoTab();
+            infoTab.setSex("男");
+            infoTab.setName("张三5");
+            infoTab.setAge(22);
+            concurrentHashMap.put(infoTab, "111");
+            infoTab = new InfoTab();
+            infoTab.setSex("男");
+            infoTab.setName("张三6");
+            infoTab.setAge(22);
+            concurrentHashMap.put(infoTab, "222");
+            Map hhhhhh = Maps.filterKeys(concurrentHashMap, (Predicate<InfoTab>) input -> input.getName().equals("张三6"));
+            Map hhhhh2 = Maps.filterKeys(concurrentHashMap, (Predicate<InfoTab>) input -> input.getName().equals("张三4"));
+
+
+            Map hhhhhh1 = Maps.filterKeys(concurrentHashMap, (Predicate<InfoTab>) input -> input.getName().equals("张三6"));
+            Map hhhhh21 = Maps.filterKeys(concurrentHashMap, (Predicate<InfoTab>) input -> input.getName().equals("张三4"));
+            Log.d(TAG, "hhhhhh = " + hhhhhh);
+
+
+            try {
+                JSONArray jsonArray = new JSONArray((String) respone);
+                JSONObject innerJsonObject = jsonArray.optJSONObject(0);
+
+                ImmutableMap<String, String> ele = Maps.toMap(innerJsonObject.keys(), innerJsonObject::optString);
+//                sourceDataList.add(ele);
+
+                ImmutableMap<String, String> ele1 = Maps.toMap(innerJsonObject.keys(), innerJsonObject::optString);
+                Log.d(TAG, "ele = " + ele);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 
-    public <T> List<T> parseArray(String response, Class<T> object){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public <T> List<T> parseArray(String response, Class<T> object) {
         List<T> modelList = JSON.parseArray(response, object);
         return modelList;
     }
@@ -163,7 +306,6 @@ public class GoogleGuvaActivity extends AppCompatActivity {
     public static boolean isEmpty(@Nullable Map<?, ?> m) {
         return m == null || m.isEmpty();
     }
-
 
 
 }
