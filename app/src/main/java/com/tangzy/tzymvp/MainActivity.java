@@ -19,13 +19,10 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,8 +51,6 @@ import com.tangzy.myannotation.MyAnnotationApi;
 import com.tangzy.navigation.NavigationLibActivity;
 import com.tangzy.pdfrecyclerview.RecycleViewActivity;
 import com.tangzy.pdfrecyclerview.adapter.LinearLayoutManagerRecycleview;
-import com.tangzy.pdfrecyclerview.adapter.PDFRecycleAdapter;
-import com.tangzy.pdfrecyclerview.view.ScaleImageView;
 import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.tzymvp.activity.AiduActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
@@ -86,6 +81,7 @@ import com.tangzy.tzymvp.bean.Info;
 import com.tangzy.tzymvp.bean.MainBean;
 import com.tangzy.tzymvp.bean.TzyBean;
 import com.tangzy.tzymvp.bean.UserBean;
+import com.tangzy.tzymvp.entity.EventBusBaseEntity;
 import com.tangzy.tzymvp.hook.HookSetOnClickListenerHelper;
 import com.tangzy.tzymvp.net.api.APIService;
 import com.tangzy.tzymvp.net.bean.ListBean;
@@ -121,6 +117,9 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.translate.UnicodeUnescaper;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -139,11 +138,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -170,7 +164,7 @@ import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_
 
 @CustomAnnotation
 @Route(path = "/test/MainActivity")
-public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.OnItemClickListener{
 
     private final String TAG = "MainActivity";
 
@@ -236,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         setPath(Constant.path+"ttt.txt");
         ARouter.getInstance().inject(this);//添加在onCreate（）
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         mSnackbarAnchor = findViewById(R.id.base_root);
         handler.sendEmptyMessage(0);
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
@@ -767,6 +762,11 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.name = "google guava";
         lists.add(mainBean);
 
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "EventBus";
+        lists.add(mainBean);
+
 
         adapter.notifyDataSetChanged();
     }
@@ -986,8 +986,23 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 58:
                 onGoogleGuava();
                 break;
+            case 59:
+                onEventBus();
+                break;
         }
 
+    }
+    @Subscribe
+    public void updateBaseInfo(@NotNull EventBusBaseEntity<Object>  eventBusBaseEntity) {
+        Logger.i(TAG, "接受EventBus  -downloadStateCount = " + eventBusBaseEntity);
+
+    }
+
+    private void onEventBus() {
+        EventBusBaseEntity eventBusBaseEntity = new EventBusBaseEntity();
+        eventBusBaseEntity.data = new Object();
+        eventBusBaseEntity.type = 1;
+        EventBus.getDefault().post(eventBusBaseEntity);
     }
 
     @Override
@@ -2047,6 +2062,7 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
         compositeDisposable.clear();
     }
