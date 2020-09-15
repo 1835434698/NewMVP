@@ -15,6 +15,13 @@ jarFilter {
 }
 
 
+apply plugin: "cn.cxzheng.asmtraceman"
+traceMan {
+    open = true //这里如果设置为false,则会关闭插桩
+    logTraceInfo = false //这里设置为true时可以在log日志里看到所有被插桩的类和方法
+    traceConfigFile = "${project.projectDir}/traceconfig.txt"
+}
+
 
 
 android {
@@ -180,7 +187,12 @@ dependencies {
 //    configurations {
 //        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
 //    }
+
+    debugImplementation 'com.github.zhengcx:MethodTraceMan:1.0.7'
+    releaseImplementation 'com.github.zhengcx:MethodTraceMan:1.0.5-noop'
+
 }
+
 repositories {
     mavenCentral()
 }
