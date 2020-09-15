@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tangzy.mykotlin">
+
+    <application>
+        <activity android:name=".KotlinActivity"/>
+    </application>
+</manifest>

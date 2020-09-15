@@ -48,6 +48,7 @@ import com.mingyuechunqiu.recordermanager.feature.record.RecorderManagerFactory;
 import com.tangzy.jspdf.PdfActivity;
 import com.tangzy.myannotation.CustomAnnotation;
 import com.tangzy.myannotation.MyAnnotationApi;
+import com.tangzy.mykotlin.KotlinActivity;
 import com.tangzy.navigation.NavigationLibActivity;
 import com.tangzy.pdfrecyclerview.RecycleViewActivity;
 import com.tangzy.pdfrecyclerview.adapter.LinearLayoutManagerRecycleview;
@@ -761,10 +762,14 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.id = id++;
         mainBean.name = "google guava";
         lists.add(mainBean);
-
         mainBean = new MainBean();
         mainBean.id = id++;
         mainBean.name = "EventBus";
+        lists.add(mainBean);
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "KotlinActivity";
         lists.add(mainBean);
 
 
@@ -989,9 +994,17 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 59:
                 onEventBus();
                 break;
+            case 60:
+                onKotlinActivity();
+                break;
         }
 
     }
+
+    private void onKotlinActivity() {
+        startActivity(new Intent(this, KotlinActivity.class));
+    }
+
     @Subscribe
     public void updateBaseInfo(@NotNull EventBusBaseEntity<Object>  eventBusBaseEntity) {
         Logger.i(TAG, "接受EventBus  -downloadStateCount = " + eventBusBaseEntity);

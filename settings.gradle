@@ -1,3 +1,4 @@
+include ':MyKotlin'
 include ':MyGuavaLib'
 include ':DoodleLib'
 include ':NavigationDemo'

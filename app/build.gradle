@@ -175,6 +175,7 @@ dependencies {
     api project(':NavigationDemo')
     api project(':DoodleLib')
     api project(':MyGuavaLib')
+    api project(':MyKotlin')
 
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
 
