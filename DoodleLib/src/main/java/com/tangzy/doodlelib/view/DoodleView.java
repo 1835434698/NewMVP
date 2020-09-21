@@ -15,19 +15,24 @@ import android.widget.ImageView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
+import com.tangzy.doodlelib.DoodleShape;
 import com.tangzy.doodlelib.util.DrawUtil;
 
 import java.util.Stack;
 
 
 @SuppressLint("AppCompatCustomView")
-public class DoodleView extends ImageView {
+public class DoodleView extends ImageView implements IDoodle{
     private static final String TAG = "DoodleVIew";
     private Context context;
+
+    private DoodleShape mShape;
+
 
     private Paint mPaint;
 
     private Stack<Path> stack = new Stack<>();
+    private Stack<DoodlePath> paths = new Stack<>();
 
     public DoodleView(Context context) {
         super(context);
@@ -68,13 +73,42 @@ public class DoodleView extends ImageView {
                 tx = event.getX();
                 ty = event.getY();
                 Path path = new Path();
-                updateRectPath(path,sx,sy,tx,ty);
-                stack.add(path);
-                invalidate();
+                addPath(path,sx,sy,tx,ty);
+//                stack.add(path);
                 break;
         }
         return super.dispatchTouchEvent(event);
     }
+
+    private void addPath(Path path, float sx, float sy, float tx, float ty) {
+        switch (mShape){
+            case HOLLOW_RECT:
+                updateRectPath(path,sx,sy,tx,ty);
+                break;
+            case HOLLOW_CIRCLE:
+                updateOvalPath(path,sx,sy,tx,ty);
+                break;
+            case LINE:
+                updateLinePath(path,sx,sy,tx,ty);
+                break;
+            case ARROW:
+//                updateArrowPath(path,sx,sy,tx,ty);
+                break;
+            case HAND_WRITE:
+//                updateRectPath(path,sx,sy,tx,ty);
+                break;
+        }
+        doodlePath = new DoodlePath();
+        doodlePath.setmPath(path);
+//                doodlePath.setmColor();
+//                doodlePath.setmPaint();
+//                doodlePath.setmWidth();
+        doodlePath.setmDoodleShape(mShape);
+        paths.add(doodlePath);
+        invalidate();
+    }
+
+    private DoodlePath doodlePath;
 
     //---------计算Path
     private Path mArrowTrianglePath;
@@ -117,15 +151,19 @@ public class DoodleView extends ImageView {
         path.addPath(mArrowTrianglePath);
     }
 
-    private void updateLinePath(Path path, float sx, float sy, float ex, float ey, float size) {
+    private void updateLinePath(Path path, float sx, float sy, float ex, float ey) {
         path.moveTo(sx, sy);
         path.lineTo(ex, ey);
     }
 
-    private void updateCirclePath(Path path, float sx, float sy, float dx, float dy, float size) {
+    private void updateCirclePath(Path path, float sx, float sy, float dx, float dy) {
         float radius = (float) Math.sqrt((sx - dx) * (sx - dx) + (sy - dy) * (sy - dy));
         path.addCircle(sx, sy, radius, Path.Direction.CCW);
 
+    }
+
+    private void updateOvalPath(Path path, float sx, float sy, float dx, float dy) {
+        path.addOval(sx, sy, dx, dy, Path.Direction.CCW);
     }
 
     private void updateRectPath(Path path, float sx, float sy, float dx, float dy) {
@@ -175,17 +213,42 @@ public class DoodleView extends ImageView {
 
             Path path = new Path();
 
-            updateRectPath(path, sx, sy, tx, ty);// addRect
+//            updateRectPath(path, sx, sy, tx, ty);// addRect
+
+            updateOvalPath(path, sx, sy, tx, ty);//
             canvas.drawPath(path, mPaint);
         }
-        if (stack.size() >0){
+        if (paths.size() >0){
 
-            Path path = new Path();
-            for (Path item :stack){
-                canvas.drawPath(item, mPaint);
+            for (DoodlePath item :paths){
+
+                canvas.drawPath(item.getmPath(), item.getmPaint());
             }
         }
 
     }
 
+    @Override
+    public void setPen(Paint pen) {
+
+    }
+
+    @Override
+    public Paint getPen() {
+        return null;
+    }
+
+    @Override
+    public void setShape(DoodleShape shape) {
+        if (shape == null) {
+            throw new RuntimeException("Shape can't be null");
+        }
+        mShape = shape;
+
+    }
+
+    @Override
+    public DoodleShape getShape() {
+        return null;
+    }
 }

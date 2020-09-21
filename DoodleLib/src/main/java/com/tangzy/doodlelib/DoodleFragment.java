@@ -114,15 +114,15 @@ public class DoodleFragment extends Fragment implements View.OnClickListener, Ra
         } else if (vid == R.id.rb_size) {
             showSize();
         } else if (vid == R.id.rb_rectangle) {
-//            mDoodle.setShape(DoodleShape.HOLLOW_RECT);
+            doodleview.setShape(DoodleShape.HOLLOW_RECT);
         } else if (vid == R.id.rb_circular) {
-//            mDoodle.setShape(DoodleShape.HOLLOW_CIRCLE);
+            doodleview.setShape(DoodleShape.HOLLOW_CIRCLE);
         } else if (vid == R.id.rb_arrow) {
-//            mDoodle.setShape(DoodleShape.ARROW);
+            doodleview.setShape(DoodleShape.ARROW);
         } else if (vid == R.id.rb_curve) {
-//            mDoodle.setShape(DoodleShape.HAND_WRITE);
+            doodleview.setShape(DoodleShape.HAND_WRITE);
         } else if (vid == R.id.rb_straight_line) {
-//            mDoodle.setShape(DoodleShape.LINE);
+            doodleview.setShape(DoodleShape.LINE);
 //        } else if (vid == R.id.im_close) {// TODO: 2020/8/25 关闭涂鸦
 //            showDoodle(false);
 //            resetDoodle();
@@ -142,11 +142,11 @@ public class DoodleFragment extends Fragment implements View.OnClickListener, Ra
             setChecked( rb_xx_large);
             setPenSize(xxLarge);
 //        } else if (vid == R.id.imb_undo) {// TODO: 2020/8/25 撤销
-//            mDoodle.undo();
+//            doodleview.undo();
 //        } else if (vid == R.id.imb_redo) {// TODO: 2020/8/25 重做
-//            mDoodle.redo(1);
+//            doodleview.redo(1);
 //        } else if (vid == R.id.im_ok) {
-//            mDoodle.save();
+//            doodleview.save();
 //            showDoodle(false);
 //            resetDoodle();
 //        }else if (vid == R.id.tvCancelMosaic) {

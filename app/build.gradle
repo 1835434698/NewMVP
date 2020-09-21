@@ -5,14 +5,14 @@ apply plugin: 'com.alibaba.arouter'
 apply plugin: 'android-aspectjx'
 //apply plugin: 'com.neenbedankt.android-apt'
 
-apply plugin: 'jar-filter'
-
-jarFilter {
-    skipFiles = [
-            'androidx/recyclerview/widget/RecyclerView.class',
-            'androidx/recyclerview/widget/RecyclerView\\$(.*).class'
-    ]
-}
+//apply plugin: 'jar-filter'
+//
+//jarFilter {
+//    skipFiles = [
+//            'androidx/recyclerview/widget/RecyclerView.class',
+//            'androidx/recyclerview/widget/RecyclerView\\$(.*).class'
+//    ]
+//}
 
 
 apply plugin: "cn.cxzheng.asmtraceman"
