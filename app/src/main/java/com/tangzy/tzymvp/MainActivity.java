@@ -64,6 +64,7 @@ import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.LottieActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
+import com.tangzy.tzymvp.activity.ProgressActivity;
 import com.tangzy.tzymvp.activity.RecyclerViewActivity;
 import com.tangzy.tzymvp.activity.ServiceOActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
@@ -766,10 +767,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.id = id++;
         mainBean.name = "EventBus";
         lists.add(mainBean);
-
         mainBean = new MainBean();
         mainBean.id = id++;
         mainBean.name = "KotlinActivity";
+        lists.add(mainBean);
+
+
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "onProgress";
         lists.add(mainBean);
 
 
@@ -997,8 +1003,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 60:
                 onKotlinActivity();
                 break;
+            case 61:
+                onProgress();
+                break;
         }
 
+    }
+
+    private void onProgress() {
+        startActivity(new Intent(this, ProgressActivity.class));
     }
 
     private void onKotlinActivity() {

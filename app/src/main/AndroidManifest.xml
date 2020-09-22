@@ -99,6 +99,7 @@
         <activity android:name=".activity.YuanChengActivity"
             android:process=":hhhhh">
         </activity>
+        <activity android:name=".activity.ProgressActivity"/>
         <service android:name=".servive.DemoServive"></service>
         <service android:name=".servive.Demo2Servive"></service>
         <service android:name=".servive.DemoIntentService" />
