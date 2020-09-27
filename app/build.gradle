@@ -141,6 +141,7 @@ dependencies {
     implementation project(':pdfRenderer')
     implementation project(':pdfRecyclerView')
     implementation 'com.alibaba:arouter-api:1.5.0'
+//    implementation project(path: ':MyThread')
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     implementation project(':demoloader')
     implementation 'com.google.android.material:material:1.0.0-rc01'

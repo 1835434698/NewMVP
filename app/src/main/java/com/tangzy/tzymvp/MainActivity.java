@@ -70,6 +70,7 @@ import com.tangzy.tzymvp.activity.ServiceOActivity;
 import com.tangzy.tzymvp.activity.ShowWaveActivity;
 import com.tangzy.tzymvp.activity.SmartRefreshLayoutActivity;
 import com.tangzy.tzymvp.activity.TestActivity;
+import com.tangzy.tzymvp.activity.ThreadMainActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
 import com.tangzy.tzymvp.activity.ViewPageActivity;
@@ -771,11 +772,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.id = id++;
         mainBean.name = "KotlinActivity";
         lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "onProgress";
+        lists.add(mainBean);
 
 
         mainBean = new MainBean();
         mainBean.id = id++;
-        mainBean.name = "onProgress";
+        mainBean.name = "ThreadMainActivity";
         lists.add(mainBean);
 
 
@@ -1006,8 +1011,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 61:
                 onProgress();
                 break;
+            case 62:
+                onThreadMainActivity();
+                break;
         }
 
+    }
+
+    private void onThreadMainActivity() {
+        startActivity(new Intent(this, ThreadMainActivity.class));
     }
 
     private void onProgress() {

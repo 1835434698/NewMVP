@@ -25,7 +25,7 @@ public enum RxHandler {
         if (Looper.myLooper() == Looper.getMainLooper()){
             postDelayedUI(owner, runnable, delayMillis);
         }else {
-            postDelayedWorker(owner, runnable, delayMillis);
+            postDelayedWorker(runnable, delayMillis);
         }
     }
 
@@ -60,8 +60,8 @@ public enum RxHandler {
      * UI线程中执行
      * @param runnable
      */
-    public void postDelayedUI(LifecycleOwner owner, Runnable runnable, long delayMillis){
-        Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
+    private void postDelayedUI(LifecycleOwner owner, Runnable runnable, long delayMillis){
+        Observable.timer(delayMillis, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                 .subscribe(new Consumer<Long>() {
@@ -122,21 +122,6 @@ public enum RxHandler {
     public void postUI( Runnable runnable){
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        runnable.run();
-                    }
-                });
-    }
-    /**
-     * UI线程中执行
-     * @param runnable
-     */
-    public void postUI(LifecycleOwner owner, Runnable runnable){
-        Observable.just(1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                 .subscribe(new Consumer<Integer>() {
                     @Override
                     public void accept(Integer integer) throws Exception {
