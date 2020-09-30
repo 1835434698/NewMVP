@@ -35,6 +35,7 @@ dependencies {
 
 
 }
+
 task makeJar(type: Copy) {
     //删除存在的
     delete'build/libs/ThreadFactory.jar'
@@ -51,3 +52,8 @@ task makeJar(type: Copy) {
 }
 
 makeJar.dependsOn(build)
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}

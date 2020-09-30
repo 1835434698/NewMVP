@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyGuavaLib/MyGuavaLib.iml" filepath="$PROJECT_DIR$/.idea/modules/MyGuavaLib/MyGuavaLib.iml" group="TheMVP/MyGuavaLib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyKotlin/MyKotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/MyKotlin/MyKotlin.iml" group="TheMVP/MyKotlin" />
       <module fileurl="file://$PROJECT_DIR$/MyProcessor/MyProcessor.iml" filepath="$PROJECT_DIR$/MyProcessor/MyProcessor.iml" group="TheMVP/MyProcessor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyThread/MyThread.iml" filepath="$PROJECT_DIR$/.idea/modules/MyThread/MyThread.iml" group="TheMVP/MyThread" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NavigationDemo/NavigationDemo.iml" filepath="$PROJECT_DIR$/.idea/modules/NavigationDemo/NavigationDemo.iml" group="TheMVP/NavigationDemo" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TheMVP.iml" filepath="$PROJECT_DIR$/.idea/TheMVP.iml" group="TheMVP" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TheMVP/app" />
@@ -14,6 +15,8 @@
       <module fileurl="file://$PROJECT_DIR$/filelibrary/filelibrary.iml" filepath="$PROJECT_DIR$/filelibrary/filelibrary.iml" group="TheMVP/filelibrary" />
       <module fileurl="file://$PROJECT_DIR$/jspdf/jspdf.iml" filepath="$PROJECT_DIR$/jspdf/jspdf.iml" group="TheMVP/jspdf" />
       <module fileurl="file://$PROJECT_DIR$/myannotation/myannotation.iml" filepath="$PROJECT_DIR$/myannotation/myannotation.iml" group="TheMVP/myannotation" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myjava/myjava.iml" filepath="$PROJECT_DIR$/.idea/modules/myjava/myjava.iml" group="TheMVP/myjava" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mytest/mytest.iml" filepath="$PROJECT_DIR$/.idea/modules/mytest/mytest.iml" group="TheMVP/mytest" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfRecyclerView/pdfRecyclerView.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfRecyclerView/pdfRecyclerView.iml" group="TheMVP/pdfRecyclerView" />
       <module fileurl="file://$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" filepath="$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" group="TheMVP/pdfRenderer" />
       <module fileurl="file://$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" filepath="$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" group="TheMVP/pdfviewpage" />
