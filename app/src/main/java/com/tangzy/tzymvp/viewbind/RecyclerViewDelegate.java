@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecycylerViewLinearlayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -142,7 +141,7 @@ int i =0;
 //        //GridLayoutManager
 //        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         //生命为瀑布流的布局方式，3列，布局方向为垂直
-        RecycylerViewLinearlayoutManager layoutManager = new RecycylerViewLinearlayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         recycleView.setLayoutManager(layoutManager);
 

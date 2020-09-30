@@ -48,10 +48,48 @@ android {
             }
         }
     }
+    //签名
+    signingConfigs {
+        //您自己的keystore信息
+        myConfig {
+            storeFile file("../app.key")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        //您自己的keystore信息
+        debug {
+            storeFile file("../app.key")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            //签名文件
+            signingConfig signingConfigs.myConfig
+            //是否混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            //是否混淆
+            minifyEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            //Zipalign优化
+            zipAlignEnabled false
+            signingConfig signingConfigs.debug
         }
     }
 //
@@ -84,7 +122,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a','x86_64'
+            include 'armeabi-v7a'//,'x86', 'x86_64'
             universalApk true
         }
     }

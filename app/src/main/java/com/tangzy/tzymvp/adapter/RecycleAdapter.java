@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ViewHolderDelegate;
 
 import com.tangzy.tzymvp.R;
 import com.tangzy.tzymvp.bean.RecycleViewBean;
@@ -96,7 +95,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.Holder> 
         }
     }
     public void clearAdapter(){
-        ViewHolderDelegate.setPosition(viewHolder.get(), NO_POSITION);
+//        ViewHolderDelegate.setPosition(viewHolder.get(), NO_POSITION);
     }
 
 //    @NonNull
