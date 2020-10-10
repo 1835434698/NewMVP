@@ -1459,42 +1459,72 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
     }
 
     public void onRxAndroidUtil() {
-        Logger.d("hhhhhhhh", "Handler 1runa " +Thread.currentThread().getName());
-        RxHandler.INSTANCE.post(new Runnable() {
-            @Override
-            public void run() {
-                Logger.d("hhhhhhhh", "runa " +Thread.currentThread().getName());
-
-            }
-        });
-        Logger.d("hhhhhhhh", "Handler 2runa " +Thread.currentThread().getName());
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                Logger.d("hhhhhhhh", "Handler runa " +Thread.currentThread().getName());
-
-            }
-        });
+//        Logger.d("hhhhhhhh", "Handler 1runa " +Thread.currentThread().getName());
+//        RxHandler.INSTANCE.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Logger.d("hhhhhhhh", "runa " +Thread.currentThread().getName());
+//
+//            }
+//        });
+//        Logger.d("hhhhhhhh", "Handler 2runa " +Thread.currentThread().getName());
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Logger.d("hhhhhhhh", "Handler runa " +Thread.currentThread().getName());
+//
+//            }
+//        });
         Logger.d("hhhhhhhh", "Handler 3runa " +Thread.currentThread().getName());
+        Runnable hhhhhhhh3 = new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Thread runa3 " + Thread.currentThread().getName());
+
+            }
+        };
+        Runnable hhhhhhh4 = new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Thread runa4 " + Thread.currentThread().getName());
+
+            }
+        };
+        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh3, 2000);
+//        RxHandler.INSTANCE.removeCallbacks(hhhhhhhh3);
+        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh4, 2000);
+//        RxHandler.INSTANCE.removeCallbacks(hhhhhhh4);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Looper.prepare();
-                RxHandler.INSTANCE.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Logger.d("hhhhhhhh", "Thread runa " +Thread.currentThread().getName());
+//                Looper.prepare();
+        Runnable hhhhhhhh = new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Thread runa1 " + Thread.currentThread().getName());
 
-                    }
-                });
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Logger.d("hhhhhhhh", "Thread Handler runa " +Thread.currentThread().getName());
+            }
+        };
+        Runnable hhhhhhh2 = new Runnable() {
+            @Override
+            public void run() {
+                Logger.d("hhhhhhhh", "Thread runa2 " + Thread.currentThread().getName());
 
-                    }
-                });
-                Looper.loop();
+            }
+        };
+        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh, 2000);
+//        RxHandler.INSTANCE.removeCallbacks(hhhhhhhh);
+        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh2, 2000);
+//        RxHandler.INSTANCE.removeCallbacks(hhhhhhh2);
+//                new Handler().post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Logger.d("hhhhhhhh", "Thread Handler runa " +Thread.currentThread().getName());
+//
+//                    }
+//                });
+//                Looper.loop();
+//                disposable.dispose();
             }
         }).start();
     }

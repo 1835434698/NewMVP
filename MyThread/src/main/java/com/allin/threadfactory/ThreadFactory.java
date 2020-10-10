@@ -1,10 +1,14 @@
 package com.allin.threadfactory;
 
 import android.os.Looper;
+
 import androidx.lifecycle.LifecycleOwner;
+
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
 import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -34,7 +38,7 @@ public enum ThreadFactory {
                         e.printStackTrace();
                     }
                 }
-            }).subscribeOn(Schedulers.from(ThreadPool.getExecutor()))
+            }).subscribeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                     .subscribe();
         }else {
@@ -129,7 +133,7 @@ public enum ThreadFactory {
                         e.printStackTrace();
                     }
                 }
-            }).subscribeOn(Schedulers.from(ThreadPool.getExecutor())).observeOn(AndroidSchedulers.mainThread())
+            }).subscribeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor())).observeOn(AndroidSchedulers.mainThread())
                     .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                     .subscribe(new Consumer<Object>() {
                         @Override
@@ -171,7 +175,7 @@ public enum ThreadFactory {
                         e.printStackTrace();
                     }
                 }
-            }).subscribeOn(Schedulers.from(ThreadPool.getExecutor()))
+            }).subscribeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                     .subscribe();
         }else {
@@ -203,7 +207,7 @@ public enum ThreadFactory {
                         e.printStackTrace();
                     }
                 }
-            }).subscribeOn(Schedulers.from(ThreadPool.getExecutor()))
+            }).subscribeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                     .subscribe();
         }else {
@@ -363,7 +367,7 @@ public enum ThreadFactory {
     public void postDelayedWorker(final LifecycleOwner owner, final TaskRunnable runWork, final long delayMillis){
         if (Looper.getMainLooper() == Looper.myLooper()) {
             Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
-                    .observeOn(Schedulers.from(ThreadPool.getExecutor()))
+                    .observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .as(AutoDispose.<Long>autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
                     .subscribe(new Consumer<Long>() {
                         @Override
@@ -428,7 +432,7 @@ public enum ThreadFactory {
             }
         }else {
             Observable.just(1)
-                    .observeOn(Schedulers.from(ThreadPool.getExecutor()))
+                    .observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .subscribe(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Exception {
@@ -506,7 +510,7 @@ public enum ThreadFactory {
                     });
         }else {
             Observable.just(1)
-                    .observeOn(Schedulers.from(ThreadPool.getExecutor()))
+                    .observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .subscribe(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Exception {
@@ -534,7 +538,7 @@ public enum ThreadFactory {
                         e.printStackTrace();
                     }
                 }
-            }).observeOn(Schedulers.from(ThreadPool.getExecutor()))
+            }).observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                     .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object integer) throws Exception {
@@ -570,7 +574,7 @@ public enum ThreadFactory {
                     e.printStackTrace();
                 }
             }
-        }).subscribeOn(Schedulers.from(ThreadPool.getExecutor()))
+        }).subscribeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                 .observeOn(Schedulers.single())
                 .subscribe(new Consumer<Object>() {
                     @Override
@@ -598,7 +602,7 @@ public enum ThreadFactory {
                 }
             }
         }).subscribeOn(Schedulers.single())
-                .observeOn(Schedulers.from(ThreadPool.getExecutor()))
+                .observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object integer) throws Exception {
@@ -697,7 +701,7 @@ public enum ThreadFactory {
     @SuppressWarnings("不能绑定生命周期，不推荐使用")
     public void postDelayedWorker(final TaskRunnable runWork, final long delayMillis){
         Observable.timer(delayMillis, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.from(ThreadPool.getExecutor()))
+                .observeOn(Schedulers.from(ThreadPool.getThreadPool().getExecutor()))
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {

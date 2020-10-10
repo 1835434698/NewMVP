@@ -1,21 +1,28 @@
 package com.tangzy.tzymvp.util;
 
 import android.os.Looper;
+import android.util.ArrayMap;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public enum RxHandler {
     INSTANCE;
+
+    private volatile ArrayMap<Integer, Disposable> disposables = new ArrayMap<>();
 
     /**
      * 当前线程中执行
@@ -46,14 +53,19 @@ public enum RxHandler {
      * @param runnable
      */
     public void postDelayedUI(Runnable runnable, long delayMillis){
-        Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
+        Disposable subscribe = Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         runnable.run();
+                        disposables.remove(runnable.hashCode());
                     }
                 });
+        int hashCode = runnable.hashCode();
+        Log.d("hhhhhhhh", "hashCode = "+hashCode);
+        disposables.put(hashCode, subscribe);
+
     }
 
     /**
@@ -76,7 +88,7 @@ public enum RxHandler {
      * @param runnable
      */
     public void postDelayedWorker(Runnable runnable, long delayMillis){
-        Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
+        Disposable subscribe = Observable.timer(delayMillis, TimeUnit.MICROSECONDS)
                 .observeOn(Schedulers.io())
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -84,6 +96,38 @@ public enum RxHandler {
                         runnable.run();
                     }
                 });
+        int hashCode = runnable.hashCode();
+        Log.d("hhhhhhhh", "hashCode = "+hashCode);
+        disposables.put(hashCode, subscribe);
+    }
+
+    /**
+     * dispose
+     * @param disposable
+     */
+    private void dispose(Disposable disposable){
+        if (!disposable.isDisposed()){
+            disposable.dispose();
+        }
+    }
+
+    /**
+     * 取消runnable
+     * @param runnable
+     */
+    public void removeCallbacks(Runnable runnable){
+        if (disposables.isEmpty()){
+            return;
+        }
+        int hashCode = runnable.hashCode();
+        if (disposables.containsKey(hashCode)){
+            dispose(disposables.get(hashCode));
+            disposables.remove(hashCode);
+        }
+//        if (Looper.myLooper() == Looper.getMainLooper()){
+//        }else {
+//            removeCallbacksWorker(runnable);
+//        }
     }
 
     /**
