@@ -26,8 +26,8 @@ import java.util.LinkedHashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.frank.ffmpeg.FFmpegCmd;
-import com.frank.ffmpeg.FFmpegUtil;
+//import com.frank.ffmpeg.FFmpegCmd;
+//import com.frank.ffmpeg.FFmpegUtil;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -119,62 +119,62 @@ public class AiduActivity extends AppCompatActivity {
         });
         mediaExtractor = new MediaExtractor();
 
-
-        get_img.setOnClickListener(v -> {
-            Utils.muxerImg(SDCARD_PATH + "/input.mp4", SDCARD_PATH + "/output_audio.jpg");
-//创建MediaMetadataRetriever对象
-            MediaMetadataRetriever mmr=new MediaMetadataRetriever();
-//设置资源位置
-            String path = SDCARD_PATH + "/input.mp4";
-//绑定资源
-            mmr.setDataSource(path);
-//获取第一帧图像的bitmap对象
-            Bitmap bitmap=mmr.getFrameAtTime();
-            String s = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-            Logger.d("tangzy", "s = "+s);
-            String s1 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_FRAME_COUNT);
-            Logger.d("tangzy", "s1 = "+s1);
-//            mmr.getFrameAtIndex(1);
-            Bitmap bitmap1 = mmr.getFrameAtTime(2000);
-//加载到ImageView控件上
-            imageView.setImageBitmap(bitmap);
-            imageView1.setImageBitmap(bitmap1);
-        });
+//
+//        get_img.setOnClickListener(v -> {
+//            Utils.muxerImg(SDCARD_PATH + "/input.mp4", SDCARD_PATH + "/output_audio.jpg");
+////创建MediaMetadataRetriever对象
+//            MediaMetadataRetriever mmr=new MediaMetadataRetriever();
+////设置资源位置
+//            String path = SDCARD_PATH + "/input.mp4";
+////绑定资源
+//            mmr.setDataSource(path);
+////获取第一帧图像的bitmap对象
+//            Bitmap bitmap=mmr.getFrameAtTime();
+//            String s = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+//            Logger.d("tangzy", "s = "+s);
+//            String s1 = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_FRAME_COUNT);
+//            Logger.d("tangzy", "s1 = "+s1);
+////            mmr.getFrameAtIndex(1);
+//            Bitmap bitmap1 = mmr.getFrameAtTime(2000);
+////加载到ImageView控件上
+//            imageView.setImageBitmap(bitmap);
+//            imageView1.setImageBitmap(bitmap1);
+//        });
 
 
     }
 
     private void getVoice(String srcFile, String wavFile) {
-        String[] commandLine = null;
-        //pcm数据的采样率，一般采样率为8000、16000、44100
-        int sampleRate = 16000;
-        //pcm数据的声道，单声道为1，立体声道为2
-        int channel = 1;
-        commandLine = FFmpegUtil.Mp4toWav(srcFile, wavFile, sampleRate, channel);
-        executeFFmpegCmd(commandLine);
+//        String[] commandLine = null;
+//        //pcm数据的采样率，一般采样率为8000、16000、44100
+//        int sampleRate = 16000;
+//        //pcm数据的声道，单声道为1，立体声道为2
+//        int channel = 1;
+//        commandLine = FFmpegUtil.Mp4toWav(srcFile, wavFile, sampleRate, channel);
+//        executeFFmpegCmd(commandLine);
     }
     /**
      * 执行ffmpeg命令行
      * @param commandLine commandLine
      */
     private void executeFFmpegCmd(final String[] commandLine){
-        if(commandLine == null){
-            return;
-        }
-        FFmpegCmd.execute(commandLine, new FFmpegCmd.OnHandleListener() {
-            @Override
-            public void onBegin() {
-                Log.i(TAG, "handle audio onBegin...");
-//                mHandler.obtainMessage(MSG_BEGIN).sendToTarget();
-            }
-
-            @Override
-            public void onEnd(int result) {
-                Log.i(TAG, "handle audio onEnd...");
-//                mHandler.obtainMessage(MSG_FINISH).sendToTarget();
-                muxerAudioBtn.post(() -> executeStream());
-            }
-        });
+//        if(commandLine == null){
+//            return;
+//        }
+//        FFmpegCmd.execute(commandLine, new FFmpegCmd.OnHandleListener() {
+//            @Override
+//            public void onBegin() {
+//                Log.i(TAG, "handle audio onBegin...");
+////                mHandler.obtainMessage(MSG_BEGIN).sendToTarget();
+//            }
+//
+//            @Override
+//            public void onEnd(int result) {
+//                Log.i(TAG, "handle audio onEnd...");
+////                mHandler.obtainMessage(MSG_FINISH).sendToTarget();
+//                muxerAudioBtn.post(() -> executeStream());
+//            }
+//        });
     }
 
     /**
@@ -485,26 +485,26 @@ public class AiduActivity extends AppCompatActivity {
         // mIat.setParameter(SpeechConstant.AUDIO_SOURCE, "-2");
         //mIat.setParameter(SpeechConstant.ASR_SOURCE_PATH, "sdcard/XXX/XXX.pcm");
         ret = mIat.startListening(mRecognizerListener);
-        if (ret != ErrorCode.SUCCESS) {
-            Toasts.showToastShort("识别失败,错误码：" + ret+",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
-        } else {
-            byte[] audioData = FFmpegUtil.readAudioFile(voicePath);
-
-            if (null != audioData) {
-                Toasts.showToastShort(getString(R.string.text_begin_recognizer));
-                // 一次（也可以分多次）写入音频文件数据，数据格式必须是采样率为8KHz或16KHz（本地识别只支持16K采样率，云端都支持），
-                // 位长16bit，单声道的wav或者pcm
-                // 写入8KHz采样的音频时，必须先调用setParameter(SpeechConstant.SAMPLE_RATE, "8000")设置正确的采样率
-                // 注：当音频过长，静音部分时长超过VAD_EOS将导致静音后面部分不能识别。
-                // 音频切分方法：FucUtil.splitBuffer(byte[] buffer,int length,int spsize);
-                mIat.writeAudio(audioData, 0, audioData.length);
-
-                mIat.stopListening();
-            } else {
-                mIat.cancel();
-                Toasts.showToastShort("读取音频流失败");
-            }
-        }
+//        if (ret != ErrorCode.SUCCESS) {
+//            Toasts.showToastShort("识别失败,错误码：" + ret+",请点击网址https://www.xfyun.cn/document/error-code查询解决方案");
+//        } else {
+//            byte[] audioData = FFmpegUtil.readAudioFile(voicePath);
+//
+//            if (null != audioData) {
+//                Toasts.showToastShort(getString(R.string.text_begin_recognizer));
+//                // 一次（也可以分多次）写入音频文件数据，数据格式必须是采样率为8KHz或16KHz（本地识别只支持16K采样率，云端都支持），
+//                // 位长16bit，单声道的wav或者pcm
+//                // 写入8KHz采样的音频时，必须先调用setParameter(SpeechConstant.SAMPLE_RATE, "8000")设置正确的采样率
+//                // 注：当音频过长，静音部分时长超过VAD_EOS将导致静音后面部分不能识别。
+//                // 音频切分方法：FucUtil.splitBuffer(byte[] buffer,int length,int spsize);
+//                mIat.writeAudio(audioData, 0, audioData.length);
+//
+//                mIat.stopListening();
+//            } else {
+//                mIat.cancel();
+//                Toasts.showToastShort("读取音频流失败");
+//            }
+//        }
     }
     /**
      * 参数设置

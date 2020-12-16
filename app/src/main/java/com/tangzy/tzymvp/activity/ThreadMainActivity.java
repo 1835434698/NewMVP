@@ -11,8 +11,18 @@ import com.allin.threadfactory.TaskRunnable;
 import com.allin.threadfactory.ThreadFactory;
 import com.allin.threadfactory.ThreadPool;
 import com.tangzy.tzymvp.R;
+import com.tangzy.tzymvp.util.Logger;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class ThreadMainActivity extends AppCompatActivity {
 
@@ -30,6 +40,8 @@ public class ThreadMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thread_main);
 //        threadFactory = new ThreadFactory();
         runTask();
+        Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
+        Logger.e("hhhhhhhhhhh", "size = "+allStackTraces.size());
     }
 
     private void runTask() {
@@ -77,163 +89,163 @@ public class ThreadMainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-//        ThreadFactory.INSTANCE.postWorker(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work1 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postUi(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work2 run name : " + Thread.currentThread().getName());
-//                uiTask();
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postSingle(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work3 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        });
-//
-//        ThreadFactory.INSTANCE.postWorkerAndUi(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work4 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI4 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                uiTask();
-//
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postUiAndWorker(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work5 run name : " + Thread.currentThread().getName());
-//                uiTask();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI5 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                workSing();
-//
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postWorkerAndSingle(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work6 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI6 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                workSing();
-//
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postSingleAndWorker(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work7 run name : " + Thread.currentThread().getName());
-//                workSing();
-//                finish();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI7 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                workSing();
-//
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postSingleAndUi(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work8 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI8 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                uiTask();
-//
-//            }
-//        });
-//        ThreadFactory.INSTANCE.postUiAndSingle(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work9 run name : " + Thread.currentThread().getName());
-//                uiTask();
-//            }
-//        }, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "UI9 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
-//                workSing();
-//
-//            }
-//        });
-//
-//
-//        ThreadFactory.INSTANCE.postDelayedUI(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work10 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, 3000);
-//
-//        ThreadFactory.INSTANCE.postDelayedWorker(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work11 run name : " + Thread.currentThread().getName());
-//                uiTask();
-//            }
-//        }, 3000);
-//
-//        ThreadFactory.INSTANCE.postDelayedSingle(ThreadMainActivity.this, new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work12 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, 3000);
-//
-//
-//        ThreadFactory.INSTANCE.postDelayedUI(new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work13 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, 3000);
-//
-//        ThreadFactory.INSTANCE.postDelayedWorker(new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work14 run name : " + Thread.currentThread().getName());
-//                uiTask();
-//            }
-//        }, 3000);
-//
-//        ThreadFactory.INSTANCE.postDelayedSingle(new TaskRunnable() {
-//            @Override
-//            public void run() throws Exception {
-//                Log.d(TAG, "work15 run name : " + Thread.currentThread().getName());
-//                workSing();
-//            }
-//        }, 3000);
+        ThreadFactory.INSTANCE.postWorker(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work1 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        });
+        ThreadFactory.INSTANCE.postUi(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work2 run name : " + Thread.currentThread().getName());
+                uiTask();
+            }
+        });
+        ThreadFactory.INSTANCE.postSingle(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work3 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        });
+
+        ThreadFactory.INSTANCE.postWorkerAndUi(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work4 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI4 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                uiTask();
+
+            }
+        });
+        ThreadFactory.INSTANCE.postUiAndWorker(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work5 run name : " + Thread.currentThread().getName());
+                uiTask();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI5 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                workSing();
+
+            }
+        });
+        ThreadFactory.INSTANCE.postWorkerAndSingle(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work6 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI6 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                workSing();
+
+            }
+        });
+        ThreadFactory.INSTANCE.postSingleAndWorker(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work7 run name : " + Thread.currentThread().getName());
+                workSing();
+                finish();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI7 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                workSing();
+
+            }
+        });
+        ThreadFactory.INSTANCE.postSingleAndUi(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work8 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI8 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                uiTask();
+
+            }
+        });
+        ThreadFactory.INSTANCE.postUiAndSingle(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work9 run name : " + Thread.currentThread().getName());
+                uiTask();
+            }
+        }, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "UI9 run i = " + i + " j = " + j + " name : " + Thread.currentThread().getName());
+                workSing();
+
+            }
+        });
+
+
+        ThreadFactory.INSTANCE.postDelayedUI(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work10 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, 3000);
+
+        ThreadFactory.INSTANCE.postDelayedWorker(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work11 run name : " + Thread.currentThread().getName());
+                uiTask();
+            }
+        }, 3000);
+
+        ThreadFactory.INSTANCE.postDelayedSingle(ThreadMainActivity.this, new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work12 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, 3000);
+
+
+        ThreadFactory.INSTANCE.postDelayedUI(new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work13 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, 3000);
+
+        ThreadFactory.INSTANCE.postDelayedWorker(new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work14 run name : " + Thread.currentThread().getName());
+                uiTask();
+            }
+        }, 3000);
+
+        ThreadFactory.INSTANCE.postDelayedSingle(new TaskRunnable() {
+            @Override
+            public void run() throws Exception {
+                Log.d(TAG, "work15 run name : " + Thread.currentThread().getName());
+                workSing();
+            }
+        }, 3000);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

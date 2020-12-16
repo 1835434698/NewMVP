@@ -1,15 +1,15 @@
-Executable : D:\Android\sdk\cmake\3.6.4111459\bin\cmake.exe
+Executable : /Users/allin1155/Library/Android/sdk/cmake/3.6.4111459/bin/cmake
 arguments : 
--HD:\workspace\AS\mine\TzyMVP\ffmpeg
--BD:\workspace\AS\mine\TzyMVP\ffmpeg\.cxx\cmake\debug\armeabi-v7a
+-H/Users/allin1155/Documents/ws/As/mine/TheMVP/ffmpeg
+-B/Users/allin1155/Documents/ws/As/mine/TheMVP/ffmpeg/.cxx/cmake/debug/armeabi-v7a
 -DANDROID_ABI=armeabi-v7a
 -DANDROID_PLATFORM=android-21
--DCMAKE_LIBRARY_OUTPUT_DIRECTORY=D:\workspace\AS\mine\TzyMVP\ffmpeg\build\intermediates\cmake\debug\obj\armeabi-v7a
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/allin1155/Documents/ws/As/mine/TheMVP/ffmpeg/build/intermediates/cmake/debug/obj/armeabi-v7a
 -DCMAKE_BUILD_TYPE=Debug
--DANDROID_NDK=D:\Android\sdk\ndk-bundle
+-DANDROID_NDK=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172
 -DCMAKE_CXX_FLAGS=
--DCMAKE_TOOLCHAIN_FILE=D:\Android\sdk\ndk-bundle\build\cmake\android.toolchain.cmake
--DCMAKE_MAKE_PROGRAM=D:\Android\sdk\cmake\3.6.4111459\bin\ninja.exe
+-DCMAKE_TOOLCHAIN_FILE=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/build/cmake/android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=/Users/allin1155/Library/Android/sdk/cmake/3.6.4111459/bin/ninja
 -GAndroid Gradle - Ninja
 jvmArgs : 
 

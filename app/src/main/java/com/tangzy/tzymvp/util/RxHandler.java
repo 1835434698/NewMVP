@@ -59,7 +59,7 @@ public enum RxHandler {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         runnable.run();
-                        disposables.remove(runnable.hashCode());
+                        remove(runnable.hashCode());
                     }
                 });
         int hashCode = runnable.hashCode();
@@ -94,6 +94,8 @@ public enum RxHandler {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         runnable.run();
+                        remove(runnable.hashCode());
+                        Log.d("hhhhhhhh", "Thread runa2 over ");
                     }
                 });
         int hashCode = runnable.hashCode();
@@ -106,7 +108,9 @@ public enum RxHandler {
      * @param disposable
      */
     private void dispose(Disposable disposable){
+        Log.d("hhhhhhhh", "Thread runa2 isDisposed ");
         if (!disposable.isDisposed()){
+            Log.d("hhhhhhhh", "Thread runa2 dispose ");
             disposable.dispose();
         }
     }
@@ -116,18 +120,31 @@ public enum RxHandler {
      * @param runnable
      */
     public void removeCallbacks(Runnable runnable){
+        Log.d("hhhhhhhh", "Thread runa2 removeCallbacks ");
         if (disposables.isEmpty()){
             return;
         }
         int hashCode = runnable.hashCode();
         if (disposables.containsKey(hashCode)){
             dispose(disposables.get(hashCode));
-            disposables.remove(hashCode);
+            remove(hashCode);
         }
 //        if (Looper.myLooper() == Looper.getMainLooper()){
 //        }else {
 //            removeCallbacksWorker(runnable);
 //        }
+    }
+
+    /**
+     * dispose
+     * @param hashcode
+     */
+    private void remove(int hashcode){
+        Log.d("hhhhhhhh", "Thread runa2 remove ");
+        if (!disposables.isEmpty() && disposables.containsKey(hashcode)){
+            Log.d("hhhhhhhh", "Thread runa2 remove_C ");
+            disposables.remove(hashcode);
+        }
     }
 
     /**

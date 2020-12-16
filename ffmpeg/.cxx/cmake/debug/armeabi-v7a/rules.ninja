@@ -12,12 +12,20 @@
 # =============================================================================
 
 #############################################
+# Rule for running custom commands.
+
+rule CUSTOM_COMMAND
+  command = $COMMAND
+  description = $DESC
+
+
+#############################################
 # Rule for compiling C files.
 
 rule C_COMPILER__media-handle
   depfile = $DEP_FILE
   deps = gcc
-  command = D:\Android\sdk\ndk-bundle\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe  --target=armv7-none-linux-androideabi21 --gcc-toolchain=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $IN_ABS
+  command = /Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out   -c $IN_ABS
   description = Building C object $out
 
 
@@ -27,7 +35,7 @@ rule C_COMPILER__media-handle
 rule CXX_COMPILER__media-handle
   depfile = $DEP_FILE
   deps = gcc
-  command = D:\Android\sdk\ndk-bundle\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe  --target=armv7-none-linux-androideabi21 --gcc-toolchain=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot  $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $IN_ABS
+  command = /Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/sysroot  $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $IN_ABS
   description = Building CXX object $out
 
 
@@ -35,24 +43,16 @@ rule CXX_COMPILER__media-handle
 # Rule for linking CXX shared library.
 
 rule CXX_SHARED_LIBRARY_LINKER__media-handle
-  command = cmd.exe /C "$PRE_LINK && D:\Android\sdk\ndk-bundle\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe  --target=armv7-none-linux-androideabi21 --gcc-toolchain=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=D:/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot -fPIC $LANGUAGE_COMPILE_FLAGS $ARCH_FLAGS $LINK_FLAGS -shared $SONAME_FLAG$SONAME -o $TARGET_FILE $in $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = $PRE_LINK && /Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++  --target=armv7-none-linux-androideabi21 --gcc-toolchain=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -fPIC $LANGUAGE_COMPILE_FLAGS $ARCH_FLAGS $LINK_FLAGS -shared $SONAME_FLAG$SONAME -o $TARGET_FILE $in $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX shared library $TARGET_FILE
   restat = $RESTAT
-
-
-#############################################
-# Rule for running custom commands.
-
-rule CUSTOM_COMMAND
-  command = $COMMAND
-  description = $DESC
 
 
 #############################################
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = D:\Android\sdk\cmake\3.6.4111459\bin\cmake.exe -HD:\workspace\AS\mine\TzyMVP\ffmpeg -BD:\workspace\AS\mine\TzyMVP\ffmpeg\.cxx\cmake\debug\armeabi-v7a
+  command = /Users/allin1155/Library/Android/sdk/cmake/3.6.4111459/bin/cmake -H/Users/allin1155/Documents/ws/As/mine/TheMVP/ffmpeg -B/Users/allin1155/Documents/ws/As/mine/TheMVP/ffmpeg/.cxx/cmake/debug/armeabi-v7a
   description = Re-running CMake...
   generator = 1
 
@@ -61,7 +61,7 @@ rule RERUN_CMAKE
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = D:\Android\sdk\cmake\3.6.4111459\bin\ninja.exe -t clean
+  command = /Users/allin1155/Library/Android/sdk/cmake/3.6.4111459/bin/ninja -t clean
   description = Cleaning all built files...
 
 
@@ -69,6 +69,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = D:\Android\sdk\cmake\3.6.4111459\bin\ninja.exe -t targets
+  command = /Users/allin1155/Library/Android/sdk/cmake/3.6.4111459/bin/ninja -t targets
   description = All primary targets available:
 

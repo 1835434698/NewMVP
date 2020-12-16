@@ -54,12 +54,14 @@ import com.tangzy.pdfrecyclerview.RecycleViewActivity;
 import com.tangzy.pdfrecyclerview.adapter.LinearLayoutManagerRecycleview;
 import com.tangzy.pdfrenderer.RecycleViewActivity1;
 import com.tangzy.tzymvp.activity.AiduActivity;
+import com.tangzy.tzymvp.activity.BroadCastActivity;
 import com.tangzy.tzymvp.activity.DataBindingActivity;
 import com.tangzy.tzymvp.activity.DemoActivity;
 import com.tangzy.tzymvp.activity.DoodleActivity;
 import com.tangzy.tzymvp.activity.DownLoadActivity;
 import com.tangzy.tzymvp.activity.GoogleGuvaActivity;
 import com.tangzy.tzymvp.activity.IatDemo;
+import com.tangzy.tzymvp.activity.ImageViewActivity;
 import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.LottieActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
@@ -776,11 +778,19 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.id = id++;
         mainBean.name = "onProgress";
         lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "ThreadMainActivity";
+        lists.add(mainBean);
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "BroadCastActivity";
+        lists.add(mainBean);
 
 
         mainBean = new MainBean();
         mainBean.id = id++;
-        mainBean.name = "ThreadMainActivity";
+        mainBean.name = "放大缩小ImageView";
         lists.add(mainBean);
 
 
@@ -1014,8 +1024,22 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 62:
                 onThreadMainActivity();
                 break;
+            case 63:
+                onBroadCastActivity();
+                break;
+            case 64:
+                onZooImageViewActivity();
+                break;
         }
 
+    }
+
+    private void onZooImageViewActivity() {
+        startActivity(new Intent(this, ImageViewActivity.class));
+    }
+
+    private void onBroadCastActivity() {
+        startActivity(new Intent(this, BroadCastActivity.class));
     }
 
     private void onThreadMainActivity() {
@@ -1490,10 +1514,10 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
 
             }
         };
-        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh3, 2000);
-//        RxHandler.INSTANCE.removeCallbacks(hhhhhhhh3);
-        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh4, 2000);
-//        RxHandler.INSTANCE.removeCallbacks(hhhhhhh4);
+//        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh3, 2000);
+////        RxHandler.INSTANCE.removeCallbacks(hhhhhhhh3);
+//        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh4, 2000);
+////        RxHandler.INSTANCE.removeCallbacks(hhhhhhh4);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1509,12 +1533,30 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             @Override
             public void run() {
                 Logger.d("hhhhhhhh", "Thread runa2 " + Thread.currentThread().getName());
+                int i = 0;
+                while (i<20){
+                    i++;
+                    Logger.d("hhhhhhhh", "Thread runa2 i=" + i);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
 
             }
         };
-        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh, 2000);
+//        RxHandler.INSTANCE.postDelayedUI(hhhhhhhh, 2000);
 //        RxHandler.INSTANCE.removeCallbacks(hhhhhhhh);
-        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh2, 2000);
+        RxHandler.INSTANCE.postDelayedWorker(hhhhhhh2, 10);
+//                try {
+//                    Thread.sleep(500);
+                    Logger.d("hhhhhhhh", "Thread runa2 removeCallbacks");
+        RxHandler.INSTANCE.removeCallbacks(hhhhhhh2);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 //        RxHandler.INSTANCE.removeCallbacks(hhhhhhh2);
 //                new Handler().post(new Runnable() {
 //                    @Override

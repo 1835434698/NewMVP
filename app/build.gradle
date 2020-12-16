@@ -172,7 +172,7 @@ dependencies {
     api 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
     implementation files('libs/Msc.jar')
     implementation files('libs/commons-lang3-3.11.jar')
-    implementation project(':ffmpeg')
+//    implementation project(':ffmpeg')
     implementation project(':filelibrary')
     implementation project(':recordermanager')
     implementation project(':jspdf')

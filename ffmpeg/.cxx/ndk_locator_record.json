@@ -1,5 +1,5 @@
 {
-  "ndkFolder": "D:\\Android\\sdk\\ndk-bundle",
+  "ndkFolder": "/Users/allin1155/Library/Android/sdk/ndk/22.0.6917172",
   "messages": [
     {
       "level": "INFO",
@@ -7,7 +7,7 @@
     },
     {
       "level": "INFO",
-      "message": "ndk.dir in local.properties is D:\\Android\\sdk\\ndk-bundle"
+      "message": "ndk.dir in local.properties is not set"
     },
     {
       "level": "INFO",
@@ -15,23 +15,27 @@
     },
     {
       "level": "INFO",
-      "message": "sdkFolder is D:\\Android\\sdk"
+      "message": "sdkFolder is /Users/allin1155/Library/Android/sdk"
     },
     {
       "level": "INFO",
-      "message": "Considering D:\\Android\\sdk\\ndk-bundle by ndk.dir"
+      "message": "Considering /Users/allin1155/Library/Android/sdk/ndk-bundle in SDK ndk-bundle folder"
     },
     {
       "level": "INFO",
-      "message": "Considering D:\\Android\\sdk\\ndk-bundle in SDK ndk-bundle folder"
+      "message": "Considering /Users/allin1155/Library/Android/sdk/ndk/22.0.6917172 in SDK ndk folder"
     },
     {
       "level": "INFO",
-      "message": "Considering D:\\Android\\sdk\\ndk\\20.1.5948944 in SDK ndk folder"
+      "message": "Considering /Users/allin1155/Library/Android/sdk/ndk/21.0.6113669 in SDK ndk folder"
     },
     {
       "level": "INFO",
-      "message": "Found requested ndk.dir (D:\\Android\\sdk\\ndk-bundle) which has version 20.0.5594570"
+      "message": "Rejected /Users/allin1155/Library/Android/sdk/ndk-bundle in SDK ndk-bundle folder because that location has no source.properties"
+    },
+    {
+      "level": "INFO",
+      "message": "No user requested version, choosing /Users/allin1155/Library/Android/sdk/ndk/22.0.6917172 which is version 22.0.6917172-rc1"
     }
   ]
 }

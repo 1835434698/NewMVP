@@ -2,28 +2,27 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoodleLib/DoodleLib.iml" filepath="$PROJECT_DIR$/.idea/modules/DoodleLib/DoodleLib.iml" group="TheMVP/DoodleLib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyGuavaLib/MyGuavaLib.iml" filepath="$PROJECT_DIR$/.idea/modules/MyGuavaLib/MyGuavaLib.iml" group="TheMVP/MyGuavaLib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyKotlin/MyKotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/MyKotlin/MyKotlin.iml" group="TheMVP/MyKotlin" />
-      <module fileurl="file://$PROJECT_DIR$/MyProcessor/MyProcessor.iml" filepath="$PROJECT_DIR$/MyProcessor/MyProcessor.iml" group="TheMVP/MyProcessor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyThread/MyThread.iml" filepath="$PROJECT_DIR$/.idea/modules/MyThread/MyThread.iml" group="TheMVP/MyThread" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NavigationDemo/NavigationDemo.iml" filepath="$PROJECT_DIR$/.idea/modules/NavigationDemo/NavigationDemo.iml" group="TheMVP/NavigationDemo" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/TheMVP.iml" filepath="$PROJECT_DIR$/.idea/TheMVP.iml" group="TheMVP" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TheMVP/app" />
-      <module fileurl="file://$PROJECT_DIR$/demoloader/demoloader.iml" filepath="$PROJECT_DIR$/demoloader/demoloader.iml" group="TheMVP/demoloader" />
-      <module fileurl="file://$PROJECT_DIR$/ffmpeg/ffmpeg.iml" filepath="$PROJECT_DIR$/ffmpeg/ffmpeg.iml" group="TheMVP/ffmpeg" />
-      <module fileurl="file://$PROJECT_DIR$/filelibrary/filelibrary.iml" filepath="$PROJECT_DIR$/filelibrary/filelibrary.iml" group="TheMVP/filelibrary" />
-      <module fileurl="file://$PROJECT_DIR$/jspdf/jspdf.iml" filepath="$PROJECT_DIR$/jspdf/jspdf.iml" group="TheMVP/jspdf" />
-      <module fileurl="file://$PROJECT_DIR$/myannotation/myannotation.iml" filepath="$PROJECT_DIR$/myannotation/myannotation.iml" group="TheMVP/myannotation" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myjava/myjava.iml" filepath="$PROJECT_DIR$/.idea/modules/myjava/myjava.iml" group="TheMVP/myjava" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mytest/mytest.iml" filepath="$PROJECT_DIR$/.idea/modules/mytest/mytest.iml" group="TheMVP/mytest" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfRecyclerView/pdfRecyclerView.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfRecyclerView/pdfRecyclerView.iml" group="TheMVP/pdfRecyclerView" />
-      <module fileurl="file://$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" filepath="$PROJECT_DIR$/pdfRenderer/pdfRenderer.iml" group="TheMVP/pdfRenderer" />
-      <module fileurl="file://$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" filepath="$PROJECT_DIR$/pdfviewpage/pdfviewpage.iml" group="TheMVP/pdfviewpage" />
-      <module fileurl="file://$PROJECT_DIR$/recordermanager/recordermanager.iml" filepath="$PROJECT_DIR$/recordermanager/recordermanager.iml" group="TheMVP/recordermanager" />
-      <module fileurl="file://$PROJECT_DIR$/screenlockcamera/screenlockcamera.iml" filepath="$PROJECT_DIR$/screenlockcamera/screenlockcamera.iml" group="TheMVP/screenlockcamera" />
-      <module fileurl="file://$PROJECT_DIR$/testdemo/testdemo.iml" filepath="$PROJECT_DIR$/testdemo/testdemo.iml" group="TheMVP/testdemo" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/videolibrary/videolibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/videolibrary/videolibrary.iml" group="TheMVP/videolibrary" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TheMVP.iml" filepath="$PROJECT_DIR$/.idea/TheMVP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DoodleLib/TheMVP.DoodleLib.iml" filepath="$PROJECT_DIR$/.idea/modules/DoodleLib/TheMVP.DoodleLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyGuavaLib/TheMVP.MyGuavaLib.iml" filepath="$PROJECT_DIR$/.idea/modules/MyGuavaLib/TheMVP.MyGuavaLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyKotlin/TheMVP.MyKotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/MyKotlin/TheMVP.MyKotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyProcessor/TheMVP.MyProcessor.iml" filepath="$PROJECT_DIR$/.idea/modules/MyProcessor/TheMVP.MyProcessor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyThread/TheMVP.MyThread.iml" filepath="$PROJECT_DIR$/.idea/modules/MyThread/TheMVP.MyThread.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NavigationDemo/TheMVP.NavigationDemo.iml" filepath="$PROJECT_DIR$/.idea/modules/NavigationDemo/TheMVP.NavigationDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TheMVP.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TheMVP.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/demoloader/TheMVP.demoloader.iml" filepath="$PROJECT_DIR$/.idea/modules/demoloader/TheMVP.demoloader.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ffmpeg/TheMVP.ffmpeg.iml" filepath="$PROJECT_DIR$/.idea/modules/ffmpeg/TheMVP.ffmpeg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/filelibrary/TheMVP.filelibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/filelibrary/TheMVP.filelibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jspdf/TheMVP.jspdf.iml" filepath="$PROJECT_DIR$/.idea/modules/jspdf/TheMVP.jspdf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myannotation/TheMVP.myannotation.iml" filepath="$PROJECT_DIR$/.idea/modules/myannotation/TheMVP.myannotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myjava/TheMVP.myjava.iml" filepath="$PROJECT_DIR$/.idea/modules/myjava/TheMVP.myjava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mytest/TheMVP.mytest.iml" filepath="$PROJECT_DIR$/.idea/modules/mytest/TheMVP.mytest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfRecyclerView/TheMVP.pdfRecyclerView.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfRecyclerView/TheMVP.pdfRecyclerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfRenderer/TheMVP.pdfRenderer.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfRenderer/TheMVP.pdfRenderer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recordermanager/TheMVP.recordermanager.iml" filepath="$PROJECT_DIR$/.idea/modules/recordermanager/TheMVP.recordermanager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/screenlockcamera/TheMVP.screenlockcamera.iml" filepath="$PROJECT_DIR$/.idea/modules/screenlockcamera/TheMVP.screenlockcamera.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/testdemo/TheMVP.testdemo.iml" filepath="$PROJECT_DIR$/.idea/modules/testdemo/TheMVP.testdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/videolibrary/TheMVP.videolibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/videolibrary/TheMVP.videolibrary.iml" />
     </modules>
   </component>
 </project>

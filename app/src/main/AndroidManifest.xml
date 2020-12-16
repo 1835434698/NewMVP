@@ -95,6 +95,8 @@
         <activity android:name=".activity.DownLoadActivity"></activity>
         <activity android:name=".activity.GoogleGuvaActivity"></activity>
         <activity android:name=".activity.ThreadMainActivity"></activity>
+        <activity android:name=".activity.BroadCastActivity"></activity>
+        <activity android:name=".activity.ImageViewActivity"></activity>
         <activity android:name=".activity.DoodleActivity"
             android:hardwareAccelerated="false"></activity>
         <activity android:name=".activity.YuanChengActivity"
