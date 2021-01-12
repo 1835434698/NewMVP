@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#5FF"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#5FF"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#5FF"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+
+        <View
+            android:id="@+id/vLine"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FF00FF" />
+        <View
+            android:id="@+id/vLine2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FF00FF" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/ptr_framelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</LinearLayout>
+    <!--<androidx.recyclerview.widget.RecyclerView-->
+    <!--    android:id="@+id/recyclerView"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -57,6 +57,10 @@ public class Main {
             System.out.println( "map = "+map);
 
         }
+        System.out.println( "getCanonicalName = "+DataUtil.class.getCanonicalName());
+        System.out.println( "getName = "+DataUtil.class.getName());
+        System.out.println( "getSimpleName = "+DataUtil.class.getSimpleName());
+        System.out.println( "getPackage = "+DataUtil.class.getPackage());
 
 
     }

@@ -1,10 +1,12 @@
 package com.tangzy.tzymvp.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -28,6 +30,8 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
     private ArrayList<RecycleViewBean> list = new ArrayList<>();
     private RecyclerView recycleView;
     private SmartRefreshLayout ptrFrameLayout;
+    private View vLine;
+    private View vLine2;
 
     int i =0;
 
@@ -44,6 +48,8 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
     private void init() {
 
         setData();
+        vLine = findViewById(R.id.vLine);
+        vLine2 = findViewById(R.id.vLine2);
 
         adapter = new RecycleAdapter(this, list);
         recycleView = findViewById(R.id.recycleView);
@@ -96,6 +102,20 @@ public class SmartRefreshLayoutActivity extends AppCompatActivity {
 
         recycleView.setAdapter(adapter);
 
+        vLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recycleView.setLayoutManager(new LinearLayoutManager(SmartRefreshLayoutActivity.this));
+
+            }
+        });
+        vLine2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recycleView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+
+            }
+        });
     }
 
     private void setData() {
