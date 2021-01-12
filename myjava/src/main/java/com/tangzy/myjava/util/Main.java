@@ -1,6 +1,8 @@
 package com.tangzy.myjava.util;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,44 +26,79 @@ public class Main {
 //        String v1 = b.setScale(2,BigDecimal.ROUND_HALF_UP).floatValue()+"";
 //        System.out.println( "v1 = "+v1);
 
-        HashSet<String> hashSet = new HashSet<>();
-        hashSet.add("Camera");
-        hashSet.add("唯医");
-        hashSet.add("DCIM");
-        hashSet.add("icons");
-        hashSet.add("Screenshots");
-        hashSet.add("photo");
-        hashSet.add("boxing");
-        hashSet.add("Pictures");
-        hashSet.add("EditedOnlinePhotos");
-        hashSet.add("img");
-        hashSet.add("0");
+//        HashSet<String> hashSet = new HashSet<>();
+//        hashSet.add("Camera");
+//        hashSet.add("唯医");
+//        hashSet.add("DCIM");
+//        hashSet.add("icons");
+//        hashSet.add("Screenshots");
+//        hashSet.add("photo");
+//        hashSet.add("boxing");
+//        hashSet.add("Pictures");
+//        hashSet.add("EditedOnlinePhotos");
+//        hashSet.add("img");
+//        hashSet.add("0");
+//
+//        HashMap<String, String> hashma = new HashMap<>();
+//
+//        hashma.put("123", "1234");
+//        hashma.put("223", "2234");
+//        hashma.put("523", "5234");
+//        hashma.put("121", "12341");
+//        hashma.put("113", "12134");
+//        hashma.put("1203", "1234");
+//        hashma.put("1123", "1234");
+//        hashma.put("1213", "1234");
+//
+//        for(Map.Entry<String,String> entry : hashma.entrySet()) {
+//            System.out.println( "v1 = "+entry.getKey());
+//        }
+//
+//
+//        for(String map:hashSet){
+//            System.out.println( "map = "+map);
+//
+//        }
+//        System.out.println( "getCanonicalName = "+DataUtil.class.getCanonicalName());
+//        System.out.println( "getName = "+DataUtil.class.getName());
+//        System.out.println( "getSimpleName = "+DataUtil.class.getSimpleName());
+//        System.out.println( "getPackage = "+DataUtil.class.getPackage());
 
-        HashMap<String, String> hashma = new HashMap<>();
 
-        hashma.put("123", "1234");
-        hashma.put("223", "2234");
-        hashma.put("523", "5234");
-        hashma.put("121", "12341");
-        hashma.put("113", "12134");
-        hashma.put("1203", "1234");
-        hashma.put("1123", "1234");
-        hashma.put("1213", "1234");
-
-        for(Map.Entry<String,String> entry : hashma.entrySet()) {
-            System.out.println( "v1 = "+entry.getKey());
+        System.out.println( "------start------ ");
+        try {
+            GroovyClassesTest.testGroovyClasses();
+        } catch (Exception e) {
+            System.out.println( "------error------ "+e.getLocalizedMessage());
+            e.printStackTrace();
         }
+        System.out.println( "------over------ ");
+    }
 
 
-        for(String map:hashSet){
-            System.out.println( "map = "+map);
+//    public static Map<String, byte[]> compile(String javaName, String javaSrc) {
+//        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+//        StandardJavaFileManager stdManager = compiler.getStandardFileManager(null, null, null);
+//        try (MemoryJavaFileManager manager = new MemoryJavaFileManager(stdManager)) {
+//            JavaFileObject javaFileObject = manager.makeStringSource(javaName, javaSrc);
+//            JavaCompiler.CompilationTask task = compiler.getTask(null, manager, null, null, null, Arrays.asList(javaFileObject));
+//            if (task.call())
+//                return manager.getClassBytes();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
-        }
-        System.out.println( "getCanonicalName = "+DataUtil.class.getCanonicalName());
-        System.out.println( "getName = "+DataUtil.class.getName());
-        System.out.println( "getSimpleName = "+DataUtil.class.getSimpleName());
-        System.out.println( "getPackage = "+DataUtil.class.getPackage());
 
-
+    public static void StringCompilerTest() throws Exception {
+        // 传入String类型的代码
+        String source = "import java.util.Arrays;public class Main" +
+                "{" +
+                "public static void main(String[] args) {" +
+                "System.out.println(Arrays.toString(args));" +
+                "}" +
+                "}";
+//        StringCompiler.run(source, "1", "2");
     }
 }
