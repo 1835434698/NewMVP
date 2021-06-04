@@ -19,7 +19,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'com.alibaba:arouter-register:1.0.2'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.0'
+//        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.nekocode:JarFilterPlugin:1.1"
 

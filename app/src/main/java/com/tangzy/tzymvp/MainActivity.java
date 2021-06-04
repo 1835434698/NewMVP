@@ -249,12 +249,12 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         initNet();
         initData();
 
-        handler1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MainActivity.this.startActivity(new Intent());
-            }
-        }, 500);
+//        handler1.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                MainActivity.this.startActivity(new Intent());
+//            }
+//        }, 500);
 
         int i = 0;
         for(int z = 5; i < z; ++i) {
