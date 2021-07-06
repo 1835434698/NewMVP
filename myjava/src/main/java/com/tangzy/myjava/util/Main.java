@@ -65,14 +65,25 @@ public class Main {
 //        System.out.println( "getPackage = "+DataUtil.class.getPackage());
 
 
-        System.out.println( "------start------ ");
-        try {
-            GroovyClassesTest.testGroovyClasses();
-        } catch (Exception e) {
-            System.out.println( "------error------ "+e.getLocalizedMessage());
-            e.printStackTrace();
-        }
-        System.out.println( "------over------ ");
+//        System.out.println( "------start------ ");
+//        try {
+//            GroovyClassesTest.testGroovyClasses();
+//        } catch (Exception e) {
+//            System.out.println( "------error------ "+e.getLocalizedMessage());
+//            e.printStackTrace();
+//        }
+//        System.out.println( "------over------ ");
+        String str1 = "hello";
+        String str2 = "hello";
+        String str3 = new String("hello");
+
+
+
+        System.out.println( "------over------ str1 = "+str1.hashCode());
+        System.out.println( "------over------ str2 = "+str2.hashCode());
+        System.out.println( "------over------ str3 = "+str3.hashCode());
+
+
     }
 
 

@@ -172,6 +172,7 @@ import static com.mingyuechunqiu.recordermanager.data.constants.Constants.EXTRA_
 public class MainActivity extends AppCompatActivity implements MainRecycleAdapter.OnItemClickListener{
 
     private final String TAG = "MainActivity";
+    private ArrayList handlerPoints = new ArrayList();
 
     public View mSnackbarAnchor;
     private int m =0;
