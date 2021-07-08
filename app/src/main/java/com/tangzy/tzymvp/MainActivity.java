@@ -75,6 +75,7 @@ import com.tangzy.tzymvp.activity.TestActivity;
 import com.tangzy.tzymvp.activity.ThreadMainActivity;
 import com.tangzy.tzymvp.activity.TwoActivity;
 import com.tangzy.tzymvp.activity.TzyActivity;
+import com.tangzy.tzymvp.activity.ViewModelActivity;
 import com.tangzy.tzymvp.activity.ViewPageActivity;
 import com.tangzy.tzymvp.activity.WebActivity;
 import com.tangzy.tzymvp.activity.YuanChengActivity;
@@ -794,6 +795,11 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.name = "放大缩小ImageView";
         lists.add(mainBean);
 
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "ViewModel";
+        lists.add(mainBean);
+
 
         adapter.notifyDataSetChanged();
     }
@@ -1031,8 +1037,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 64:
                 onZooImageViewActivity();
                 break;
+            case 65:
+                onViewModelActivity();
+                break;
         }
 
+    }
+
+    private void onViewModelActivity() {
+        startActivity(new Intent(this, ViewModelActivity.class));
     }
 
     private void onZooImageViewActivity() {
