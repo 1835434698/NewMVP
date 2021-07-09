@@ -7,7 +7,6 @@ import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -85,7 +84,7 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Logger.d(TAG, "onDraw ");
-        magnifierView.onDrowMagnifier(canvas, this);
+        magnifierView.onDraw(canvas, this);
     }
 
     private MagnifierView magnifierView;

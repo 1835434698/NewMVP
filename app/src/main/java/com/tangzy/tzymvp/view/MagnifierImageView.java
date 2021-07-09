@@ -1,12 +1,10 @@
 package com.tangzy.tzymvp.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,7 +52,7 @@ public class MagnifierImageView extends  androidx.appcompat.widget.AppCompatImag
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Logger.d(TAG, "onDraw ");
-        magnifierView.onDrowMagnifier(canvas, this);
+        magnifierView.onDraw(canvas, this);
     }
 
     @Override

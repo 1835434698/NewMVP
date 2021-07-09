@@ -47,7 +47,7 @@ class MagnifierView {
         mY = y;
     }
 
-    public void onDrowMagnifier(Canvas mCanvas, View view){
+    public void onDraw(Canvas mCanvas, View view){
         if (mX >= 0 && mY >= 0){
             getBitmap(view);
             if (roundBitmap != null){
