@@ -2,6 +2,7 @@ package com.tangzy.tzymvp.view;
 
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
@@ -13,8 +14,11 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
 
+import com.tangzy.tzymvp.util.Logger;
+
 public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageView {
 
+    private static final String TAG = "MyZoomImageView";
     /** ImageView高度 */
     private int imgHeight;
     /** ImageView宽度 */
@@ -58,12 +62,12 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
      * 初始化UI
      */
     private void initUI() {
-
         this.setScaleType(ScaleType.FIT_CENTER);
         this.setOnTouchListener(new TouchListener());
 
         getImageViewWidthHeight();
         getIntrinsicWidthHeight();
+        magnifierView = new MagnifierView();
     }
 
     /**
@@ -75,6 +79,19 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
         // 初始化bitmap的宽高
         intrinsicHeight = drawable.getIntrinsicHeight();
         intrinsicWidth = drawable.getIntrinsicWidth();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Logger.d(TAG, "onDraw ");
+        magnifierView.onDrowMagnifier(canvas, this);
+    }
+
+    private MagnifierView magnifierView;
+
+    public void setImageView(ImageView ivTT) {
+//        magnifierView.setImageView(ivTT);
     }
 
     private final class TouchListener implements OnTouchListener {
@@ -98,6 +115,9 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
             switch (event.getAction() & MotionEvent.ACTION_MASK) {// 单点监听和多点触碰监听
                 // 手指压下屏幕
                 case MotionEvent.ACTION_DOWN:
+                    Logger.d(TAG, "down x = "+event.getX()+" , y = "+event.getY());
+                    magnifierView.setLocation(event.getX(), event.getY());
+                    invalidate();
                     mode = MODE_DRAG;
                     // 记录ImageView当前的移动位置
                     currentMatrix.set(getImageMatrix());
@@ -107,6 +127,9 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
                     break;
                 // 手指在屏幕上移动，改事件会被不断触发
                 case MotionEvent.ACTION_MOVE:
+                    Logger.d(TAG, "move x = "+event.getX()+" , y = "+event.getY());
+                    magnifierView.setLocation(event.getX(), event.getY());
+                    invalidate();
                     // 拖拉图片
                     if (mode == MODE_DRAG) {
                         // System.out.println("ACTION_MOVE_____MODE_DRAG");
@@ -379,5 +402,6 @@ public class MyZoomImageView extends androidx.appcompat.widget.AppCompatImageVie
         this.mMaxScale = mMaxScale;
         this.mMinScale = mMinScale;
     }
+
 
 }

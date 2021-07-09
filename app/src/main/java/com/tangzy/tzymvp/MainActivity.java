@@ -64,6 +64,7 @@ import com.tangzy.tzymvp.activity.IatDemo;
 import com.tangzy.tzymvp.activity.ImageViewActivity;
 import com.tangzy.tzymvp.activity.ListenerActivity;
 import com.tangzy.tzymvp.activity.LottieActivity;
+import com.tangzy.tzymvp.activity.MagnifierViewActivity;
 import com.tangzy.tzymvp.activity.MyViewGroupActivity;
 import com.tangzy.tzymvp.activity.NestedScrollViewActivity;
 import com.tangzy.tzymvp.activity.ProgressActivity;
@@ -800,6 +801,11 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
         mainBean.name = "ViewModel";
         lists.add(mainBean);
 
+        mainBean = new MainBean();
+        mainBean.id = id++;
+        mainBean.name = "放大镜";
+        lists.add(mainBean);
+
 
         adapter.notifyDataSetChanged();
     }
@@ -1040,8 +1046,15 @@ public class MainActivity extends AppCompatActivity implements MainRecycleAdapte
             case 65:
                 onViewModelActivity();
                 break;
+            case 66:
+                onMagnifierViewActivity();
+                break;
         }
 
+    }
+
+    private void onMagnifierViewActivity() {
+        startActivity(new Intent(this, MagnifierViewActivity.class));
     }
 
     private void onViewModelActivity() {
